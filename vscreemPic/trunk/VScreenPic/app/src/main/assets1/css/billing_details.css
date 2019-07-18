@@ -1,0 +1,223 @@
+#app {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+#app .header {
+  height: 44px;
+  line-height: 44px;
+  font-size: 18px;
+  color: #020202;
+  background-color: #fff;
+  border-bottom: 1px solid #dcddde;
+}
+#app .header .button_arrow {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: 49px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  border-right: 1px solid #e8e8e8;
+}
+#app .header .button_arrow img {
+  width: 15px;
+  height: 15px;
+}
+#app .header .head_text {
+  margin-left: 17px;
+}
+#app .content {
+  height: calc(100% - 44px);
+}
+#app .content .tx_wrapper {
+  margin: 20px 0 16px;
+  text-align: center;
+}
+#app .content .tx_wrapper .tx_box {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  position: relative;
+  margin-right: 14px;
+}
+#app .content .tx_wrapper .tx_box .tx {
+  width: 29px;
+  height: 29px;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+#app .content .tx_wrapper .tx_box .member_type {
+  position: absolute;
+  bottom: 0;
+  right: -4px;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+/* 取消用户等级显示栏 */
+/* #app .content .tx_wrapper .tx_box .member_type.hj {
+  background-image: url("../img/alipay/hj.png");
+}
+#app .content .tx_wrapper .tx_box .member_type.bj {
+  background-image: url("../img/alipay/bj.png");
+}
+#app .content .tx_wrapper .tx_box .member_type.hz {
+  background-image: url("../img/alipay/hz.png");
+}
+#app .content .tx_wrapper .tx_box .member_type.dz {
+  background-image: url("../img/alipay/dz.png");
+} */
+#app .content .tx_wrapper .name {
+  font-size: 15px;
+  color: #000;
+  margin-right: 11px;
+  vertical-align: middle;
+}
+#app .content .tx_wrapper .right {
+  vertical-align: middle;
+}
+#app .content .pri_wrapper {
+  text-align: center;
+  color: #000;
+  font-size: 30px;
+}
+#app .content .pri_wrapper span {
+  vertical-align: middle;
+}
+#app .content .state_wrapper {
+  font-size: 15px;
+  text-align: center;
+  margin: 20px 0 37px;
+}
+#app .content .state_wrapper span {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: none;
+}
+#app .content .state_wrapper .wait_payment,
+#app .content .state_wrapper .wait_friend_payment {
+  color: #ff801a;
+}
+#app .content .state_wrapper .payment_success {
+  color: #9e9e9e;
+}
+#app .content .list_wrapper .list_item {
+  margin-bottom: 23px;
+  font-size: 15px;
+  padding: 0 16px;
+  position: relative;
+}
+#app .content .list_wrapper .list_item:last-child {
+  margin-bottom: 0;
+}
+#app .content .list_wrapper .list_item .title {
+  color: #888;
+}
+#app .content .list_wrapper .list_item .right_text {
+  float: right;
+  color: #1a1a1a;
+  vertical-align: middle;
+}
+#app .content .list_wrapper .list_item .right_text.payment_reason_box {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  max-width: 250px;
+  word-break: break-all;
+  text-align: right;
+  line-height: 20px;
+}
+#app .content .list_wrapper .list_item .right_text img {
+  vertical-align: top;
+  height: 15px;
+}
+#app .content .list_wrapper .list_item .code_box {
+  float: right;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  max-width: 260px;
+  line-height: 20px;
+  font-size: 15px;
+  color: #1a1a1a;
+  /* word-break: break-all; */
+  text-align: right;
+}
+#app .content .list_wrapper .hx_wrapper {
+  padding-left: 16px;
+}
+#app .content .list_wrapper .hx_wrapper .hx {
+  height: 1px;
+  background-color: #efefef;
+}
+#app .content .zz_record {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: none;
+}
+#app .content .bot {
+  padding-left: 16px;
+}
+#app .content .bot  .item_add{
+  color:#aeaeae;
+  font-size:12px;
+}
+#app .content .bot img{
+  vertical-align: middle;
+}
+#app .content .hx02 {
+  background-color: #f5f5f9;
+  height: 10px;
+  border-top: 1px solid #e7e7e8;
+  border-bottom: 1px solid #e7e7e8;
+}
+#app .content .item02 {
+  border-bottom: 1px solid #e7e7e8;
+  height: 52px;
+  line-height: 52px;
+  color: #000;
+  font-size: 15px;
+  padding-right: 16px;
+}
+#app .content .item02:last-child {
+  border-bottom: none;
+}
+#app .content .item02 .right {
+  float: right;
+  height: 52px;
+  line-height: 52px;
+  text-align: center;
+}
+#app .content .desc {
+  padding: 0 16px;
+  margin: 10px 0 15px;
+  font-size: 13px;
+  line-height: 24px;
+  color: #ff801a;
+}
+#app .content .payment_btn {
+  padding: 0 16px;
+  margin-bottom: 20px;
+}
+#app .content .payment_btn a {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: 100%;
+  height: 43px;
+  background-color: #108ee9;
+  color: #fff;
+  line-height: 43px;
+  text-align: center;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}

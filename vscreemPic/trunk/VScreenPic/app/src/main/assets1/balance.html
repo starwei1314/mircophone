@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/balance.css">
+    <title>余额</title>
+</head>
+
+<body>
+    <div class="balance" id="app">
+        <header class="header">
+            <a href="javascript:;" class="button_arrow" onclick="back()">
+                <img src="./img/alipay/左箭头.png" alt="">
+            </a>
+            <span class="head_text">余额</span>
+            <span class="head_right_text">明细</span>
+        </header>
+        <div class="account_pri">
+            <div class="account_pri_desc">余额账户<span>(元)</span></div>
+            <div class="pri" id="pri">0.00</div>
+            <div class="balance_bao">
+                <span class="balance_bao_text">余额自动转入余额宝，收益天天算</span>
+                <div class="right"><a href="javascript:;" class="show_balance_bao">去开启</a></div>
+            </div>
+        </div>
+        <div class="list">
+            <div class="list_wrapper">
+                <div class="list_item">
+                    <img src="./img/alipay/1.jpg" alt="" class="icon">
+                    <span class="text">充值</span>
+                    <div class="right">
+                        <img src="./img/arrow_right.png" alt="">
+                    </div>
+                </div>
+                <div class="list_item">
+                    <img src="./img/alipay/2.jpg" alt="" class="icon">
+                    <span class="text">提现</span>
+                    <div class="right">
+                        <img src="./img/arrow_right.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="list_wrapper">
+                <div class="list_item">
+                    <img src="./img/alipay/3.jpg" alt="" class="icon">
+                    <span class="text">集分宝</span>
+                    <div class="right">
+                        <img src="./img/arrow_right.png" alt="">
+                    </div>
+                </div>
+                <div class="list_item">
+                        <img src="./img/alipay/alipay01.png" alt="" class="icon">
+                        <span class="text">备用金</span>
+                        <div class="right">
+                            <span class="r_text">免费用7天</span>
+                            <img src="./img/arrow_right.png" alt="">
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="footer">
+            <img src="./img/alipay/4.png" alt="">
+            <span class="text">信用借款</span>
+            <span class="lx"></span>
+            <span class="text">常见问题</span>
+        </div>
+    </div>
+    <script src="./js/vue.min.js"></script>
+    <script>
+        window.onload = function() {
+            getPri(10000)
+            amountLimit()
+        }
+
+        function amountLimit(){
+            var priLength= document.getElementById("pri").innerText.length
+           if(priLength>9&&priLength<=14){
+            document.getElementById("pri").style.fontSize="50px"
+           }
+        }
+        function getPri(num) {
+            document.getElementById("pri").innerText = fmoney(num, 2) || 0.00
+        }
+
+        function back() {
+            app.back();
+        }
+        //格式化金额,自动补零
+        function fmoney(s, n) {
+            n = n > 0 && n <= 20 ? n : 2;
+            s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
+            var l = s.split(".")[0].split("").reverse(),
+                r = s.split(".")[1];
+            t = "";
+            for (i = 0; i < l.length; i++) {
+                t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
+            }
+            return t.split("").reverse().join("") + "." + r;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical"
+    >
+
+    <include
+        android:id="@+id/add_friend_title"
+        layout="@layout/title_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/basics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_friend_title"
+        android:background="@color/light_gray"
+        android:padding="@dimen/margin10"
+        android:text="基本资料"
+        />
+
+    <RelativeLayout
+        android:id="@+id/r2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin10"
+        >
+
+        <TextView
+            android:id="@+id/friend_tx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin15"
+            android:text="头像"
+            android:layout_centerVertical="true"
+            android:textColor="@color/gray"
+            android:textSize="16dp"
+            />
+
+        <ImageView
+            android:id="@+id/friend_img"
+            android:layout_width="@dimen/width50"
+            android:layout_height="@dimen/height50"
+            android:layout_marginRight="@dimen/margin10"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/arrow"
+            />
+
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/margin15"
+            android:src="@mipmap/zi"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin0.5"
+        android:layout_below="@+id/r2"
+        android:background="@color/gray"
+        />
+
+    <RelativeLayout
+        android:padding="@dimen/margin10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <EditText
+            android:id="@+id/nickName"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height50"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="昵称"
+            android:maxLength="15"
+            android:textColorHint="@color/light_gray"
+            />
+
+        <ImageView
+            android:id="@+id/add_friend_img"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/refresh"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height10"
+        android:background="@color/light_gray"
+        />
+    <EditText
+        android:id="@+id/remark"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height60"
+        android:layout_below="@+id/r1"
+        android:layout_marginTop="@dimen/margin10"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:hint="个人备注（选填）"
+        android:maxLength="15"
+        android:paddingLeft="@dimen/margin10"
+        android:textColorHint="@color/light_gray"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_gray"
+        >
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <Button
+                android:id="@+id/add_friend"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height50"
+                android:layout_margin="@dimen/margin10"
+                android:background="@drawable/shape_preview"
+                android:text="添加"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                />
+            <Button
+                android:visibility="gone"
+                android:id="@+id/delete_friend"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height50"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/margin10"
+                android:background="@drawable/shape_delete"
+                android:text="删除"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

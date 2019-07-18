@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@drawable/shape_we_chat_gray"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/pay_type_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/blue"
+        />
+    <TextView
+        android:id="@+id/pay_type_add"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="添加银行卡"
+        android:gravity="center"
+        android:textColor="@color/white"
+        />
+</LinearLayout>

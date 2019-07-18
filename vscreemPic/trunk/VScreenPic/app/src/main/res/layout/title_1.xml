@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/blue"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height50"
+        android:background="@color/blue"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/weChat_transfer_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/sk"
+            />
+
+        <TextView
+            android:layout_margin="@dimen/margin10"
+            android:layout_width="1dp"
+            android:layout_height="@dimen/height20"
+            android:background="@color/white"
+            />
+
+        <TextView
+            android:text="标题"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/weChat_transfer_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            />
+    </LinearLayout>
+</LinearLayout>

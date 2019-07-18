@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_contact_swipe_root"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="@dimen/height60"
+    >
+
+
+    <ImageView
+        android:src="@drawable/my"
+        android:id="@+id/item_new_friend_img"
+        android:layout_centerVertical="true"
+        android:layout_width="@dimen/width50"
+        android:layout_height="@dimen/height50"
+        android:layout_marginTop="@dimen/dimen5"
+        android:layout_marginBottom="@dimen/dimen5"
+        android:layout_marginLeft="@dimen/margin10"
+        android:layout_marginRight="@dimen/margin10"
+        />
+
+    <TextView
+        android:layout_toRightOf="@+id/item_new_friend_img"
+        android:id="@+id/item_new_friend_nick"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/margin10"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="昵称"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:id="@+id/item_new_friend_isAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已添加"
+        android:textSize="14dp"
+        android:layout_alignParentRight="true"
+        android:padding="@dimen/dimen5"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/margin10"
+        />
+    <Button
+        android:id="@+id/item_new_friend_notAdd"
+        android:layout_width="@dimen/width60"
+        android:layout_height="@dimen/height30"
+        android:text="接受"
+        android:textSize="14dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@drawable/shape_green"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/margin10"
+        android:layout_centerVertical="true"
+        />
+
+    <TextView
+        android:id="@+id/item_new_friend_verify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="验证信息"
+        android:layout_toRightOf="@+id/item_new_friend_img"
+        android:layout_below="@+id/item_new_friend_nick"
+        />
+</RelativeLayout>
+
+

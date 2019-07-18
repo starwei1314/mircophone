@@ -1,0 +1,607 @@
+@import 'vendor.styl'
+//聊天窗
+.picMsg_wrapper
+	display: flex
+	flex-wrap: wrap
+	align-items: center
+	height: calc(100% - 280px)
+	.pic_msg_item
+		min-width: 25%
+		max-width: 25%
+		width 25%
+		padding 5px
+		text-align: center
+		img
+			max-width: 100%
+			max-height: 150px
+.msg_text
+	.green_text
+		color: #39930d
+	.face_item
+		margin: 0
+		vertical-align: middle
+		zoom 0.8
+.face_item
+	display: inline-block
+	// width 30px
+	// height: 30px
+	width 21px
+	height: 21px
+	background-image: url('../img/sprite.png')
+	background-size: 250px 166px
+	// background-size: 370px 246px
+	background-position: 0 0
+	margin: 5px 9px
+.chat_window
+	padding-top: 0
+	background-color: #EBEBEB
+	background-repeat: no-repeat
+	background-size: cover
+	background-position: center center
+	display: flex
+	flex-direction column
+	transition: transform .3s ease-out
+	.chat_window_header
+		position: static
+		.transition_box_head_text
+			display: inline-block
+	.chat_window_body
+		flex-grow: 1
+		&.bg_normal
+			// background-color: #EBEBEB
+		.msg  //代表非系统消息,那就有头像
+			margin: 12px 0
+			&.msg_my
+				.icon
+					float: right
+				.msg_pic
+					float: right
+			&.msg_friend
+				.icon
+					float: left
+				.msg_pic
+					float: left
+			.icon
+				margin: 0 9px
+				width 41px
+				height 41px
+				vertical-align: middle
+		.jt_left
+			&::before
+				content: " "
+				display: inline-block
+				position: absolute
+				top: 13px
+				left: -5px
+				border-top 5px solid transparent
+				border-right 5px solid #ffffff
+				border-bottom 5px solid transparent
+		.jt_right
+			&::after
+				content: " "
+				display: inline-block
+				position: absolute
+				top: 13px
+				right: -5px
+				border-top 5px solid transparent
+				border-left 5px solid #a0e75a
+				border-bottom 5px solid transparent
+		.msg_normal
+			&.msg_friend
+				.text
+					float: left
+					background-color: #ffffff
+					border: 1px solid #e4e4e4
+					.audio_icon
+						background-image: url('../img/voice.png')
+						float: left
+					.audio_num
+						font-size: 14px
+						font-weight: 700
+						color: #a8a8a8
+						position: absolute
+						top: 10px
+						right: -28px
+						&.audio_num_color
+							color: #ffffff
+						.audio_num_xyd
+							right: -20px
+							left: auto
+			&.msg_my
+				.text
+					float: right
+					background-color: #a0e75a
+					.audio_icon
+						background-image: url('../img/icon_luyin.png')
+						float: right
+					.audio_num
+						font-size: 14px
+						font-weight: 700
+						color: #a8a8a8
+						position: absolute
+						top: 10px
+						left: -28px
+						&.audio_num_color
+							color: #ffffff
+						.audio_num_xyd
+							left: -20px
+							right: auto
+			.text
+				min-height 41px
+				line-height: 20px
+				font-size: 16px
+				color: #0a0a0a
+				border-radius: 6px
+				position: relative
+				padding: 10px
+				max-width 262px
+				word-wrap break-word
+				word-break: break-all
+				.face_item
+					margin: 0
+					vertical-align: bottom
+					font-size: 0
+					// zoom: .7
+				.video_text
+					vertical-align: middle
+				.video_icon
+					display: inline-block
+					width: 24px
+					background-size: 100% 100%
+					background-repeat: no-repeat
+					vertical-align: middle
+					&.tel
+						height: 9px
+						&.left
+							background-image: url('../img/wechat_chat_voice_b.png')
+						&.right
+							background-image: url('../img/wechat_chat_voice_a.png')
+					&.video
+						height: 14px
+						&.left
+							background-image: url('../img/wechat_chat_video_b.png')
+						&.right
+							background-image: url('../img/wechat_chat_video_a.png')
+					&.left
+						margin: 0 15px 0 5px
+					&.right
+						margin 0 5px 0 15px
+				&.audio
+					display: inline-block
+					min-width 86px
+					padding: 0 20px
+					max-width: 240px
+					.audio_icon
+						display: inline-block
+						width 13px
+						height 16.5px
+						background-size: 13px 16.5px
+						margin-top: 12.25px
+						background-repeat: no-repeat
+					.audio_num_xyd
+						display: inline-block
+						width 10px
+						height 10px
+						border-radius: 50%
+						background-color: red
+						position: absolute
+						top: 5px
+		//图片消息
+		.msg_pic
+			position: relative
+			overflow-y: hidden
+			border-radius 3px
+			background-size: cover
+			background-position: center center 
+			background-repeat: no-repeat
+			background-color: #ebebeb
+			transition: all .3s
+			&.msg_my
+				-webkit-clip-path polygon(0% 0%, 0% 100%, calc(100% - 8px) 100%, calc(100% - 7px) 99.75%, calc(100% - 6px) 99%, calc(100% - 5.75px) 98%, calc(100% - 5.5px) 97.75%, calc(100% - 5.5px) 26px, 100% 20px, calc(100% - 5.5px) 14px, calc(100% - 5.5px) 2%, calc(100% - 5.5px) 1.5%, calc(100% - 6px) 1%, calc(100% - 6.75px) 0.25%, calc(100% - 7px) 0.15%, calc(100% - 8px) 0%)
+				margin-right: -4.5px
+			&.msg_friend
+				-webkit-clip-path polygon(100% 0%, 100% 100%, 8px 100%, 7px 99.75%, 6px 99%, 5.75px 98%, 5.5px 97.75%,5.5px 26px, 0 20px, 5.5px 14px,5.5px 2%, 5.5px 1.5%, 6px 1%,6.75px 0.25%, 7px 0.15%, 7px 0%)
+				margin-left: -4.5px
+			// img
+			// 	border-radius: 3px
+			// 	position: absolute
+			// 	left: 0
+			// 	top: 50%
+			// 	transform: translate3d(0, -50%, 0)
+		.system_msg//系统消息
+			margin: 12px 0
+			text-align: center
+			font-size: 15px
+			color: #ffffff
+			max-width: 85%
+			margin-left: 7.5%
+			.system_msg_con
+				text-align: left
+				display: inline-block
+				background-color: #d5d5d5
+				padding: 6px 5px
+				line-height: 20px
+				border-radius: 3px
+				&.bg_style
+					background-color: rgba(0, 0, 0, .1)
+				.hongbao_icon
+					width 15px
+					height 18px
+					vertical-align: middle
+					margin-right: 2px
+				.red_color
+					color #fa9d3b
+					vertical-align: middle
+				.receive_hb_text
+					vertical-align: middle
+			&.system_time
+				margin: 24px 0 12px 7.5%
+				font-size: 12px
+				.system_msg_con
+					max-height: 20px
+					height: 20px
+					line-height: 20px
+					padding: 0 7px
+		.msg_red
+			.jt_right
+				&::after
+					border-left-color: #fa9d3b
+			.jt_left
+				&::before
+					border-right-color: #fa9d3b
+			&.msg_my
+				.msg_red_content
+					float: right
+			&.msg_friend
+				.msg_red_content
+					float: left
+			&.receive
+				.jt_right
+					&::after
+						border-left-color: #ffd09c
+				.jt_left
+					&::before
+						border-right-color: #ffd09c
+				.msg_red_content
+					.red_info
+						background-color: #ffd09c
+			.msg_red_content
+				width 215px
+				position: relative
+				.red_info
+					background-color: #fa9d3b
+					border-top-left-radius: 4px
+					border-top-right-radius: 4px
+					height 63px
+					padding: 14px 12px 0
+					.red_info_icon
+						vertical-align: middle
+						margin-right: 7px
+					.msg_red_con
+						display: inline-block
+						vertical-align: middle
+						color: #ffffff
+						width: calc(100% - 50px)
+						.msg_red_con_tit
+							font-size: 15px
+							margin-bottom: 8px
+							overflow: hidden
+							text-overflow: ellipsis
+							white-space: nowrap
+						.msg_red_con_text
+							font-size: 13px
+				.red_desc
+					height 20px
+					line-height: 20px
+					color: #8d8d8d
+					font-size: 10px
+					background-color: #ffffff
+					padding-left: 12px
+					border-bottom-left-radius: 4px
+					border-bottom-right-radius: 4px
+	.chat_window_footer
+		.chat_window_footer_top
+			font-size: 0
+			min-height: 48px
+			// padding: 8px 0 7px 12px
+			padding: 8px 12px 7px
+			background-color: #f4f4f4
+			display: flex
+			align-items: flex-end
+			a
+				display: inline-block
+				width 32px
+				height 32px
+				// position: absolute
+				// bottom: 0
+				img
+					width 100%
+					height 100%
+			.chat_input
+				display: inline-block
+				vertical-align: bottom				
+				background-color: transparent
+				border: none 
+				border-bottom: 1px solid #dbdbdb
+				// width 208px
+				flex-grow: 1
+				margin: 5px 9px 0
+				max-height 80px
+				min-height: 25px
+				line-height: 18px
+				font-size: 16px
+				padding: 5px
+				.face_item
+					vertical-align: bottom
+					margin: 0
+				&:focus	
+					border-color: #46c11b
+			.chat_yuyin
+				font-size: 16px
+				text-align: center
+				line-height: 34px
+				height 34px
+				border: 1px solid #d0d0d0
+				color: #747474
+				// margin: 0 9px
+				margin 0 15px
+				flex-grow: 1
+				// width 208px
+				border-radius: 5px
+			.chat_footer_too_left
+				display: inline-block	
+				vertical-align: middle
+				position: relative
+			.chat_footer_too_right
+				min-width: 80px
+				position: relative
+				display: inline-block	
+				vertical-align: middle
+				float right
+				.icon-face
+				.icon-text
+					margin-right: 16px
+				.send_btn
+					position: absolute
+					// left: 40px
+					right -7px
+					top: 0
+					width 46px
+					height 32px
+					line-height: 32px
+					text-align: center
+					display: inline-block
+					color: #ffffff
+					background-color: #1aac19  
+					border: 1px solid #2f912a
+					border-radius: 3px
+					font-size: 15px
+		.chat_footer_tools
+			background-color: #f4f4f4
+			.face_tools
+				overflow-y: scroll
+				height: 254px
+				padding: 8px
+			.add_tools
+				padding-bottom: 30px
+				.add_tools_item
+					float: left
+					width: 25%
+					text-align: center
+					margin-top: 30px
+					img
+						width 56px
+						height 56px
+						margin-bottom: 11px
+					p
+						font-size: 12px
+						color #9e9e9e
+	.chat_mtitem
+		background-color: #ffffff
+		padding: 0 15px 0 10px
+		margin-top: 20px
+		min-height: 48px
+		.mtitem_tit
+			font-size: 14px
+			color: #0f0f0f
+		.mtitem_text
+			font-size: 11px
+			color: #777777
+		.chat_mtitem_left
+			float: left	
+		.chat_mtitem_right
+			float: right
+			.arrow_right
+				vertical-align: middle
+			.mt_item_pic_img
+				vertical-align: middle
+		&.fasongren
+			height 65px
+			.mtitem_tit
+				margin-bottom: 4px
+			.chat_mtitem_left
+				padding-top: 17.5px
+			.chat_mtitem_right
+				width: calc(100% - 87px)
+				line-height: 65px
+				text-align: right 
+			.chat_mtitem_right_name
+				font-size: 14px
+				color: #777777
+				width: calc(100% - 100px)
+				display: inline-block
+				vertical-align: middle
+				overflow: hidden
+				text-overflow: ellipsis
+				white-space: nowrap
+			.mt_item_pic_img
+				width 45px
+				height 45px
+				margin: 0 15px
+				vertical-align: middle
+			.arrow_right
+				width 16px
+				height 16px
+				vertical-align: middle
+		&.shichang
+			position: relative
+			height: 48px
+			line-height: 35px
+			padding-top: 8px
+			.chat_mtitem_left
+				margin-right: 20px
+			.rangeValue
+				margin-left: 15px
+				font-size: 14px
+				color: #535353
+			.mt-range
+				width calc(100% - 100px)
+		&.chat_mtitem_time
+			line-height: 48px
+			.time
+				font-size: 14px
+				color: #535353
+				margin-right: 8px
+				vertical-align: middle
+		&.chat_mtitem_pic
+			min-height 64px
+			line-height: 64px
+			.mt_item_pic_img
+				margin-right: 15px
+				&.new_msg_pic
+					max-width 48px
+	.chat_mtitem_input
+		border-top: 1px solid #e6e6e6
+		height 64px
+		line-height: 64px
+		background-color: #ffffff
+		padding-left: 10px
+		input 
+			padding-right: 15px
+			width 100%
+			height 100%
+			outline: 0
+			border none
+			font-size: 14px
+			color: #a9a8a8
+			background-color: transparent
+	.mt_sub_box
+		position: absolute
+		width 100%
+		bottom: 10px
+		left: 0
+		padding: 0 10px
+		.mt_sub
+			display: inline-block
+			width 100%
+			height 47px
+			line-height: 47px
+			text-align: center
+			background-color: #1aad19
+			color: #ffffff
+			font-size: 18px
+			border-radius: 3px
+	// 红包详情页面
+	.hb
+		padding-top: 48px
+		height: 100%
+	.hb_wrapper
+		background-image: url('../img/bg_02.png')
+		background-size: 100% 100%
+		background-repeat: no-repeat
+		height: 100%
+		width 100%
+		text-align: center
+		.icon
+			display: inline-block
+			margin-top: 41px
+			text-align: center
+			border: 2px solid #ebce9b
+			border-radius: 6px
+			width 62px
+			height 62px
+			img
+				width 58px
+				height 58px
+				border-radius: 5px
+		.hb_friend_name
+			margin: 8px 0 6px
+			font-size: 14px
+			color: #000000
+		.hb_desc
+			font-size: 14px
+			color: #838383
+			margin-bottom: 36px
+		.hb_pri
+			font-size: 16px
+			color: #000000
+			.pri
+				font-size: 58px
+		.hb_zeng
+			color: #3459a2
+			font-size: 12px 
+			img
+				width 15.5px
+				height 15px
+				margin-right: 2px
+				vertical-align: middle
+		.message
+			margin: 86px 0 44px
+			font-size: 16px
+			color: #000000
+		.record
+			font-size: 14px
+			color: #3459a2
+	//转账
+	.zz_wrapper
+		text-align: center
+		.icon
+			display: inline-block
+			width 90px
+			height 90px
+			margin: 40.5px 0 20px
+			img
+				width 100%
+				height 100%
+		.zz_friend_name
+			font-size: 21px
+			color: #000000
+			margin-bottom: 16px
+		.zz_pri
+			font-size: 48px
+			color: #000000
+		.zz_btn
+			padding: 0 15px
+			margin: 32.5px 0 22px
+			a	
+				display: inline-block
+				width 100%
+				height 47px
+				line-height: 47px
+				background-color: #1aad19
+				border 2px solid #0f950e
+				border-radius: 3px
+				color: #ffffff
+				font-size: 18px
+		.zz_desc
+			font-size: 14px
+			color: #808080
+			margin-top: 30px
+			.blue_color
+				color: #6f8aa8
+		.zz_time
+			position: absolute
+			bottom: 0
+			left: 50%
+			transform: translate3d(-50%, 0, 0)
+			font-size: 14px
+			color: #747474
+			&>div
+				margin-bottom: 16px
+#video_chat_time
+	width: 100%
+	height: 48px
+	border: none 
+	outline: 0
+	background-color: transparent
+                           

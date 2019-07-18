@@ -1,0 +1,93 @@
+.transition_box {
+  /* 修改钱包页面更改 */
+  /* background-color: #ededed; */
+  width: 100%;
+  min-height: 100%;
+  padding-top: 48px;
+}
+.transition_box.add_onefriend {
+  padding-top: 0;
+}
+.transition_box.chat_window {
+  height: 100%;
+  overflow: hidden;
+}
+.transition_box.add_friend_box,
+.transition_box.set_my_info {
+  background-color: #ebebeb;
+}
+.transition_box.transition_show {
+  -webkit-transform: none;
+  -khtml-transform: none;
+  -moz-transform: none;
+  -o-transform: none;
+  -ms-transform: none;
+  transform: none;
+}
+.transition_box .transition_box_head {
+  height: 48px;
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 200;
+}
+.transition_box .transition_box_head.add_friend_box_header {
+  position: fixed;
+}
+.transition_box .transition_box_head .transition_box_head_fanhui {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  padding-top: 12px;
+  text-align: center;
+  margin-right: 15px;
+}
+.transition_box .transition_box_head .transition_box_head_fanhui .button_arrow_box {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  /* border-right: 1px solid #303035; */
+  line-height: 24px;
+}
+.transition_box .transition_box_head .transition_box_head_fanhui .button_arrow_box img {
+  width: 15px;
+  vertical-align: middle;
+  height: 15px;
+}
+.transition_box .transition_box_head .transition_box_head_text {
+  font-size: 16px;
+  color: #000;
+  vertical-align: middle;
+}
+.transition_box .transition_box_head .transition_box_head_right {
+  float: right;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  height: 48px;
+}
+.transition_box .transition_box_head .transition_box_head_right .transition_box_head_right_text {
+  margin-top: 12px;
+  height: 24px;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  color: #000;
+  vertical-align: middle;
+  font-size: 14px;
+  line-height: 24px;
+  padding: 0 16px;
+  /* border-left: 1px solid #303035; */
+}
+.transition_box .transition_box_head .transition_box_head_right .transition_box_head_right_icon {
+  width: 20px;
+  height: 20px;
+  margin-top: 14px;
+  margin-right: 13px;
+}

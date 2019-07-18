@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/head.css">
+    <title>交易详情</title>
+    <style>
+        .zz_wrapper {
+            text-align: center;
+        }
+        
+        .zz_wrapper .icon {
+            display: -webkit-box/* OLD - iOS 6-, Safari 3.1-6 */
+            ;
+            display: -moz-box/* OLD - Firefox 19- (buggy but mostly works) */
+            ;
+            display: inline-block;
+            width: 90px;
+            height: 90px;
+            margin: 60.5px 0 0px;
+        }
+        
+        .zz_wrapper .icon img {
+            /* width: 100%;
+            height: 100%; */
+            width:60%;
+            display: none;
+        }
+        
+        .zz_wrapper .zz_friend_name {
+            font-size: 21px;
+            color: #000;
+            margin-bottom: 16px;
+        }
+        
+        .zz_wrapper .zz_friend_name>div,
+        .zz_wrapper .zz_friend_name>div>span {
+            display: none;
+        }
+        
+        .zz_wrapper .zz_pri {
+            font-size: 48px;
+            color: #000;
+            font-weight: bold;
+        }
+        .zz_wrapper .zz_pri .pri_yy{
+            font-weight: bold;
+           height: 32px;
+            vertical-align: top;
+            margin-top: 6px;
+            margin-right: -8px
+        }
+        .zz_wrapper .zz_btn {
+            padding: 0 15px;
+            margin: 38px 0 22px;
+        }
+        
+        .zz_wrapper .zz_btn a {
+            display: -webkit-box/* OLD - iOS 6-, Safari 3.1-6 */
+            ;
+            display: -moz-box/* OLD - Firefox 19- (buggy but mostly works) */
+            ;
+            display: inline-block;
+            width: 50%;
+            height: 47px;
+            line-height: 47px;
+            background-color: #1aad19;
+            border: 1px solid #0f950e;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+            color: #fff;
+            font-size: 18px;
+        }
+        
+        .zz_wrapper .zz_desc {
+            font-size: 14px;
+            color: #808080;
+            margin-top: 25px;
+        }
+         .zz_wrapper .zz_advise{
+            padding: 10px 10px 10px 10px;
+            margin: 60px 20px 0 20px;
+            border-bottom: 1px solid #e4e4e4;
+            border-top: 1px solid #e4e4e4;
+            overflow: hidden;
+        }       
+        .zz_wrapper .zz_advise .zz_advise_img{
+             vertical-align: middle;
+             width: 30px;
+             margin-right: 30px;
+             float: left;
+             margin-top: 10px;
+        }
+        .zz_wrapper .zz_advise .zz_advise_img img{
+            width: 50px;
+            margin-top: -3px;
+        }
+        .zz_wrapper .zz_advise  .zz_advise_r{
+             float: left;
+        }
+
+        .zz_wrapper .zz_advise  .zz_advise_r .zz_advise_title1{
+            text-align: left;
+            color: #8e8e8e;
+            margin-bottom: 10px;
+        }
+       .zz_wrapper .zz_advise  .zz_advise_r .zz_advise_title2{
+            width: 70%;
+            text-align: left;
+        }
+        .zz_wrapper .zz_advise .zz_advise_arrow{
+            float:right;
+            margin-top: 20px;
+        }
+        .zz_wrapper .zz_desc>div,
+        .zz_wrapper .zz_desc>div>span {
+            display: none;
+        }
+        
+        .zz_wrapper .zz_desc .blue_color {
+            color: #6f8aa8;
+        }
+        
+        .zz_wrapper .zz_time {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            -webkit-transform: translate3d(-50%, 0, 0);
+            -khtml-transform: translate3d(-50%, 0, 0);
+            -moz-transform: translate3d(-50%, 0, 0);
+            -o-transform: translate3d(-50%, 0, 0);
+            -ms-transform: translate3d(-50%, 0, 0);
+            transform: translate3d(-50%, 0, 0);
+            font-size: 14px;
+            color: #747474;
+        }
+        
+        .zz_wrapper .zz_time>div {
+            margin-bottom: 16px;
+        }
+        
+        .zz_wrapper .zz_time .zz_time02 {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 转账详情 -->
+    <div class="transition_box zz">
+        <header class="zz_header transition_box_head">
+            <a class="transition_box_head_fanhui" href="javascript:;" onclick="back();">
+                <span class="button_arrow_box"><img src="./img/button_arrow.png" alt=""></span>
+            </a>
+            <span class="transition_box_head_text"></span>
+        </header>
+        <div class="zz_wrapper">
+            <div class="icon">
+                <img src="./img/wait.png" alt="" class="wait_icon">
+                <img src="./img/ok.png" alt="" class="ok_icon">
+            </div>
+            <div class="zz_friend_name">
+                <!-- 收钱 -->
+                <div class="zz_name_friend">
+                    <span class="wait_text">待确认收款</span>
+                    <span class="ok_text">已收钱</span>
+                </div>
+
+                <!-- 发钱 -->
+                <div class="zz_name_me">
+                    <span class="wait_text">待xxx确认收</span>
+                    <span class="ok_text">已收钱</span>
+                </div>
+            </div>
+            <div class="zz_pri">
+                <img class="pri_yy" src="./img/rmb.png">
+                <span class="pri"></span>
+            </div>
+            <div class="zz_btn">
+                <a href="javascript:;">确认收款</a>
+            </div>
+            <div class="zz_desc">
+                <!-- 收钱 -->
+                <div class="zz_desc_friend">
+                    <span class="wait_text">1天内未确认，将退还给对方。<span class="blue_color">立即退还</span></span>
+                    <span class="blue_color ok_text">查看零钱</span>
+                </div>
+
+                <!-- 发钱 -->
+                <div class="zz_desc_me">
+                    <span class="wait_text">1天内朋友未确认，将退还给你。<span class="blue_color">重发转账消息</span></span>
+                    <span class="ok_text">已存入对方零钱中</span>
+                </div>
+            </div>
+            <!-- 新增模块 -->
+            <div class="zz_advise">
+                <div class="zz_advise_img">
+                    <img src="img/wallet-money.png" alt="">
+                </div>
+                <div class="zz_advise_r">
+                    <p class="zz_advise_title1">零钱通</p>
+                    <p class="zz_advise_title2">转入资金即享3.15%年化收入</p>
+                </div>
+                <div class="zz_advise_arrow">
+                    <img src="img/arrow_right.png" alt="">
+                </div>
+            </div>
+            <div class="zz_time">
+                <div class="zz_time01">
+
+                </div>
+                <div class="zz_time02"></div>
+            </div>
+        </div>
+    </div>
+    <script src="./js/jquery-2.2.3.min.js"></script>
+    <script>
+        function initPage(name, pri, transferTime, getMoneyTime) {
+            if (getMoneyTime != 0) {
+                $(".ok_icon").show()
+                $(".zz_btn").hide()
+                $(".zz_time02").show().text("收钱时间: " + getMoneyTime)
+            } else {
+                $(".wait_icon").show()
+            }
+            $(".zz_time01").text("转账时间: "+ transferTime)
+            $(".pri").text(pri)
+
+            if (name != "") { //发钱
+                $(".zz_btn").hide()
+                $(".zz_desc_me,.zz_name_me").show()
+                if (getMoneyTime != 0) { //已确认
+                    $(".zz_desc_me .ok_text,.zz_name_me .ok_text").show()
+                    $(".zz_name_me .ok_text").text(name + "已收钱")
+                } else { //未确认
+                    $(".zz_desc_me .wait_text,.zz_name_me .wait_text").show()
+                    $(".zz_name_me .wait_text").text("待" + name + "确认收款")
+                }
+            } else {
+                $(".zz_desc_friend,.zz_name_friend").show()
+                if (getMoneyTime != 0) { //已确认
+                    $(".zz_desc_friend .ok_text,.zz_name_friend .ok_text").show()
+                } else { //未确认
+                    $(".zz_desc_friend .wait_text,.zz_name_friend .wait_text").show()
+                }
+            }
+        }
+
+        function back() {
+            app.back();
+        }
+    </script>
+</body>
+
+</html>

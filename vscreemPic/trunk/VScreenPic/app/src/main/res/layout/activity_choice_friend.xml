@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height70"
+        android:background="@color/blue"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/height20"
+        >
+
+        <ImageView
+            android:id="@+id/choice_friend_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="@dimen/margin10"
+            android:src="@mipmap/sk"
+            />
+
+        <TextView
+            android:id="@+id/choice_friend_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="角色库"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/choice_friend_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            />
+        <TextView
+            android:id="@+id/contact_dialog"
+            android:layout_width="@dimen/width60"
+            android:layout_height="@dimen/height60"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/width70"
+            android:background="@drawable/choice"
+            android:textColor="#ffffffff"
+            android:textSize="30.0dip"
+            android:visibility="invisible" />
+
+        <xiake.vscreenshot.widget.SideBar
+            android:id="@+id/contact_sidebar"
+            android:layout_width="25dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="right|center"
+            />
+
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/add_we_chat_friend"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height50"
+        android:layout_margin="@dimen/margin10"
+        android:background="@drawable/shape_blue"
+        android:text="添加微信角色"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        />
+
+</LinearLayout>

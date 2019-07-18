@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <include
+        android:id="@+id/ali_friend_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/title_3"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/ali_friend_rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+        <TextView
+            android:id="@+id/contact2_dialog"
+            android:layout_width="@dimen/width60"
+            android:layout_height="@dimen/height60"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/width70"
+            android:background="@drawable/choice"
+            android:textColor="#ffffffff"
+            android:textSize="30.0dip"
+            android:visibility="invisible" />
+
+        <xiake.vscreenshot.widget.SideBar
+            android:id="@+id/contact2_sidebar"
+            android:layout_width="25dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="right|center"
+            />
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/ali_friends_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加支付宝角色"
+        android:textSize="16dp"
+        android:textColor="@color/white"
+        android:background="@drawable/shape_blue"
+        android:layout_margin="@dimen/margin10"
+        />
+
+</LinearLayout>

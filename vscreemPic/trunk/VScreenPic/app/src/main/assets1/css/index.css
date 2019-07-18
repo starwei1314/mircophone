@@ -1,0 +1,1343 @@
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+#app {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* 消除vue.js加载之前的闪烁问题 */
+[v-cloak] {
+  display: none;
+}
+.picker-item {
+  text-overflow: initial;
+}
+.transition_box {
+  position: absolute;
+  /* background-color: #ededed; */
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  will-change: transform;
+  -webkit-transform: translateX(100%);
+  -khtml-transform: translateX(100%);
+  -moz-transform: translateX(100%);
+  -o-transform: translateX(100%);
+  -ms-transform: translateX(100%);
+  transform: translateX(100%);
+  z-index: 200;
+  -webkit-transition: all 0.3s ease-out;
+  -khtml-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  padding-top: 43px;
+}
+.transition_box.add_onefriend {
+  padding-top: 0;
+}
+.transition_box.chat_window {
+  height: 100%;
+  overflow: hidden;
+}
+.transition_box.add_friend_box,
+.transition_box.set_my_info {
+  background-color: #ebebeb;
+}
+.transition_box.transition_show {
+  -webkit-transform: none;
+  -khtml-transform: none;
+  -moz-transform: none;
+  -o-transform: none;
+  -ms-transform: none;
+  transform: none;
+}
+.transition_box .transition_box_head {
+  height: 43px;
+  /* background-color: #ebebeb; */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 200;
+  line-height:43px;
+}
+.transition_box .transition_box_head.add_friend_box_header {
+  position: fixed;
+}
+.transition_box .transition_box_head.hb_header {
+  background-color: #f25542;
+}
+.transition_box .transition_box_head.hb_header .transition_box_head_fanhui .button_arrow_box {
+  /* border-right: 1px solid #ffe9b6; */
+}
+.transition_box .transition_box_head.hb_header .transition_box_head_text {
+  color: #ffe9b6;
+  float: right;
+  margin-right: 15px;
+}
+.transition_box .transition_box_head .transition_box_head_modal_zz {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 210;
+}
+.transition_box .transition_box_head .transition_box_head_modal {
+  position: absolute;
+  width: 150px;
+  right: 16px;
+  background-color: #393a3f;
+  top: 48px;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  z-index: 9999;
+}
+.transition_box .transition_box_head .transition_box_head_modal .transition_box_head_modal_item {
+  height: 40px;
+  line-height: 40px;
+  border-bottom: 1px solid #0f0f0f;
+}
+.transition_box .transition_box_head .transition_box_head_modal .transition_box_head_modal_item:last-child {
+  border-bottom: none;
+}
+.transition_box .transition_box_head .transition_box_head_fanhui {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  /* 修改红包页面的 head样式格局*/
+  /* padding-top: 12px; */
+  text-align: center;
+  margin-right: 5px;
+}
+.transition_box .transition_box_head .transition_box_head_fanhui .button_arrow_box {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  /* border-right: 1px solid #303035; */
+  line-height: 24px;
+}
+.transition_box .transition_box_head .transition_box_head_fanhui .button_arrow_box img {
+  width: 20px;
+  vertical-align: middle;
+  height: 20px;
+}
+.transition_box .transition_box_head .transition_box_head_text {
+  font-size: 16px;
+  color: #000000;
+  vertical-align: middle;
+}
+.transition_box .transition_box_head .transition_box_head_right {
+  float: right;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  height: 43px;
+  line-height: 31px;
+}
+.transition_box .transition_box_head .transition_box_head_right .transition_box_head_right_text {
+  margin-top: 12px;
+  height: 24px;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  color: #000;
+  vertical-align: middle;
+  font-size: 14px;
+  line-height: 24px;
+  padding: 0 16px;
+  /* border-left: 1px solid #303035; */
+}
+.transition_box .transition_box_head .transition_box_head_right .transition_box_head_right_icon {
+  width: 20px;
+  height: 20px;
+  margin-top: 10px;
+  margin-right: 13px;
+}
+.header {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  padding: 0 25px 0 16px;
+  line-height: 50px;
+  /* background-color: #393a3f; */
+  background-color: #FFF;
+}
+.header .wechat_tit {
+  font-size: 18px;
+  /* color: #fff; */
+  color:#181818;
+}
+.header .head_tool {
+  float: right;
+  position: relative;
+}
+.header .head_tool>span {
+  font-size: 18px;
+  vertical-align: middle;
+  color: #fff;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  -webkit-background-size: 18px 18px;
+  -moz-background-size: 18px 18px;
+  background-size: 18px 18px;
+  background-repeat: no-repeat;
+}
+.header .head_tool>span.head_tool_search {
+  background-image: url("../img/icon-search.png");
+  margin-right: 38px;
+}
+.header .head_tool>span.head_tool_add {
+  background-image: url("../img/icon-add.png");
+}
+.header .head_tool .head_modal_zz {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9;
+}
+.header .head_tool .head_modal {
+  position: absolute;
+  z-index: 10;
+  top: 45px;
+  right: 0;
+  width: 150px;
+  background-color: #393a3f;
+}
+.header .head_tool .head_modal .head_modal_item {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-bottom: 1px solid #000;
+  color: #fff;
+  font-size: 14px;
+}
+.tab_content {
+  padding: 48px 0 54px;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+}
+.tab_content .tab_content_item {
+  height: 100%;
+}
+.tab_content .wechat_content .wechat_list .wechat_item {
+  height: 64px;
+  padding: 10px 16px 0 16px;
+  /* border-bottom: 1px solid #e8e8e8; */
+}
+.tab_content .wechat_content .wechat_list .wechat_item.current {
+  background-color: #d9d9d9;
+}
+.tab_content .wechat_content .wechat_list .wechat_item:nth-child(-n+3){
+  background-color: #f2f2f2;
+  box-sizing: content-box;
+}
+.tab_content .wechat_content .wechat_list .wechat_item .icon_pe {
+  position: relative;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  float: left;
+  margin-right: 13px;
+  /* 添加修改头像的样式 */
+  border-radius: 5px;
+}
+.tab_content .wechat_content .wechat_list .wechat_item .icon_pe img {
+  width: 48px;
+  height: 48px;
+  vertical-align: middle;
+/* 修改图像的圆角问题 */
+  border-radius: 5px;
+}
+.tab_content .wechat_content .wechat_list .wechat_item .icon_pe .msg_num {
+  top: -3px;
+  right: -8px;
+}
+.tab_content .wechat_content .wechat_list .wechat_item .desc_box {
+  overflow: hidden;
+  vertical-align: middle;
+  margin-top: 11px;
+  padding: 1px 0 10px 0;
+  border-bottom: 1px solid #dddddd;
+}
+.tab_content .wechat_content .wechat_list .wechat_item .desc_box .desc_time {
+  float: right;
+  font-size: 12px;
+  color: #afafaf;
+}
+.tab_content .wechat_content .wechat_list .wechat_item .desc_box .desc_author {
+  font-size: 16px;
+  color: #0f0f0f;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 60px;
+}
+.tab_content .wechat_content .wechat_list .wechat_item .desc_box .desc_msg {
+  margin-top: 5px;
+  margin-right: 45px;
+}
+.tab_content .wechat_content .wechat_list .wechat_item .desc_box .desc_msg .msg_text {
+  font-size: 13px;
+  color: #848484;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  vertical-align: middle;
+  height: 20px;
+  line-height: 20px;
+}
+.tab_content .wechat_content .wechat_list .wechat_item .desc_box .desc_msg .desc-mute {
+  float: right;
+  color: #b8b8b8;
+  margin-top: 5px;
+}
+.tab_content .mail_content .pinyin_list {
+  height: calc(100% - 102px);
+  position: fixed;
+  padding: 2px 0;
+  right: 4px;
+  width: 12px;
+  text-align: center;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: -ms-flexbox /* TWEENER - IE 10 */;
+  display: -webkit-flex /* NEW - Chrome */;
+  display: flex /* NEW, Spec - Opera 12.1, Firefox 20+ */;
+  display: flex;
+  -webkit-box-direction: normal;
+  -moz-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: space-between;
+  -khtml-justify-content: space-between;
+  -moz-justify-content: space-between;
+  -o-justify-content: space-between;
+  -ms-justify-content: space-between;
+  justify-content: space-between;
+}
+.tab_content .mail_content .pinyin_list .top {
+  width: 6px;
+}
+.tab_content .mail_content .pinyin_list .star {
+  width: 12px;
+}
+.tab_content .mail_content .pinyin_list li {
+  font-size: 14px;
+  color: #545454;
+}
+.tab_content .mail_content .icon {
+  width: 36px;
+  height: 36px;
+  vertical-align: middle;
+  margin-right: 12px;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  /* 修改图标的圆角 */
+  border-radius: 5px;
+}
+.tab_content .mail_content .text {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: calc(100% - 48px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+  font-size: 16px;
+  color: #0f0f0f;
+  /* 修改底部边框颜色 */
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #e8e8e8;
+  box-sizing: content-box;
+  -webkit-box-sizing:content-box;
+}
+.tab_content .mail_content .mail_content_tit {
+  padding: 0 16px;
+}
+.tab_content .mail_content .mail_content_tit .mail_content_tit_item {
+  height: 50px;
+  margin-top: 5px; 
+  /* border-bottom: 1px solid #e8e8e8; */
+  font-size: 0;
+}
+.tab_content .mail_content .mail_content_tit .mail_content_tit_item:last-child {
+  border-bottom: none;
+}
+.tab_content .mail_content .mail_wrapper .mail_list .title {
+  height: 22px;
+  line-height: 22px;
+  background-color: #ebebeb;
+  padding: 0 16px;
+  font-size: 12px;
+  color: #727272;
+}
+.tab_content .mail_content .mail_wrapper .mail_list .mail_ul {
+  padding: 0 16px;
+}
+.tab_content .mail_content .mail_wrapper .mail_list .mail_ul .mail_item {
+  height: 50px;
+  line-height: 50px;
+  /* border-bottom: 1px solid #e8e8e8; */
+  font-size: 0;
+  margin-top: 2px;
+}
+.tab_content .mail_content .mail_wrapper .mail_list .mail_ul .mail_item:last-child {
+  border-bottom: none;
+}
+.tab_content .mail_content .mail_total {
+  height: 62px;
+  background-color: #ebebeb;
+  line-height: 62px;
+  font-size: 16px;
+  color: #777;
+  text-align: center;
+}
+.tab_content .me_content {
+  background-color: #ebebeb;
+}
+.tab_content .me_content .my_wallet .wallet_title {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: -ms-flexbox /* TWEENER - IE 10 */;
+  display: -webkit-flex /* NEW - Chrome */;
+  display: flex /* NEW, Spec - Opera 12.1, Firefox 20+ */;
+  display: flex;
+  height: 127px;
+  background-color: #3bac6a;
+  padding-top: 28px;
+  margin: 5px;
+  border-radius: 10px;
+}
+.tab_content .me_content .my_wallet .wallet_title .wallet_title_item {
+  flex-grow: 1;
+  text-align: center;
+}
+.tab_content .me_content .my_wallet .wallet_title .wallet_title_item .icon {
+  height: 35px;
+  margin-bottom: 11px;
+  text-align: center;
+  padding-top: 4px;
+}
+.tab_content .me_content .my_wallet .wallet_title .wallet_title_item .icon img {
+  width: 35px;
+  height: 27px;
+}
+.tab_content .me_content .my_wallet .wallet_title .wallet_title_item .icon.icon_lq {
+  padding-top: 0;
+}
+.tab_content .me_content .my_wallet .wallet_title .wallet_title_item .icon.icon_lq img {
+  height: 35px;
+}
+.tab_content .me_content .my_wallet .wallet_title .wallet_title_item p {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.tab_content .me_content .my_wallet .wallet_title .wallet_title_item .small_change {
+  color: #9dd6b5;
+  font-size: 15px;
+}
+.tab_content .me_content .my_wallet .wallet_service{
+    margin: 5px;
+    border-radius: 10px;
+    border: 2px solid #fff;
+}
+.tab_content .me_content .my_wallet .wallet_service:nth-last-child(1){
+    margin-bottom: -10px;
+}
+.tab_content .me_content .my_wallet .wallet_service .wallet_service_tit {
+  height: 39px;
+  /* background-color: #ebebeb; */
+  background-color: #fff;
+  font-size: 14px;
+  color: #66646b;
+  padding: 15px 0 0 15px;
+  border-bottom:1px solid #ececec
+}
+.tab_content .me_content .my_wallet .wallet_service .wallet_service_con {
+  background-color: #fff;
+  font-size: 0;
+}
+.tab_content .me_content .my_wallet .wallet_service .wallet_service_con .wallet_service_item {
+  position: relative;
+  width: 33.33%;
+  height: 100px;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  text-align: center;
+  border-right: 1px solid #ececec;
+  border-bottom: 1px solid #ececec;
+}
+.tab_content .me_content .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-child(3n) {
+  border-right: none;
+}
+.tab_content .me_content .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-last-child(-n+2){
+  border-bottom:none;
+}
+.tab_content .me_content .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-last-child(1){
+  border-right: none;
+}
+.tab_content .me_content .my_wallet .wallet_service .wallet_service_con .wallet_service_item .wallet_service_item_box {
+  position: absolute;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  -webkit-transform: translateY(-50%);
+  -khtml-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.tab_content .me_content .my_wallet .wallet_service .wallet_service_con .wallet_service_item .wallet_service_item_box .icon {
+  margin-bottom: 15px;
+  height: 30px;
+  line-height: 30px;
+}
+/* .tab_content .me_content .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-child(1) .wallet_service_item_box .icon img{
+  height:58px
+}
+.tab_content .me_content .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-child(2) .wallet_service_item_box .icon img{
+  height:60px
+}
+.tab_content .me_content .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-child(3) .wallet_service_item_box .icon img{
+  height:60px
+}
+.tab_content .me_content .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-child(6) .wallet_service_item_box .icon img{
+  height:75px
+}
+.tab_content .me_content .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-child(9) .wallet_service_item_box .icon img{
+  height:75px
+}  */
+.tab_content .me_content .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-child(10){
+  border-bottom:none
+}
+.tab_content .me_content .my_wallet .wallet_service .wallet_service_con .wallet_service_item .wallet_service_item_box .icon img {
+  -webkit-transform: scale(0.5, 0.5);
+  -khtml-transform: scale(0.5, 0.5);
+  -moz-transform: scale(0.5, 0.5);
+  -o-transform: scale(0.5, 0.5);
+  -ms-transform: scale(0.5, 0.5);
+  transform: scale(0.5, 0.5);
+  -webkit-transform-origin: center top;
+  -khtml-transform-origin: center top;
+  -moz-transform-origin: center top;
+  -o-transform-origin: center top;
+  -ms-transform-origin: center top;
+  transform-origin: center top;
+  height: 65px;
+}
+.tab_content .me_content .my_wallet .wallet_service .wallet_service_con .wallet_service_item .wallet_service_item_box p {
+  font-size: 14px;
+  color: #66646b;
+}
+.tab_content .me_content .lq_box .lq_box_wrapper {
+  text-align: center;
+}
+.tab_content .me_content .lq_box .lq_box_wrapper .logo {
+  margin: 60px 0 9px;
+}
+.tab_content .me_content .lq_box .lq_box_wrapper .logo img {
+  /* width: 110px; */
+  /* height: 106px; */
+  width: 55px;
+}
+.tab_content .me_content .lq_box .lq_box_wrapper .my_lq .title {
+  font-size: 16px;
+  color: #000;
+  margin-bottom: 17px;
+  margin-top:40px;
+}
+.tab_content .me_content .lq_box .lq_box_wrapper .my_lq .text {
+  font-size: 47px;
+  color: #353535;
+  margin-bottom: 40px;
+  font-weight: 600;
+  line-height: 36px;
+}
+.tab_content .me_content .lq_box .lq_box_wrapper .my_lq .pri_y{
+  width:20px;
+  vertical-align: top;
+  margin-right: -4px;
+}
+.tab_content .me_content .lq_box .lq_box_wrapper .lq_box_wrapper_btn {
+  padding: 0 15px;
+}
+.tab_content .me_content .lq_box .lq_box_wrapper .lq_box_wrapper_btn a {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  height: 42px;
+  width: 60%;
+  line-height: 42px;
+  font-size: 18px;
+  -webkit-border-radius: 2px;
+  border-radius: 5px;
+}
+.tab_content .me_content .lq_box .lq_box_wrapper .lq_box_wrapper_btn a.lq_box_wrapper_btn_cz {
+  background-color: #07c160;
+  color: #fff;
+  /* border: 1px solid #00a200; */
+  margin-bottom: 15px;
+}
+.tab_content .me_content .lq_box .lq_box_wrapper .lq_box_wrapper_btn a.lq_box_wrapper_btn_tx {
+  background-color: #f1f1f1;
+  color: #07c160;
+  /* border: 1px solid #b9b9b9; */
+  margin: auto;
+}
+.tab_content .me_content .lq_box .lq_box_wrapper .desc {
+  font-size: 14px;
+  color: #fbb161;
+  margin-top: 17px;
+  vertical-align: middle;
+  margin-bottom: 60px;
+}
+.tab_content .me_content .lq_box .lq_box_wrapper .desc img {
+  width: 15px;
+  height: 15px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.tab_content .me_content .lq_box .lq_box_wrapper .lq_box_wrapper_footer {
+  position: absolute;
+  bottom: 11px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -khtml-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+.tab_content .me_content .lq_box .lq_box_wrapper .lq_box_wrapper_footer p {
+  font-size: 13px;
+  color: #3c5384;
+  margin-bottom: 6.5px;
+}
+.tab_content .me_content .lq_box .lq_box_wrapper .lq_box_wrapper_footer span {
+  font-size: 12px;
+  color: #bbb;
+}
+.tab_content .me_content .lq_box .lq_cz {
+  height: 100%;
+}
+.tab_content .me_content .lq_box .lq_cz .lq_cz_wrapper {
+  height: 100%;
+  padding-top: 23px;
+  background-color: #ededed;
+}
+.tab_content .me_content .lq_box .lq_cz .lq_cz_wrapper .lq_cz_item {
+  padding: 0 20px;
+  background-color: #fff;
+  height: 48px;
+  line-height: 48px;
+}
+.tab_content .me_content .lq_box .lq_cz .lq_cz_wrapper .lq_cz_item.lq_cz_item01 {
+  height: 72px;
+  border-bottom: 1px solid #eee;
+  padding-top: 16px;
+  line-height: 1;
+}
+.tab_content .me_content .lq_box .lq_cz .lq_cz_wrapper .lq_cz_item .title {
+  font-size: 16px;
+  color: #0c0c0c;
+  margin-right: 34px;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: 64px;
+}
+.tab_content .me_content .lq_box .lq_cz .lq_cz_wrapper .lq_cz_item .text {
+  font-size: 16px;
+  color: #3c5384;
+}
+.tab_content .me_content .lq_box .lq_cz .lq_cz_wrapper .lq_cz_item .cz_pri_input {
+  border: none;
+  outline: 0;
+  height: 48px;
+  font-size: 16px;
+}
+.tab_content .me_content .lq_box .lq_cz .lq_cz_wrapper .lq_cz_item .cz_pri_input::-webkit-input-placeholder {
+  color: #d4d4d4;
+}
+.tab_content .me_content .lq_box .lq_cz .lq_cz_wrapper .lq_cz_wrapper_btn {
+  padding: 0 15px;
+  margin-top: 15px;
+}
+.tab_content .me_content .lq_box .lq_cz .lq_cz_wrapper .lq_cz_wrapper_btn a {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  height: 47px;
+  text-align: center;
+  width: 100%;
+  line-height: 47px;
+  font-size: 18px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #1aad19;
+  color: #fff;
+  border: 1px solid #00a200;
+}
+.tab_content .find_item {
+  background-color: #fff;
+  border-top:11px solid #ebebeb;
+  padding: 0 18px;
+}
+.tab_content .find_item:nth-child(2){
+  border-top:none;
+}
+.tab_content .find_item:last-child {
+  border-bottom: 15px solid #ebebeb;
+}
+.tab_content .find_item .find {
+  border-bottom: 1px solid #eee;
+  height: 55px;
+  padding-top: 15px;
+  position: relative;
+}
+/* 给发现区添加右箭头 */
+.tab_content .find_item .find .friend_r_pic{
+  position: absolute;
+    right: 0px;
+    top: 15px;
+}
+.tab_content .find_item .find.set_find {
+  padding-top: 0;
+  line-height: 48px;
+}
+.tab_content .find_item .find.set_find .set_text_right {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: calc(100% - 85px);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 20px;
+}
+.tab_content .find_item .find.set_find_pic {
+  height: 80px;
+  padding-top: 0;
+  line-height: 80px;
+}
+/* 个人信息页面栏箭头单独样式 */
+.tab_content .find_item .find.set_find_pic .friend_r_pic{
+  margin-top: 16px;
+}
+.tab_content .find_item .find.set_find_pic .set_find_pic_icon {
+  float: right;
+  width: 64px;
+  height: 64px;
+  margin-top: 8px;
+  border-radius: 5px;
+  margin-right: 20px;
+}
+.tab_content .find_item .find.set_find_pic .set_find_pic_input {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: none;
+}
+.tab_content .find_item .find .set_text_right {
+  float: right;
+  font-size: 16px;
+  color: #999;
+}
+.tab_content .find_item .find .set_icon_right {
+  float: right;
+  width: 15px;
+  height: 15px;
+  /* margin-top: 15px; */
+  margin-top: -32px;
+  margin-right: 20px;
+}
+.tab_content .find_item .find:last-child {
+  border-bottom: none;
+}
+.tab_content .find_item .find .friend_q_num {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: 19px;
+  text-align: center;
+  line-height: 19px;
+  vertical-align: middle;
+  height: 19px;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  background-color: #ff3e3e;
+  font-size: 11px;
+  color: #fff;
+}
+.tab_content .find_item .find .friend_q {
+  float: right;
+  margin-top: -4px;
+  position: relative;
+  /* 添加箭头后需要移动定位 */
+  right:30px;
+}
+.tab_content .find_item .find .friend_q .friend_q_pic {
+  width: 32px;
+  height: 32px;
+  /* 修改朋友圈图像样式 */
+  border-radius: 5px;
+}
+/* 修改底边线 */
+.tab_content .find_item .find  .friend_b_line{
+  height: 36px;
+  display: inline-block;
+  border-bottom: 9px solid #fff;
+  box-sizing: content-box;
+}
+.tab_content .find_item .find .friend_q .friend_q_d {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  background-color: #ff3e3e;
+  right: -5px;
+  top: -5px;
+}
+.tab_content .find_item .find .icon {
+  width: 22px;
+  /* height: 24px; */
+  vertical-align: middle;
+  margin-right: 17px;
+  margin-left: 4px;
+  /* padding-top: 4px; */
+}
+.tab_content .find_item .find .text {
+  font-size: 16px;
+  color: #0f0f0f;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+.tab_content .find_item.my_info_item {
+  padding: 0 15px 18px 13px;
+  border-top:none
+}
+.tab_content .find_item.my_info_item .my_info {
+  height: 80px;
+  padding-top: 8px;
+  position: relative;
+}
+/* 个人信息栏修改 */
+.tab_content .find_item.my_info_item .my_info .friend_r_pic{
+  position: absolute;
+  right: 2px;
+  top: 42px;
+}
+.tab_content .find_item.my_info_item .my_info .my_icon {
+  margin-right: 16px;
+  vertical-align: top;
+  width: 60px;
+  height: 60px;
+  border-radius:5px;
+}
+.tab_content .find_item.my_info_item .my_info .my_info_con {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  vertical-align: middle;
+  width: calc(100% - 114px);
+}
+.tab_content .find_item.my_info_item .my_info .my_info_con .my_info_name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 19px;
+  color: #212121;
+  /* margin-bottom: 1px; */
+  font-weight: bolder;
+  margin-top: 4px;
+  height: 20px;
+  line-height: 20px;
+}
+.tab_content .find_item.my_info_item .my_info .my_info_con .my_info_num {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  color: #9f9f9f;
+  line-height: 38px;
+  margin-top: 4px;
+}
+.tab_content .find_item.my_info_item .my_info .qr_img {
+  float: right;
+  margin-top: 10px;
+  width: 13px;
+  height: 13px;
+}
+.add_friend_wrapper {
+  height: 100%;
+}
+.add_friend_wrapper .search {
+  height: 48px;
+  background-color: #fff;
+  padding: 0 12px;
+  padding-top: 16px;
+}
+.add_friend_wrapper .search .search_con {
+  /* border-bottom: 1px solid #e5e5e5; */
+  height: 24px;
+}
+.add_friend_wrapper .search .search_con img {
+  width: 20px;
+  height: 20px;
+  vertical-align: top;
+  margin: 0 9px 0 6px;
+}
+.add_friend_wrapper .search .search_con span {
+  font-size: 16px;
+  vertical-align: middle;
+  color: #c5c5c5;
+}
+.add_friend_wrapper .new_friend_list {
+  height: calc(100% - 83px);
+  background-color: #fff;
+}
+.add_friend_wrapper .new_friend_list .title {
+  font-size: 12px;
+  color: #727272;
+  background-color: #ebebeb;
+  padding: 0 12px;
+  padding-bottom: 6px;
+}
+.add_friend_wrapper .new_friend_list ul li {
+  position: relative;
+  height: 64px;
+  padding: 0 9px 0 0px;
+  background-color: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  font-size: 0;
+}
+.add_friend_wrapper .new_friend_list ul li:nth-last-child(1){
+  border-bottom:none;
+}
+.add_friend_wrapper .new_friend_list ul li .newfriend_img{
+    display: inline-block;
+    height: 64px;
+    border-bottom: 1px solid white;
+}
+.add_friend_wrapper .new_friend_list ul{
+  padding:0 10px 0 15px;
+}
+.add_friend_wrapper .new_friend_list ul li .icon {
+  width: 48px;
+  height: 48px;
+  margin-right: 13px;
+  vertical-align: middle;
+  margin-top: 8px;
+  border-radius: 5px;
+}
+.add_friend_wrapper .new_friend_list ul li .info {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  margin-top: 10px;
+  vertical-align: middle;
+  width: calc(100% - 125px);
+}
+.add_friend_wrapper .new_friend_list ul li .info>div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.add_friend_wrapper .new_friend_list ul li .info .name {
+  font-size: 16px;
+  color: #0f0f0f;
+  margin-bottom: 3px;
+}
+.add_friend_wrapper .new_friend_list ul li .info .desc {
+  font-size: 14px;
+  height: 20px;
+  line-height: 20px;
+  color: #848484;
+}
+.add_friend_wrapper .new_friend_list ul li .add_state {
+  position: absolute;
+  right: 9px;
+  top: 16px;
+}
+.add_friend_wrapper .new_friend_list ul li .add_state .add_state_ok {
+  font-size: 13px;
+  line-height: 32px;
+  color: #8a8a8a;
+}
+.add_friend_wrapper .new_friend_list ul li .add_state .add_state_wait {
+  border: 1px solid #1e991c;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  font-size: 16px;
+  outline: 0;
+  width: 60px;
+  height: 31px;
+  background-color: #1aad19;
+  line-height: 31px;
+  text-align: center;
+  color: #fff;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+.footer_nav {
+  position: fixed;
+  z-index: 100;
+  bottom: 0;
+  left: 0;
+  height: 54px;
+  width: 100%;
+  text-align: center;
+  background-color: #f7f7f7;
+  color: #a1a1a1;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: -ms-flexbox /* TWEENER - IE 10 */;
+  display: -webkit-flex /* NEW - Chrome */;
+  display: flex /* NEW, Spec - Opera 12.1, Firefox 20+ */;
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+.footer_nav .footer_nav_item {
+  flex-grow: 1;
+  padding-top: 7px;
+  height: 100%;
+}
+.footer_nav .footer_nav_item .icon {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  background-repeat: no-repeat;
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  background-size: 100% 100%;
+  height: 20px;
+  position: relative;
+}
+.footer_nav .footer_nav_item .icon .msg_num {
+  top: -3px;
+  right: -14px;
+}
+.footer_nav .footer_nav_item .icon.img-wechat {
+  background-image: url("../img/01_nor.png");
+  width: 23px;
+}
+.footer_nav .footer_nav_item .icon.img-tongxunlu {
+  background-image: url("../img/02_nor.png");
+  width: 24.5px;
+}
+.footer_nav .footer_nav_item .icon.img-faxian {
+  background-image: url("../img/03_nor.png");
+  width: 22px;
+}
+.footer_nav .footer_nav_item .icon.img-me {
+  background-image: url("../img/04_nor.png");
+  width: 20.5px;
+}
+.footer_nav .footer_nav_item.active p {
+  color: #07c060;
+}
+.footer_nav .footer_nav_item.active .img-wechat {
+  background-image: url("../img/01_pre.png");
+}
+.footer_nav .footer_nav_item.active .img-tongxunlu {
+  background-image: url("../img/02_pre.png");
+}
+.footer_nav .footer_nav_item.active .img-faxian {
+  background-image: url("../img/03_pre.png");
+}
+.footer_nav .footer_nav_item.active .img-me {
+  background-image: url("../img/04_pre.png");
+}
+.footer_nav .footer_nav_item p {
+  margin-top: 5px;
+  /* color: #8d8d8d; */
+  /* 修改字体颜色 */
+  color:#000000;
+  font-size: 12px;
+}
+.tip_info_modal_zz,
+.tip_input_modal_zz {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(92,92,92,0.6);
+  z-index: 120;
+}
+.tip_modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -khtml-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 310px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px 32px 25px 25px;
+  z-index: 130;
+}
+.tip_modal .tip_modal_tit {
+  font-size: 18px;
+  color: #000;
+  margin-bottom: 29px;
+}
+.tip_modal .tip_modal_text {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 10px;
+  line-height: 20px;
+}
+.tip_modal .tip_modal_input {
+  border: none;
+  border-bottom: 1px solid #2889fc;
+  outline: 0;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  padding: 0 5px;
+}
+.tip_modal .tip_modal_btn_box {
+  text-align: right;
+  margin-top: 36px;
+}
+.tip_modal .tip_modal_btn_box a {
+  color: #2889fc;
+  font-size: 14px;
+}
+.tip_modal .tip_modal_btn_box a.tip_info_qx,
+.tip_modal .tip_modal_btn_box a.tip_input_qx {
+  margin-right: 47px;
+}
+.add_chat {
+  background-color: #f1f1f1;
+  padding-top: 0;
+}
+.add_chat .isnewfriend .isnewfriend_time {
+  height: 48px;
+  line-height: 48px;
+  background-color: #fff;
+  padding: 0 10px;
+}
+.add_chat .isnewfriend .isnewfriend_time .time {
+  float: right;
+}
+.add_chat .isnewfriend .add_chat_input {
+  padding: 10px;
+  background-color: #fff;
+}
+.add_chat .isnewfriend .add_chat_input input {
+  width: 100%;
+  height: 35px;
+  outline: 0;
+  border: none;
+  background-color: transparent;
+  border-bottom: 1px solid #000;
+}
+.mt_box {
+  background-color: #e1e1e1;
+  padding-top: 0;
+}
+.mt_box .mt_header {
+  height: 48px;
+  line-height: 48px;
+  background-color: #2889fc;
+}
+.mt_box .mt_header .mt_header_fanhui {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+  margin-right: 16px;
+}
+.mt_box .mt_header .mt_header_fanhui span {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  text-align: center;
+  line-height: 24px;
+  border-right: 1px solid #fff;
+}
+.mt_box .mt_header .mt_header_fanhui span img {
+  vertical-align: middle;
+  width: 15px;
+  height: 15px;
+}
+.mt_box .mt_header .mt_header_text {
+  font-size: 18px;
+  color: #fff;
+}
+.mt_box .mt_item_wrapper {
+  margin-top: 20px;
+}
+.mt_box .mt_item_wrapper .mt_item {
+  padding: 0 12px;
+  border-bottom: 1px solid #e6e6e6;
+  background-color: #fff;
+}
+.mt_box .mt_item_wrapper .mt_item .mt_item_tit {
+  font-size: 14px;
+  color: #0f0f0f;
+}
+.mt_box .mt_item_wrapper .mt_item .mt_item_right {
+  float: right;
+}
+.mt_box .mt_item_wrapper .mt_item .refresh {
+  width: 17px;
+  height: 17px;
+  vertical-align: middle;
+}
+.mt_box .mt_item_wrapper .mt_item .mt_input {
+  width: calc(100% - 25px);
+  height: 63px;
+  outline: 0;
+  border: none;
+}
+.mt_box .mt_item_wrapper .mt_item.mt_pic {
+  height: 64px;
+  line-height: 64px;
+}
+.mt_box .mt_item_wrapper .mt_item.mt_pic.com_mt_pic {
+  height: auto;
+}
+.mt_box .mt_item_wrapper .mt_item.mt_pic.com_mt_pic .mt_item_pic_img {
+  width: auto;
+  height: auto;
+  max-width: 69px;
+}
+.mt_box .mt_item_wrapper .mt_item.mt_pic .mt_item_pic_img {
+  width: 45px;
+  height: 45px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.mt_box .mt_item_wrapper .mt_item.mt_pic .mt_item_pic {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: none;
+}
+.mt_box .mt_item_wrapper .mt_item.mt_pic .arrow_right {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+.mt_box .mt_item_wrapper .mt_item.mt_name {
+  height: 64px;
+}
+.mt_box .mt_item_wrapper .mt_item.is_beenadd {
+  height: 48px;
+  line-height: 48px;
+}
+.mt_box .mt_item_wrapper .mt_item.is_beenadd .mint-switch-core {
+  margin-top: 8px;
+}
+.mt_box .mt_box_btn_wrapper {
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+  left: 0;
+  padding: 0 10px;
+}
+.mt_box .mt_box_btn_wrapper a {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: 100%;
+  height: 47px;
+  line-height: 47px;
+  text-align: center;
+  background-color: #1aad19;
+  color: #fff;
+  font-size: 18px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+.mt_pic {
+  margin-top: 20px;
+}
+.mt_name {
+  position: relative;
+}
+.mt_name span {
+  position: absolute;
+  right: 10px;
+  top: 15px;
+}
+.mt_name .add_chat_btn {
+  position: absolute;
+  bottom: 10px;
+  width: 90%;
+  left: 5%;
+}
+.msg_num {
+  position: absolute;
+  font-weight: bold;
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  background-color: #ff3e3e;
+  color: #fff;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 21px;
+  font-size: 10px;
+}

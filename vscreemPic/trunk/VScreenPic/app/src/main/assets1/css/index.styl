@@ -1,0 +1,892 @@
+@import 'vendor.styl'
+body
+	user-select: none
+	-webkit-touch-callout:none
+#app
+	height: 100%
+	overflow: hidden
+	position: relative
+	user-select: none
+.picker-item
+	text-overflow: initial
+.transition_box
+	position: absolute
+	background-color: #ffffff
+	width 100%
+	height: 100%
+	top: 0
+	left: 0
+	will-change: transform
+	transform: translateX(100%)
+	z-index: 200
+	transition: all .3s ease-out
+	padding-top: 48px
+	&.add_onefriend
+		padding-top: 0
+	&.chat_window
+		height: 100%
+		overflow: hidden
+	&.add_friend_box
+	&.set_my_info
+		background-color: #ebebeb
+	&.transition_show
+		transform: none
+	.transition_box_head
+		height: 48px
+		background-color: #393a3f
+		position: fixed
+		top: 0
+		left: 0
+		width: 100%
+		z-index: 200
+		&.add_friend_box_header
+			position: fixed
+		&.hb_header
+			background-color: #d85940
+			.transition_box_head_fanhui
+				.button_arrow_box
+					border-right: 1px solid #ffe9b6
+			.transition_box_head_text
+				color: #ffe9b6
+		.transition_box_head_modal_zz
+			position: fixed
+			left: 0
+			top: 0
+			right: 0
+			bottom: 0
+			z-index: 210
+		.transition_box_head_modal
+			position absolute
+			width 150px
+			right: 16px
+			background-color: #393a3f
+			top: 48px
+			color: #ffffff
+			font-size: 14px
+			text-align: center
+			z-index: 9999
+			.transition_box_head_modal_item
+				height: 40px
+				line-height: 40px
+				border-bottom: 1px solid #0f0f0f
+				&:last-child
+					border-bottom: none
+		.transition_box_head_fanhui
+			display: inline-block
+			width 48px
+			height: 48px
+			padding-top: 12px
+			text-align: center
+			margin-right: 15px
+			.button_arrow_box
+				display: inline-block
+				width 48px
+				height: 24px
+				border-right: 1px solid #303035
+				line-height: 24px
+				img
+					width 15px
+					vertical-align: middle
+					height: 15px
+		.transition_box_head_text
+			font-size: 18px
+			color: #ffffff
+			vertical-align: middle
+		.transition_box_head_right
+			float: right
+			display: inline-block
+			height: 48px
+			.transition_box_head_right_text
+				margin-top: 12px
+				height: 24px
+				display: inline-block
+				color: #ffffff
+				vertical-align: middle
+				font-size: 14px
+				line-height: 24px
+				padding: 0 16px
+				border-left: 1px solid #303035
+			.transition_box_head_right_icon
+				width 20px
+				height: 20px
+				margin-top: 14px
+				margin-right: 13px
+.header
+	position: fixed
+	z-index: 100
+	top: 0
+	left: 0
+	width: 100%
+	height: 48px
+	padding: 0 25px 0 16px
+	line-height: 48px
+	background-color:#393a3f
+	.wechat_tit
+		font-size: 18px
+		color: #fff
+	.head_tool
+		float: right
+		position: relative
+		&>span
+			font-size: 18px
+			vertical-align: middle
+			color: #fff
+			display: inline-block
+			width 18px
+			height: 18px
+			background-size: 18px 18px
+			background-repeat: no-repeat
+			&.head_tool_search
+				background-image: url('../img/icon-search.png')
+				margin-right: 38px
+			&.head_tool_add
+				background-image: url('../img/icon-add.png')
+		.head_modal_zz
+			position: fixed
+			top: 0
+			bottom: 0
+			left: 0
+			right: 0
+			z-index: 9
+		.head_modal
+			position: absolute
+			z-index: 10
+			top: 45px
+			right: 0
+			width: 150px
+			background-color: #393a3f
+			.head_modal_item
+				height: 40px
+				line-height: 40px
+				text-align: center
+				border-bottom: 1px solid #000000
+				color: #fff
+				font-size: 14px
+.tab_content
+	padding: 48px 0 54px
+	height 100%
+	overflow: hidden
+	position: absolute
+	width: 100%
+	.tab_content_item
+		height: 100%
+	.wechat_content
+		.wechat_list
+			.wechat_item
+				height: 64px
+				padding: 8px 16px
+				border-bottom: 1px solid #e8e8e8
+				&.current
+					background-color: #d9d9d9
+				.icon_pe
+					position: relative
+					display: inline-block
+					float: left
+					margin-right: 13px
+					img
+						width 48px
+						height 48px
+						vertical-align: middle
+					.msg_num
+						top -3px
+						right -8px
+				.desc_box
+					overflow: hidden
+					vertical-align: middle
+					margin-top: 4.5px
+					.desc_time
+						float: right
+						font-size: 12px
+						color: #afafaf
+					.desc_author
+						font-size: 16px
+						color: #0f0f0f
+						overflow: hidden
+						text-overflow: ellipsis
+						white-space: nowrap
+						margin-right: 60px
+					.desc_msg
+						margin-top: 5px
+						margin-right: 45px
+						.msg_text
+							font-size: 13px
+							color: #848484
+							max-width: 100%
+							overflow: hidden
+							text-overflow: ellipsis
+							white-space: nowrap
+							display: inline-block
+							vertical-align: middle
+							height: 20px
+							line-height: 20px
+						.desc-mute
+							float: right
+							color: #b8b8b8
+							margin-top: 5px
+	.mail_content
+		.pinyin_list
+			height calc(100% - 102px)
+			position: fixed
+			padding 2px 0
+			right: 4px
+			width: 12px
+			text-align: center
+			display: flex
+			flex-direction column
+			justify-content: space-between
+			.top
+				width: 6px
+			.star
+				width: 12px
+			li
+				font-size: 14px
+				color: #545454
+		.icon
+			width 36px
+			height 36px
+			vertical-align: middle
+			margin-right: 12px
+			display: inline-block
+
+		.text
+			display: inline-block
+			width calc(100% - 48px)
+			overflow: hidden
+			text-overflow: ellipsis
+			white-space: nowrap
+			vertical-align: middle
+			font-size: 16px
+			color: #0f0f0f
+		.mail_content_tit
+			padding: 0 16px
+			.mail_content_tit_item
+				height: 50px
+				padding-top: 7px
+				border-bottom: 1px solid #e8e8e8
+				font-size: 0
+				&:last-child
+					border-bottom: none
+		.mail_wrapper
+			.mail_list
+				.title
+					height: 22px
+					line-height: 22px
+					background-color: #ebebeb
+					padding: 0 16px
+					font-size: 12px
+					color: #727272
+				.mail_ul
+					padding: 0 16px
+					.mail_item
+						height 50px
+						line-height: 50px
+						border-bottom: 1px solid #e8e8e8
+						font-size: 0
+						&:last-child
+							border-bottom: none
+		.mail_total
+			height: 62px
+			background-color: #ebebeb
+			line-height: 62px
+			font-size: 16px
+			color: #777777
+			text-align: center
+	.me_content
+		background-color: #ebebeb
+		.my_wallet
+			.wallet_title
+				display: flex
+				height 127px
+				background-color: #686f78
+				padding-top: 28px
+				.wallet_title_item
+					flex-grow: 1
+					text-align: center
+					.icon
+						height 35px
+						margin-bottom: 11px
+						text-align: center
+						padding-top: 4px
+						img
+							width 35px
+							height 27px
+						&.icon_lq
+							padding-top: 0
+							img
+								height 35px
+					p
+						font-size: 16px
+						color: #ffffff
+						margin-bottom: 8px
+					.small_change
+						color: #b3b6bb
+						font-size: 13px
+			.wallet_service
+				.wallet_service_tit
+					height: 39px
+					background-color: #ebebeb
+					font-size: 14px
+					color: #66646b
+					padding: 15px 0 0 15px
+				.wallet_service_con
+					background-color: #ffffff
+					font-size: 0
+					.wallet_service_item
+						position: relative
+						width 33.33%
+						height: 95px
+						display: inline-block
+						text-align: center
+						border-right: 1px solid #e3e3e3
+						border-bottom: 1px solid #e3e3e3
+						&:nth-child(3n)
+							border-right: none
+						.wallet_service_item_box
+							position: absolute
+							display: inline-block
+							width 100%
+							top: 50%
+							left: 0
+							transform: translateY(-50%)
+							.icon
+								margin-bottom: 12px
+								height: 30px
+								line-height: 30px
+								img
+									transform: scale(0.5,0.5)
+									transform-origin: center top
+							p
+								font-size: 14px
+								color: #66646b
+		.lq_box
+			.lq_box_wrapper
+				text-align: center
+				.logo
+					margin: 25px 0 9px
+					img
+						width 110px
+						height 106px
+				.my_lq
+					.title
+						font-size: 21px
+						color: #000000
+						margin-bottom: 17px
+					.text
+						font-size: 43px
+						color: #353535
+						margin-bottom: 40px
+				.lq_box_wrapper_btn
+					padding: 0 15px
+					a
+						display: inline-block
+						height 47px
+						width 100%
+						line-height: 47px
+						font-size: 18px
+						border-radius: 2px
+						&.lq_box_wrapper_btn_cz
+							background-color: #1aad19
+							color: #ffffff
+							border: 1px solid #00a200
+							margin-bottom: 15px
+						&.lq_box_wrapper_btn_tx
+							background-color: #f1f1f1
+							color: #1c1c1c
+							border: 1px solid #b9b9b9
+				.desc
+					font-size: 14px
+					color: #3b5ea5
+					margin-top: 17px
+					vertical-align: middle
+					img
+						width 15px
+						height 15px
+						vertical-align: middle
+						margin-right: 5px
+				.lq_box_wrapper_footer
+					position: absolute
+					bottom: 11px
+					left: 50%
+					transform: translateX(-50%)
+					p
+						font-size: 13px
+						color: #3c5384
+						margin-bottom: 6.5px
+					span
+						font-size: 12px
+						color: #bbbbbb
+			.lq_cz
+				height: 100%
+				.lq_cz_wrapper
+					height: 100%
+					padding-top: 23px
+					background-color: #ededed
+					.lq_cz_item
+						padding: 0 20px
+						background-color: #ffffff
+						height: 48px
+						line-height: 48px
+						&.lq_cz_item01
+							height: 72px
+							border-bottom: 1px solid #eeeeee
+							padding-top: 16px
+							line-height: 1
+						.title
+							font-size: 16px
+							color: #0c0c0c
+							margin-right: 34px
+							display: inline-block
+							width: 64px
+						.text
+							font-size: 16px
+							color: #3c5384
+						.cz_pri_input
+							border: none 
+							outline: 0
+							height: 48px
+							font-size: 16px
+							&::-webkit-input-placeholder
+								color: #d4d4d4
+					.lq_cz_wrapper_btn
+						padding: 0 15px
+						margin-top: 15px
+						a
+							display: inline-block
+							height 47px
+							text-align: center
+							width 100%
+							line-height: 47px
+							font-size: 18px
+							border-radius: 2px
+							background-color: #1aad19
+							color: #ffffff
+							border: 1px solid #00a200
+	.find_item
+		background-color: #fff
+		border-top: 20px solid #ebebeb
+		padding: 0 18px
+		&:last-child
+			border-bottom: 20px solid #ebebeb
+		.find
+			border-bottom: 1px solid #eeeeee
+			height 48px
+			padding-top: 12px
+			&.set_find
+				padding-top: 0
+				line-height: 48px
+				.set_text_right
+					display: inline-block
+					width: calc(100% - 85px)
+					text-align: right
+					overflow: hidden
+					text-overflow: ellipsis
+					white-space: nowrap
+			&.set_find_pic
+				height: 80px
+				padding-top: 0
+				line-height: 80px
+				.set_find_pic_icon
+					float: right
+					width 64px
+					height: 64px
+					margin-top: 8px
+				.set_find_pic_input
+					display: none
+			.set_text_right
+				float: right
+				font-size: 16px
+				color: #999999
+			.set_icon_right
+				float: right
+				width 18px
+				height 18px
+				margin-top: 15px
+			&:last-child
+				border-bottom: none
+			.friend_q_num
+				display: inline-block
+				width 19px
+				text-align: center
+				line-height: 19px
+				vertical-align: middle
+				height 19px
+				border-radius: 50%
+				background-color: #ff3e3e
+				font-size: 11px
+				color: #ffffff
+			.friend_q
+				float: right
+				margin-top: -4px
+				position: relative
+				.friend_q_pic
+					width 32px
+					height: 32px
+				.friend_q_d
+					position: absolute
+					width 10px
+					height 10px
+					border-radius:50%
+					background-color: #ff3e3e
+					right: -5px
+					top: -5px
+			.icon
+				width 24px
+				height 24px
+				vertical-align: middle
+				margin-right: 17px
+				margin-left: 4px
+			.text
+				font-size: 16px
+				color: #0f0f0f
+				vertical-align: middle
+				margin-right: 8px
+		&.my_info_item
+			padding: 0 25px 0 13px
+			.my_info
+				height: 80px
+				padding-top: 8px
+				.my_icon
+					margin-right: 16px
+					vertical-align: middle
+					width 64px
+					height 64px
+				.my_info_con
+					display: inline-block
+					vertical-align: middle
+					width: calc(100% - 114px)
+					.my_info_name
+						overflow: hidden
+						text-overflow: ellipsis
+						white-space: nowrap
+						font-size: 16px
+						color #212121
+						margin-bottom: 7px
+					.my_info_num
+						overflow: hidden
+						text-overflow: ellipsis
+						white-space: nowrap
+						font-size: 14px
+						color: #9f9f9f
+				.qr_img
+					float: right
+					margin-top: 23px
+					width 18px
+					height: 18px
+.add_friend_wrapper
+	height: 100%
+	.search
+		height: 48px
+		background-color: #ffffff
+		padding: 0 12px
+		padding-top: 16px
+		.search_con
+			border-bottom: 1px solid #e5e5e5
+			height: 24px
+			img
+				width 20px
+				height 20px
+				vertical-align: top
+				margin 0 9px 0 6px
+			span
+				font-size: 16px
+				vertical-align: middle
+				color: #c5c5c5
+	.new_friend_list
+		height: calc(100% - 83px)
+		background-color: #ffffff
+		.title
+			font-size: 12px
+			color: #727272
+			background-color: #ebebeb
+			padding: 0 12px
+			padding-bottom: 6px
+		ul
+			li
+				position: relative
+				height: 64px
+				padding: 0 9px 0 12px
+				background-color: #ffffff
+				border-bottom: 1px solid #e8e8e8
+				font-size: 0
+				.icon
+					width 48px
+					height 48px
+					margin-right: 13px
+					vertical-align: middle
+					margin-top: 8px
+				.info
+					display: inline-block
+					margin-top: 10px
+					vertical-align: middle
+					width calc(100% - 125px)
+					&>div
+						overflow: hidden
+						text-overflow: ellipsis
+						white-space: nowrap
+					.name
+						font-size: 16px
+						color: #0f0f0f
+						margin-bottom: 3px
+					.desc
+						font-size: 14px
+						height: 20px
+						line-height: 20px
+						color: #848484
+				.add_state
+					position: absolute
+					right: 9px
+					top: 16px
+					.add_state_ok
+						font-size: 13px
+						line-height: 32px
+						color: #8a8a8a
+					.add_state_wait
+						border: 1px solid #1e991c
+						display: inline-block
+						font-size: 16px
+						outline: 0
+						width 60px
+						height 31px
+						background-color: #1aad19
+						line-height: 31px
+						text-align: center
+						color: #ffffff
+						border-radius: 3px
+.footer_nav
+	position: fixed
+	z-index: 100
+	bottom: 0
+	left: 0
+	height: 54px
+	width: 100%
+	text-align: center
+	background-color: #fcfcfc
+	color: #a1a1a1
+	display: flex
+	border-top: 1px solid #dddddd
+	.footer_nav_item
+		flex-grow: 1
+		padding-top: 7px
+		height: 100%
+		.icon
+			display: inline-block
+			background-repeat: no-repeat
+			background-size: 100% 100%
+			height: 20px
+			position: relative
+			.msg_num
+				top: -3px
+				right: -14px
+			&.img-wechat
+				background-image: url('../img/01_nor.png')
+				width 23px
+			&.img-tongxunlu
+				background-image: url('../img/02_nor.png')
+				width 24.5px
+			&.img-faxian
+				background-image: url('../img/03_nor.png')
+				width 22px
+			&.img-me
+				background-image: url('../img/04_nor.png')
+				width 20.5px
+		&.active
+			p
+				color #46c11b
+			.img-wechat
+				background-image: url('../img/01_pre.png')
+			.img-tongxunlu
+				background-image: url('../img/02_pre.png')
+			.img-faxian
+				background-image: url('../img/03_pre.png')
+			.img-me
+				background-image: url('../img/04_pre.png')
+		p
+			margin-top: 5px
+			color: #8d8d8d
+			font-size: 12px
+.tip_info_modal_zz
+.tip_input_modal_zz
+	position: fixed
+	top: 0
+	left: 0
+	right: 0
+	bottom: 0
+	background-color: rgba(92,92,92,0.6)
+	// transition: all .3s ease-out
+	z-index: 120
+.tip_modal
+	position: absolute
+	left: 50%
+	top: 50%
+	transform: translate(-50%, -50%)
+	width 310px
+	margin: 0 auto
+	background-color: #ffffff
+	padding: 30px 32px 25px 25px
+	// transition: all .3s ease-out
+	z-index: 130
+	.tip_modal_tit
+		font-size: 18px
+		color: #000000
+		margin-bottom: 29px
+	.tip_modal_text
+		font-size: 14px
+		color: #777777
+		margin-bottom: 10px
+		line-height: 20px
+	.tip_modal_input
+		border: none 
+		border-bottom: 1px solid #2889fc
+		outline: 0
+		width 100%
+		height: 40px
+		line-height: 40px
+		font-size: 14px
+		padding: 0 5px
+	.tip_modal_btn_box
+		text-align: right
+		margin-top: 36px
+		a
+			color: #2889fc
+			font-size: 14px
+			&.tip_info_qx
+			&.tip_input_qx
+				margin-right: 47px
+// 添加聊天
+.add_chat
+	background-color: #f1f1f1
+	padding-top: 0
+	.isnewfriend
+		.isnewfriend_time
+			height 48px
+			line-height: 48px
+			background-color: #ffffff
+			padding: 0 10px
+			.time
+				float: right
+		.add_chat_input
+			padding: 10px
+			background-color: #fff
+			input
+				width: 100%
+				height: 35px
+				outline: 0
+				border: none 
+				background-color: transparent
+				border-bottom: 1px solid #000	
+.mt_box
+	background-color: #e1e1e1
+	padding-top: 0
+	.mt_header
+		height: 48px
+		line-height: 48px
+		background-color: #2889fc
+		.mt_header_fanhui
+			display: inline-block
+			width 48px
+			height: 48px
+			line-height: 48px
+			margin-right: 16px
+			span
+				display: inline-block
+				width 48px
+				height: 24px
+				text-align: center
+				line-height: 24px
+				border-right: 1px solid #ffffff
+				img
+					vertical-align: middle
+					width 15px
+					height 15px
+		.mt_header_text
+			font-size: 18px
+			color: #ffffff
+	.mt_item_wrapper
+		margin-top: 20px
+		.mt_item
+			padding: 0 12px
+			border-bottom: 1px solid #e6e6e6
+			background-color: #ffffff
+			.mt_item_tit
+				font-size: 14px
+				color: #0f0f0f
+			.mt_item_right
+				float: right
+			.refresh
+				width 17px
+				height: 17px
+				vertical-align: middle
+			.mt_input
+				width calc(100% - 25px)
+				height 63px
+				outline: 0
+				border: none 
+			&.mt_pic
+				height 64px
+				line-height: 64px
+				&.com_mt_pic
+					height: auto
+					.mt_item_pic_img
+						width: auto
+						height: auto
+						max-width: 69px
+				.mt_item_pic_img
+					width 45px
+					height 45px
+					vertical-align: middle
+					margin-right: 5px
+				.mt_item_pic
+					display: none
+				.arrow_right
+					width 16px
+					height 16px
+					vertical-align: middle
+			&.mt_name
+				height: 64px
+			&.is_beenadd
+				height: 48px
+				line-height: 48px
+				.mint-switch-core
+					margin-top: 8px
+	.mt_box_btn_wrapper
+		position: absolute
+		width 100%
+		bottom: 10px
+		left: 0
+		padding: 0 10px
+		a
+			display: inline-block
+			width 100%
+			height 47px
+			line-height: 47px
+			text-align: center
+			background-color: #1aad19
+			color: #ffffff
+			font-size: 18px
+			border-radius: 3px
+.mt_pic
+	margin-top: 20px
+.mt_name
+	position: relative
+	span
+		position: absolute
+		right: 10px
+		top: 15px
+			
+	.add_chat_btn
+		position: absolute
+		bottom: 10px
+		width:90%
+		left: 5%
+.msg_num
+	position: absolute
+	font-weight: bold
+	display: inline-block
+	border-radius: 50%
+	background-color: #ff3e3e
+	color: #fff
+	width 20px
+	height: 20px
+	text-align: center
+	line-height: 21px
+	font-size: 10px

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <TextView
+
+            android:id="@+id/title_tx"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:background="#3BA0FF"
+
+            />
+        <LinearLayout
+            android:id="@+id/title"
+            android:layout_below="@+id/title_tx"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#3BA0FF"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:id="@+id/alipay_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/sk" />
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="1dp"
+                android:layout_height="18dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#fffefe" />
+
+            <TextView
+                android:id="@+id/alipay_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="支付宝账单"
+                android:textColor="#fffefe"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:id="@+id/alipay_add"
+                android:padding="5dp"
+                android:layout_width="@dimen/width40"
+                android:layout_height="@dimen/height40"
+                android:background="#00ffffff"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal"
+                android:src="@drawable/add"
+                />
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="1dp"
+                android:layout_height="18dp"
+                android:background="#fffefe" />
+            <TextView
+                android:id="@+id/alipay_bill_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="清空"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:padding="10dp"
+                />
+        </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/title"
+                android:background="#EBEBEB"
+                >
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/alipayBill"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+                <Button
+                    android:id="@+id/alipay_bill_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="生成预览"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:gravity="center"
+                    android:layout_margin="@dimen/height10"
+                    android:background="@drawable/shape_preview"
+                    />
+            </LinearLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>

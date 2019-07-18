@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/light_gray"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <include
+
+            android:id="@+id/we_chat_small_money_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/title_1"/>
+
+        <EditText
+
+            android:layout_marginTop="@dimen/margin10"
+            android:layout_below="@+id/we_chat_small_money_title"
+            android:id="@+id/small_money_money"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height60"
+            android:hint="账户余额（元）"
+            android:maxLength="10"
+            android:inputType="numberDecimal"
+            android:background="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:paddingLeft="@dimen/margin10"
+            android:maxLines="1"
+            android:textSize="16dp"
+            />
+        <Button
+
+            android:id="@+id/small_money_preview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height50"
+            android:text="生成预览"
+            android:textSize="16dp"
+            android:background="@drawable/shape_preview"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/margin10"
+            />
+    </RelativeLayout>
+
+</FrameLayout>

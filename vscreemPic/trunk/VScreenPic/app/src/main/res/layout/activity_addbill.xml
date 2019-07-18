@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EBEBEB"
+    >
+    <TextView
+        android:id="@+id/addbill_status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="#3BA0FF"
+        />
+    <LinearLayout
+        android:layout_below="@+id/addbill_title"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/Incomeandexpenditure"
+            android:padding="15dp"
+            android:background="#ffffff"
+            android:layout_marginBottom="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收支类型"
+                android:textSize="20dp"
+                android:textColor="#393939"
+                android:layout_centerVertical="true"/>
+
+            <CheckBox
+                android:id="@+id/income"
+                android:gravity="center"
+                android:background="@drawable/select"
+                android:button="@null"
+                android:text="收入"
+                android:layout_width="60dp"
+                android:layout_height="@dimen/height30"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="72dp"
+                android:layout_marginEnd="72dp" />
+
+            <CheckBox
+
+                android:background="@drawable/select"
+                android:button="@null"
+                android:layout_width="60dp"
+                android:layout_height="@dimen/height30"
+                android:text="支出"
+                android:gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/expend" />
+        </RelativeLayout>
+
+        <RelativeLayout
+
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="1dp"
+            android:layout_height="60dp">
+
+            <EditText
+                android:id="@+id/headline"
+                android:background="@null"
+                android:paddingLeft="@dimen/margin10"
+                android:hint="添加备注（50字以内）"
+                android:textColorHint="@color/gray"
+                android:textColor="@color/black"
+                android:maxLines="2"
+                android:maxLength="50"
+                android:textSize="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="1dp"
+            android:layout_height="50dp">
+
+            <EditText
+                android:id="@+id/money"
+                android:inputType="number|numberDecimal"
+                android:background="@null"
+                android:hint="金额(元)"
+                android:textColorHint="@color/gray"
+                android:textColor="@color/black"
+                android:paddingLeft="@dimen/margin10"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:textSize="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/imageView"
+            android:layout_marginBottom="1dp"
+            android:padding="15dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/setImg"
+                android:src="@drawable/my"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="21dp"
+                android:layout_marginEnd="21dp"
+                 />
+
+            <TextView
+
+
+                android:hint="头像"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/portrait" />
+
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/Vipclass"
+            android:padding="15dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="1dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:background="@null"
+                android:hint="会员等级"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/Viplv"
+                android:background="@null"
+                android:hint="无"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/tradingTiime"
+            android:padding="15dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="1dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:background="@null"
+                android:hint="交易时间"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/settimes"
+                android:background="@null"
+                android:hint="2017-09-20 16:05"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/transaction"
+            android:padding="15dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="1dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:background="@null"
+                android:hint="交易状态"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/stateText"
+                android:background="@null"
+                android:hint="无"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp" />
+
+
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+    <Button
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="添加"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:background="@drawable/addbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/Addtransactionbills" />
+    <LinearLayout
+        android:id="@+id/bill_change"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/height10"
+        android:layout_alignParentBottom="true"
+        >
+        <Button
+            android:id="@+id/addbill_change"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="修改"
+            android:textColor="@color/white"
+            android:background="@drawable/addbutton"
+            android:layout_marginBottom="@dimen/margin10"
+            />
+        <Button
+            android:id="@+id/addbill_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="删除"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_delete"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/addbill_status_bar"
+        android:id="@+id/addbill_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#3BA0FF"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/weChat_transfer_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/sk"
+            />
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:background="#fffefe"
+            />
+
+        <TextView
+            android:text="添加一条账单"
+            android:id="@+id/weChat_transfer_title"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="#fffefe"
+            android:textSize="18dp"
+            />
+
+
+
+    </LinearLayout>
+</RelativeLayout>

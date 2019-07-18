@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/head.css">
+    <title>支付</title>
+    <style>
+        .transition_box {
+         /* 修改钱包页面更改 */
+         background-color: #ededed;
+         width: 100%;
+         min-height: 100%;
+         padding-top: 48px;
+}       
+        .my_wallet .wallet_title {
+            display: -webkit-box/* OLD - iOS 6-, Safari 3.1-6 */
+            ;
+            display: -moz-box/* OLD - Firefox 19- (buggy but mostly works) */
+            ;
+            display: -ms-flexbox/* TWEENER - IE 10 */
+            ;
+            display: -webkit-flex/* NEW - Chrome */
+            ;
+            display: flex/* NEW, Spec - Opera 12.1, Firefox 20+ */
+            ;
+            display: flex;
+            height: 127px;
+            background-color: #3bac6a;
+            padding-top: 28px;
+            margin: 5px;
+            border-radius: 10px;
+        }
+        
+        .my_wallet .wallet_title .wallet_title_item {
+            flex-grow: 1;
+            text-align: center;
+        }
+        
+        .my_wallet .wallet_title .wallet_title_item .icon {
+            height: 35px;
+            margin-bottom: 11px;
+            text-align: center;
+            padding-top: 4px;
+        }
+        
+        .my_wallet .wallet_title .wallet_title_item .icon img {
+            width: 35px;
+            height: 27px;
+        }
+        
+        .my_wallet .wallet_title .wallet_title_item .icon.icon_lq {
+            padding-top: 0;
+        }
+        
+        .my_wallet .wallet_title .wallet_title_item .icon.icon_lq img {
+            height: 35px;
+        }
+        
+        .my_wallet .wallet_title .wallet_title_item p {
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        
+        .my_wallet .wallet_title .wallet_title_item .small_change {
+            color: #9dd6b5;
+            font-size: 15px;
+        }
+         .my_wallet .wallet_service{
+             margin: 5px;
+             border-radius: 10px;
+             border: 4px solid #fff;
+        }
+        .my_wallet .wallet_service:nth-last-child(1){
+            margin-bottom: -10px;
+        }
+        .my_wallet .wallet_service .wallet_service_tit {
+            height: 39px;
+            background-color: #fff;
+            font-size: 14px;
+            color: #66646b;
+            padding: 15px 0 0 15px;
+            border-bottom:1px solid #ececec;
+        }
+        
+        .my_wallet .wallet_service .wallet_service_con {
+            background-color: #fff;
+            font-size: 0;
+            /* border-radius: 10px */
+        }
+        
+        .my_wallet .wallet_service .wallet_service_con .wallet_service_item {
+            position: relative;
+            width: 33.33%;
+            height: 100px;
+            display: -webkit-box/* OLD - iOS 6-, Safari 3.1-6 */
+            ;
+            display: -moz-box/* OLD - Firefox 19- (buggy but mostly works) */
+            ;
+            display: inline-block;
+            text-align: center;
+            border-right: 1px solid #ececec;
+            border-bottom: 1px solid #ececec;
+        }
+        
+        .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-child(3n) {
+            border-right: none;
+        }
+        .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-last-child(-n+3){
+            border-bottom:none;
+        }
+        .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-child(6){
+            border-bottom: 1px solid #ececec;
+        }
+        .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-last-child(1){
+            border-right:none
+        }
+        .my_wallet .wallet_service .wallet_service_con .wallet_service_item .wallet_service_item_box {
+            position: absolute;
+            display: -webkit-box/* OLD - iOS 6-, Safari 3.1-6 */
+            ;
+            display: -moz-box/* OLD - Firefox 19- (buggy but mostly works) */
+            ;
+            display: inline-block;
+            width: 100%;
+            top: 50%;
+            left: 0;
+            -webkit-transform: translateY(-50%);
+            -khtml-transform: translateY(-50%);
+            -moz-transform: translateY(-50%);
+            -o-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+        
+        .my_wallet .wallet_service .wallet_service_con .wallet_service_item .wallet_service_item_box .icon {
+            margin-bottom: 15px;
+            height: 30px;
+            line-height: 30px;
+        }
+        /* .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-child(1) .wallet_service_item_box .icon img{
+          height:59px
+        }
+         .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-child(2) .wallet_service_item_box .icon img{
+          height:60px
+        }
+        .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-child(6) .wallet_service_item_box .icon img{
+          height:70px
+        }
+         .my_wallet .wallet_service .wallet_service_con .wallet_service_item:nth-child(9) .wallet_service_item_box .icon img{
+          height:70px
+        } */
+        .my_wallet .wallet_service .wallet_service_con .wallet_service_item .wallet_service_item_box .icon img {
+            -webkit-transform: scale(0.5, 0.5);
+            -khtml-transform: scale(0.5, 0.5);
+            -moz-transform: scale(0.5, 0.5);
+            -o-transform: scale(0.5, 0.5);
+            -ms-transform: scale(0.5, 0.5);
+            transform: scale(0.5, 0.5);
+            -webkit-transform-origin: center top;
+            -khtml-transform-origin: center top;
+            -moz-transform-origin: center top;
+            -o-transform-origin: center top;
+            -ms-transform-origin: center top;
+            transform-origin: center top;
+            height:65px;
+        }
+        
+        .my_wallet .wallet_service .wallet_service_con .wallet_service_item .wallet_service_item_box p {
+            font-size: 14px;
+            color: #66646b;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 我的钱包 -->
+    <div class="transition_box my_wallet">
+        <header class="my_wallet_header transition_box_head">
+            <a class="transition_box_head_fanhui" href="javascript:;" onclick="back()">
+                <span class="button_arrow_box"><img src="./img/button_arrow.png" alt=""></span>
+            </a>
+            <span class="transition_box_head_text">支付</span>
+        </header>
+        <div class="wallet_title">
+            <div class="wallet_title_item">
+                <div class="icon">
+                    <img src="./img/1_1.png" alt="" class="">
+                </div>
+                <p>收付款</p>
+                <span class="small_change"> </span>
+            </div>
+            <div class="wallet_title_item" @click="transition_el02 = 'lq_box'">
+                <div class="icon icon_lq">
+                    <img src="./img/1_2.png" alt="" class="">
+                </div>
+                <p>钱包</p>
+                <span class="small_change">   ¥<span id="money">10399.00</span></span>
+            </div>
+            <!-- <div class="wallet_title_item">
+                <div class="icon">
+                    <img src="./img/1_3.png" alt="" class="">
+                </div>
+                <p>银行卡</p>
+                <span class="small_change"> </span>
+            </div> -->
+        </div>
+        <div class="wallet_service">
+            <div class="wallet_service_tit">
+                腾讯服务
+            </div>
+            <div class="wallet_service_con clearfix">
+                <div class="wallet_service_item">
+                    <div class="wallet_service_item_box">
+                        <div class="icon">
+                            <img src="./img/01-1.png" alt="">
+                        </div>
+                        <p>信用卡还款</p>
+                    </div>
+                </div>
+                <div class="wallet_service_item">
+                    <div class="wallet_service_item_box">
+                        <div class="icon">
+                            <img src="./img/01-2.png" alt="">
+                        </div>
+                        <p>手机充值</p>
+                    </div>
+                </div>
+                <div class="wallet_service_item">
+                    <div class="wallet_service_item_box">
+                        <div class="icon">
+                            <img src="./img/01-3.png" alt="">
+                        </div>
+                        <p>理财通</p>
+                    </div>
+
+                </div>
+                <div class="wallet_service_item">
+                    <div class="wallet_service_item_box">
+                        <div class="icon">
+                            <img src="./img/01-4.png" alt="">
+                        </div>
+                        <p>生活缴费</p>
+                    </div>
+                </div>
+                <div class="wallet_service_item">
+                    <div class="wallet_service_item_box">
+                        <div class="icon">
+                            <img src="./img/01-5.png" alt="">
+                        </div>
+                        <p>Q币充值</p>
+                    </div>
+                </div>
+                <div class="wallet_service_item">
+                    <div class="wallet_service_item_box">
+                        <div class="icon">
+                            <img src="./img/01-6.png" alt="">
+                        </div>
+                        <p>城市服务</p>
+                    </div>
+                </div>
+                <div class="wallet_service_item">
+                    <div class="wallet_service_item_box">
+                        <div class="icon">
+                            <img src="./img/01-7.png" alt="">
+                        </div>
+                        <p>腾讯公益</p>
+                    </div>
+                </div>
+                <!-- <div class="wallet_service_item">
+                    <div class="wallet_service_item_box">
+                        <div class="icon">
+                            <img src="./img/01-9.png" alt="">
+                        </div>
+                        <p>保险服务</p>
+                    </div>
+                </div> -->
+                <div class="wallet_service_item">
+                    <div class="wallet_service_item_box">
+                        <div class="icon">
+                        </div>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wallet_service">
+            <div class="wallet_service_tit">
+               第三方服务
+            </div>
+            <div class="wallet_service_con">
+                <div class="wallet_service_item">
+                    <div class="wallet_service_item_box">
+                        <div class="icon">
+                            <img src="./img/02-1.png" alt="">
+                        </div>
+                        <p>火车票机票</p>
+                    </div>
+
+                </div>
+                <div class="wallet_service_item">
+                    <div class="wallet_service_item_box">
+                        <div class="icon">
+                            <img src="./img/02-2.png" alt="">
+                        </div>
+                        <p>滴滴出行</p>
+                    </div>
+                </div>
+                <div class="wallet_service_item">
+                        <div class="wallet_service_item_box">
+                            <div class="icon">
+                                <img src="./img/02-3.png" alt="">
+                            </div>
+                            <p>京东优选</p>
+                        </div>
+                </div>
+                <div class="wallet_service_item">
+                        <div class="wallet_service_item_box">
+                            <div class="icon">
+                                <img src="./img/02-4.png" alt="">
+                            </div>
+                            <p>美团外卖</p>
+                        </div>
+                </div>
+                <div class="wallet_service_item">
+                        <div class="wallet_service_item_box">
+                            <div class="icon">
+                                <img src="./img/02-5.png" alt="">
+                            </div>
+                            <p>电影演出赛事</p>
+                        </div>
+                </div>
+                <div class="wallet_service_item">
+                        <div class="wallet_service_item_box">
+                            <div class="icon">
+                                <img src="./img/02-6.png" alt="">
+                            </div>
+                            <p>吃喝玩乐</p>
+                        </div>
+                </div>
+                <div class="wallet_service_item">
+                        <div class="wallet_service_item_box">
+                            <div class="icon">
+                                <img src="./img/02-7.png" alt="">
+                            </div>
+                            <p>酒店</p>
+                        </div>
+                </div>
+                <div class="wallet_service_item">
+                        <div class="wallet_service_item_box">
+                            <div class="icon">
+                                <img src="./img/02-8.png" alt="">
+                            </div>
+                            <p>拼多多</p>
+                        </div>
+                </div>
+                <div class="wallet_service_item">
+                        <div class="wallet_service_item_box">
+                            <div class="icon">
+                                <img src="./img/02-9.png" alt="">
+                            </div>
+                            <p>蘑菇街女装</p>
+                        </div>
+                </div>
+                <div class="wallet_service_item">
+                        <div class="wallet_service_item_box">
+                            <div class="icon">
+                                <img src="./img/02-10.png" alt="">
+                            </div>
+                            <p>唯品会特卖</p>
+                        </div>
+                </div>
+                <div class="wallet_service_item">
+                        <div class="wallet_service_item_box">
+                            <div class="icon">
+                                <img src="./img/02-11.png" alt="">
+                            </div>
+                            <p>转转二手</p>
+                        </div>
+                </div>
+                <div class="wallet_service_item">
+                    <div class="wallet_service_item_box">
+                        <div class="icon">
+                        </div>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function initMoney(money) {
+            document.getElementById("money").innerText = money
+        }
+
+        function back() {
+            app.back()
+        }
+    </script>
+</body>
+
+</html>

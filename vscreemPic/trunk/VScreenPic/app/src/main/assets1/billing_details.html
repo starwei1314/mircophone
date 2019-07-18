@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/billing_details.css">
+    <title>转账详情</title>
+</head>
+
+<body>
+    <div id="app">
+        <header class="header">
+            <a href="javascript:;" class="button_arrow" onclick="back()">
+                <img src="./img/alipay/blue_fanhui.png" alt="">
+            </a>
+            <span class="head_text">账单详情</span>
+        </header>
+        <div class="content scrollbar">
+            <div class="tx_wrapper">
+                <div class="tx_box">
+                    <img src="./img/icon.png" alt="" class="tx">
+                    <!-- 标志着等级制度图像显示 -->
+                    <!-- <span class="member_type"></span> -->
+                </div>
+                <span class="name">猴哥</span>
+                <img src="./img/alipay/arrow-r.png" alt="" class="right">
+            </div>
+            <div class="pri_wrapper">
+                <span class="pri_type"></span><span class="pri">200.00</span>
+            </div>
+            <div class="state_wrapper">
+                <span class="wait_payment" style="display:none;">等待付款</span>
+                <span class="wait_friend_payment" style="display:none;">等待对方付款</span>
+                <span class="payment_success" style="display:none;">交易成功</span>
+            </div>
+            <div class="list_wrapper">
+                <div class="list_item">
+                    <span class="title skfs">收款方式</span>
+                    <div class="right_text">
+                        <span class="payment_type">余额</span>
+                        <img src="./img/alipay/arrow-r.png" alt="">
+                    </div>
+                </div>
+                <div class="list_item clearfix">
+                    <span class="title">转账备注</span>
+                    <div class="right_text payment_reason_box">
+                        <span class="payment_reason"></span>
+                    </div>
+                </div>
+                <div class="list_item">
+                    <span class="title">对方账户</span>
+                    <div class="right_text">
+                        <span class="name">猴哥</span>
+                        <span class="account">18511281141</span>
+                    </div>
+                </div>
+                <div class="list_item">
+                    <span class="title" class="skfs">账单分类</span>
+                    <div class="right_text">
+                        <span>其他</span>
+                        <img src="./img/alipay/arrow-r.png" alt="">
+                    </div>
+                </div>
+                <div class="hx_wrapper">
+                    <div class="hx"></div>
+                </div>
+                <div class="list_item" style="margin-top:16px;">
+                    <span class="title">创建时间</span>
+                    <div class="right_text">
+                        <span class="time"></span>
+                    </div>
+                </div>
+                <div class="list_item clearfix" style="padding:0 16px 14px">
+                    <span class="title" style="float:left;line-height:20px;">订单号</span>
+                    <div class="code_box">
+                        <span class="code"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="hx02"></div>
+            <div class="bot">
+                <div class="item02">
+                    <span>标签和备注</span>
+                    <div class="right">
+                        <span class="item_add">添加</span>
+                        <img src="./img/alipay/arrow-r.png" alt="">
+                    </div>
+                </div>
+                <div class="item02 dzhd">
+                    <span>申请电子回单</span>
+                    <div class="right">
+                        <img src="./img/alipay/arrow-r.png" alt="">
+                    </div>
+                </div>
+                <div class="item02 zz_record">
+                    <span>查看往来记录</span>
+                    <div class="right">
+                        <img src="./img/alipay/arrow-r.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="hx02"></div>
+            <div class="bot">
+                <div class="item02">
+                    <span>对此订单有疑问</span>
+                    <div class="right">
+                        <img src="./img/alipay/arrow-r.png" alt="">
+                    </div>
+                </div>
+                <div class="item02">
+                    <span>投诉</span>
+                    <div class="right">
+                        <img src="./img/alipay/arrow-r.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="hx02"></div>
+            <div class="desc">
+                该笔付款不是担保交易.付款后,资金将直接进入对方账户,无法退款,谨防诈骗.
+            </div>
+            <div class="payment_btn">
+                <a href="javascript:;">立即付款</a>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script>
+        function initPage(name, tx, dj, pri, state, isMe, payment_type, reason, account, time, code, zz_record) {
+            $(".name").text(name)
+            $(".tx").prop("src", tx)
+            $(".pri").text(fmoney(pri, 2))
+            $(".payment_type").text(payment_type)
+            $(".account").text(account)
+            $(".time").text(time)
+            $(".code").text(code)
+            $(".payment_reason").text(reason)
+            if (zz_record == '是') {
+                $(".zz_record").show()
+            } else {
+                $(".dzhd").css('borderBottom', 'none');
+            }
+            //等级标签   权限显示
+            // if (dj === 'lv1') {
+            //     $(".member_type").addClass("hj")
+            // } else if (dj === 'lv2') {
+            //     $(".member_type").addClass("bj")
+            // } else if (dj === 'lv3') {
+            //     $(".member_type").addClass("hz")
+            // } else if (dj === 'lv0') {
+            //     $(".member_type").addClass("dz")
+            // }
+
+            $(".pri_type").text(isMe)
+
+            if (isMe === '+') {
+                $(".desc,.payment_btn").hide()
+                $(".skfs").text('收款方式');
+            } else {
+                $(".skfs").text('付款方式');
+            }
+
+            if (state == '交易成功') {
+                //交易成功
+                $(".payment_success").show()
+                $(".wait_payment,.wait_friend_payment").hide()
+                $(".desc,.payment_btn").hide()
+            } else {
+                if (isMe == '-') {
+                    $(".wait_payment").show()
+                } else {
+                    $(".wait_friend_payment").show()
+                }
+                $(".payment_success").hide()
+            }
+
+        }
+
+        function back() {
+            alipay.back();
+        }
+        // console.log(fmoney(1000,2))
+        //格式化金额,自动补零
+        function fmoney(s, n) {
+            n = n > 0 && n <= 20 ? n : 2;
+            s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
+            var l = s.split(".")[0].split("").reverse(),
+                r = s.split(".")[1];
+            t = "";
+            for (var i = 0; i < l.length; i++) {
+                t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
+            }
+            return t.split("").reverse().join("") + "." + r;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">
+    <title>微信模拟器</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/mint-style.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/chat.css">
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <header class="header">
+            <span class="wechat_tit"><span class="wechat_title_wen">微信</span><span class="weidu_num"  v-show="weidu_num > 0">({{weidu_num}})</span></span>
+            <div class="head_tool">
+                <span class="head_tool_search"></span>
+                <span class="head_tool_add" @click="head_modal_key = !head_modal_key;"></span>
+                <div class="head_modal" v-show="head_modal_key">
+                    <div class="head_modal_item" @click="addChat">添加单聊</div>
+                    <div class="head_modal_item" @click="emptyChat">清空列表</div>
+                </div>
+                <div class="head_modal_zz" @click="head_modal_key = false;" v-show="head_modal_key"></div>
+            </div>
+        </header>
+        <div class="tab_content">
+            <div class="tab_content_item wechat_content scrollbar" id="wechat" v-show="tab_index === 0">
+                <div class="wechat_list">
+                    <div class="wechat_item" v-for="(item, index) in chatlist" :key="item.id" :class="{current: index === wechat_css}" @touchstart="wechatItemTouchStart(index,item,'wechat',$event)" @touchmove="wechatItemTouchMove($event)" @touchend="switchChat($event)">
+                        <div class="icon_pe">
+                            <img v-lazy.wechat="item.icon" alt="">
+                            <span class="msg_num" v-show="item.msg_num > 0">{{item.msg_num > 99 ? '...' : item.msg_num}}</span>
+                        </div>
+                        <div class="desc_box">
+                            <div class="desc_time">{{item.com_time | gshTimeFilter}}</div>
+                            <div class="desc_author" v-html="nameFilter(item.name)"></div>
+                            <div class="desc_msg">
+                                <!-- <div class="desc-mute el-icon-warning"></div> -->
+                                <span class="msg_text" v-html="recentNew(item)"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab_content_item mail_content" v-show="tab_index === 1">
+                <div class="scrollbar" style="height:100%;" id="maillist">
+                    <mt-actionsheet :actions="actions_mail" v-model="mailsheetVisible"></mt-actionsheet>
+                    <ul class="pinyin_list">
+                        <li><img src="./img/sarrow.png" alt="" class="top"></li>
+                        <li><img src="./img/star.png" alt="" class="star"></li>
+                        <li>A</li>
+                        <li>B</li>
+                        <li>C</li>
+                        <li>D</li>
+                        <li>E</li>
+                        <li>F</li>
+                        <li>G</li>
+                        <li>H</li>
+                        <li>I</li>
+                        <li>J</li>
+                        <li>K</li>
+                        <li>L</li>
+                        <li>M</li>
+                        <li>N</li>
+                        <li>O</li>
+                        <li>P</li>
+                        <li>Q</li>
+                        <li>R</li>
+                        <li>S</li>
+                        <li>T</li>
+                        <li>U</li>
+                        <li>V</li>
+                        <li>W</li>
+                        <li>X</li>
+                        <li>Y</li>
+                        <li>Z</li>
+                        <li>#</li>
+                    </ul>
+                    <div class="mail_content_tit">
+                        <div class="mail_content_tit_item" @click="showNewFriendPage">
+                            <img src="./img/contact_top-friend-notify.png" alt="" class="icon">
+                            <span class="text">新的朋友</span>
+                        </div>
+                        <div class="mail_content_tit_item">
+                            <img src="./img/contact_add-friend-addgroup.png" alt="" class="icon">
+                            <span class="text">群聊</span>
+                        </div>
+                        <div class="mail_content_tit_item">
+                            <img src="./img/contact_top-tag.png" alt="" class="icon">
+                            <span class="text">标签</span>
+                        </div>
+                        <div class="mail_content_tit_item">
+                            <img src="./img/contact_top-offical.png" alt="" class="icon">
+                            <span class="text">公众号</span>
+                        </div>
+                    </div>
+                    <div class="mail_wrapper">
+                        <ul>
+                            <li class="mail_list" v-for="item in allData.allfriend">
+                                <h1 class="title">{{item.type}}</h1>
+                                <ul class="mail_ul">
+                                    <li class="mail_item" v-for="mail in item.mail_list" :key="item.id" @touchstart="wechatItemTouchStart(-1,mail,'mail')" @touchmove="wechatItemTouchMove" @touchend="switchChat">
+                                        <img v-lazy="mail.icon" alt="" class="icon">
+                                        <span class="text" v-html="nameFilter(mail.name)"></span>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mail_total">
+                        {{alldate_len}}位联系人
+                    </div>
+                </div>
+            </div>
+            <div class="tab_content_item find_content scrollbar" v-show="tab_index === 2">
+                <!-- 点击朋友圈弹出框 -->
+                <mt-actionsheet :actions="actions_friend_q" v-model="sheetVisible_friend"></mt-actionsheet>
+                <div class="find_item" @click="sheetVisible_friend = true">
+                    <div class="find">
+                        <img src="img/find_icon-circle.png" alt="" class="icon">
+                        <span class="text">朋友圈</span>
+                        <span class="friend_q_num" v-show="friend_q.num != 0">{{friend_q.num}}</span>
+                        <div class="friend_q" v-show="friend_q.show">
+                            <img :src="friend_q.img_src" alt="" class="friend_q_pic">
+                            <span class="friend_q_d"></span>
+                        </div>
+                        <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                    </div>
+                </div>
+                <div class="find_item">
+                    <div class="find">
+                        <span class="friend_b_line"><img src="img/find_icon-qrcode.png" alt="" class="icon"></span> 
+                        <span class="text">扫一扫</span>
+                        <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                    </div>
+                    <div class="find">
+                        <img src="img/find_icon-shake.png" alt="" class="icon">
+                        <span class="text">摇一摇</span>
+                        <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                    </div>
+                </div>
+                <div class="find_item">
+                    <div class="find">
+                        <span class="friend_b_line"><img src="img/tu4.png" alt="" class="icon"></span>
+                        <span class="text">看一看</span>
+                        <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                    </div>
+                    <div class="find">
+                        <img src="img/tu5.png" alt="" class="icon">
+                        <span class="text">搜一搜</span>
+                        <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                    </div>
+                </div>
+                <!-- <div class="find_item">
+                    <div class="find">
+                        <span class="friend_b_line"> <img src="img/find_icon-locationservice.png" alt="" class="icon"> </span>
+                        <span class="text">附近的人</span>
+                        <img src="../assets/img/arrow_right.png" alt="" class="friend_r_pic">
+                    </div>
+                <div class="find">
+                        <img src="img/find_icon-bottle.png" alt="" class="icon">
+                        <span class="text">漂流瓶</span>
+                        <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                    </div> 
+                </div> -->
+                <div class="find_item">
+                    <div class="find">
+                        <span class="friend_b_line"><img src="img/find_icon-shopping.png" alt="" class="icon"></span>
+                        <span class="text">购物</span>
+                        <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                    </div>
+                    <div class="find">
+                        <img src="img/find_icon-moregame.png" alt="" class="icon">
+                        <span class="text">游戏</span>
+                        <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                    </div>
+                </div>
+                <div class="find_item">
+                    <div class="find">
+                        <img src="img/tu10.png" alt="" class="icon">
+                        <span class="text">小程序</span>
+                        <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                    </div>
+                </div>
+            </div>
+            <div class="tab_content_item me_content scrollbar" v-show="tab_index === 3">
+                <!-- 设置我的个人信息 -->
+                <div class="transition_box set_my_info" :class="{transition_show:transition_el === 'set_my_info'}" @touchstart="e.preventDefault();">
+                    <header class="set_my_info_header transition_box_head">
+                        <a class="transition_box_head_fanhui" href="javascript:;" onclick="back();">
+                            <span class="button_arrow_box"><img src="./img/button_arrow.png" alt=""></span>
+                        </a>
+                        <span class="transition_box_head_text">个人信息</span>
+                    </header>
+                    <div class="find_item">
+                        <div class="find set_find_pic" @click="xc_sheetVisible = true;xc_el='.set_find_pic_icon'">
+                            <span class="text">头像</span>
+                            <img :src="allData.my_info.tx" alt="" class="set_find_pic_icon">
+                            <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                            <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                            <!-- <input type="file" class="set_find_pic_input" id="set_find_pic_icon" @change="mtPicChange($event,'set')"> -->
+                        </div>
+                        <div class="find set_find" @click="setNc">
+                            <span class="text">昵称</span>
+                            <span class="set_text_right set_nic_text" v-html="nameFilter(allData.my_info.my_nc)"></span>
+                            <img src="img/arrow_right.png" alt="" class="friend_r_pic"> 
+                        </div>
+                        <div class="find set_find" @click="setWxh">
+                            <span class="text">微信号</span>
+                            <span class="set_text_right set_num_text">{{allData.my_info.my_wxh}}</span>
+                            <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                        </div>
+                        <div class="find set_find">
+                            <span class="text">二维码名片</span>
+                            <span class="set_text_right"></span>
+                            <img src="./img/chat-info-qr.png" class="set_icon_right" alt="">
+                            <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                        </div>
+                        <div class="find set_find">
+                            <span class="text">更多</span>
+                            <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                        </div>
+                    </div>
+                    <div class="find_item">
+                        <div class="find set_find">
+                            <span class="text">我的地址</span>
+                            <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 我的钱包 -->
+                <div class="transition_box my_wallet" :class="{transition_show:transition_el === 'my_wallet'}">
+                    <header class="my_wallet_header transition_box_head">
+                        <a class="transition_box_head_fanhui" href="javascript:;" onclick="back();">
+                            <span class="button_arrow_box"><img src="./img/button_arrow.png" alt=""></span>
+                        </a>
+                        <span class="transition_box_head_text">支付</span>
+                        <a class="transition_box_head_right">
+                            <span class="transition_box_head_right_text" style="border-left:none;"><img src="./img/sgd.png" alt="" width="20" height="20"></span>
+                        </a>
+                    </header>
+                    <div style="height:100%;" class="scrollbar">
+                        <div class="wallet_title">
+                            <div class="wallet_title_item">
+                                <div class="icon">
+                                    <img src="./img/1_1.png" alt="" class="">
+                                </div>
+                                <p>收付款</p>
+                                <span class="small_change"> </span>
+                            </div>
+                            <div class="wallet_title_item" @click="switchPage('lq_box', 2)">
+                                <div class="icon icon_lq">
+                                    <img src="./img/1_2.png" alt="" class="">
+                                </div>
+                                <p>钱包</p>
+                                <span class="small_change">¥{{allData.my_info.small_change | returnFloat}}</span>
+                            </div>
+                            <!-- <div class="wallet_title_item">
+                                <div class="icon">
+                                    <img src="./img/1_3.png" alt="" class="">
+                                </div>
+                                <p>银行卡</p>
+                                <span class="small_change"> </span>
+                            </div> -->
+                        </div>
+                        <div class="wallet_service">
+                            <div class="wallet_service_tit">
+                                腾讯服务
+                            </div>
+                            <div class="wallet_service_con clearfix">
+                                <div class="wallet_service_item">
+                                    <div class="wallet_service_item_box">
+                                        <div class="icon">
+                                            <img src="./img/01-1.png" alt="">
+                                        </div>
+                                        <p>信用卡还款</p>
+                                    </div>
+                                </div>
+                                <div class="wallet_service_item">
+                                    <div class="wallet_service_item_box">
+                                        <div class="icon">
+                                            <img src="./img/01-2.png" alt="">
+                                        </div>
+                                        <p>手机充值</p>
+                                    </div>
+                                </div>
+                                <div class="wallet_service_item">
+                                    <div class="wallet_service_item_box">
+                                        <div class="icon">
+                                            <img src="./img/01-3.png" alt="">
+                                        </div>
+                                        <p>理财通</p>
+                                    </div>
+
+                                </div>
+                                <div class="wallet_service_item">
+                                    <div class="wallet_service_item_box">
+                                        <div class="icon">
+                                            <img src="./img/01-4.png" alt="">
+                                        </div>
+                                        <p>生活缴费</p>
+                                    </div>
+                                </div>
+                                <div class="wallet_service_item">
+                                    <div class="wallet_service_item_box">
+                                        <div class="icon">
+                                            <img src="./img/01-5.png" alt="">
+                                        </div>
+                                        <p>Q币充值</p>
+                                    </div>
+                                </div>
+                                <div class="wallet_service_item">
+                                    <div class="wallet_service_item_box">
+                                        <div class="icon">
+                                            <img src="./img/01-6.png" alt="">
+                                        </div>
+                                        <p>城市服务</p>
+                                    </div>
+                                </div>
+                                <div class="wallet_service_item">
+                                    <div class="wallet_service_item_box">
+                                        <div class="icon">
+                                            <img src="./img/01-7.png" alt="">
+                                        </div>
+                                        <p>腾讯公益</p>
+                                    </div>
+                                </div>
+                                <!-- <div class="wallet_service_item">
+                                    <div class="wallet_service_item_box">
+                                        <div class="icon">
+                                           <img src="./img/01-9.png" alt="">
+                                        </div>
+                                        <p>保险服务</p>
+                                    </div>
+                                </div>  -->
+                                <div class="wallet_service_item">
+                                    <div class="wallet_service_item_box">
+                                        <div class="icon">
+                                        </div>
+                                        <p></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wallet_service">
+                            <div class="wallet_service_tit">
+                                    第三方服务
+                            </div>
+                            <div class="wallet_service_con">
+                                <div class="wallet_service_item">
+                                    <div class="wallet_service_item_box">
+                                        <div class="icon">
+                                            <img src="./img/02-1.png" alt="">
+                                        </div>
+                                        <p>火车票机票</p>
+                                    </div>
+
+                                </div>
+                                <div class="wallet_service_item">
+                                        <div class="wallet_service_item_box">
+                                            <div class="icon">
+                                                <img src="./img/02-2.png" alt="">
+                                            </div>
+                                            <p>滴滴出行</p>
+                                        </div>
+                                    </div>
+                                <div class="wallet_service_item">
+                                    <div class="wallet_service_item_box">
+                                        <div class="icon">
+                                            <img src="./img/02-3.png" alt="">
+                                        </div>
+                                        <p>京东优选</p>
+                                    </div>
+                                </div>
+                                <div class="wallet_service_item">
+                                        <div class="wallet_service_item_box">
+                                            <div class="icon">
+                                                <img src="./img/02-4.png" alt="">
+                                            </div>
+                                            <p>美团外卖</p>
+                                        </div>
+                                </div>
+                                <div class="wallet_service_item">
+                                        <div class="wallet_service_item_box">
+                                            <div class="icon">
+                                                <img src="./img/02-5.png" alt="">
+                                            </div>
+                                            <p>电影演出赛事</p>
+                                        </div>
+                                </div>
+                                <div class="wallet_service_item">
+                                        <div class="wallet_service_item_box">
+                                            <div class="icon">
+                                                <img src="./img/02-6.png" alt="">
+                                            </div>
+                                            <p>吃喝玩乐</p>
+                                        </div>
+                                </div>
+                                <div class="wallet_service_item">
+                                        <div class="wallet_service_item_box">
+                                            <div class="icon">
+                                                <img src="./img/02-7.png" alt="">
+                                            </div>
+                                            <p>酒店</p>
+                                        </div>
+                                </div>
+                                <div class="wallet_service_item">
+                                        <div class="wallet_service_item_box">
+                                            <div class="icon">
+                                                <img src="./img/02-8.png" alt="">
+                                            </div>
+                                            <p>拼多多</p>
+                                        </div>
+                                </div>
+                                <div class="wallet_service_item">
+                                        <div class="wallet_service_item_box">
+                                            <div class="icon">
+                                                <img src="./img/02-9.png" alt="">
+                                            </div>
+                                            <p>蘑菇街女装</p>
+                                        </div>
+                                </div>
+                                <div class="wallet_service_item">
+                                        <div class="wallet_service_item_box">
+                                            <div class="icon">
+                                                <img src="./img/02-10.png" alt="">
+                                            </div>
+                                            <p>唯品会特卖</p>
+                                        </div>
+                                </div>
+                                <div class="wallet_service_item">
+                                        <div class="wallet_service_item_box">
+                                            <div class="icon">
+                                                <img src="./img/02-11.png" alt="">
+                                            </div>
+                                            <p>转转二手</p>
+                                        </div>
+                                </div>
+                                <div class="wallet_service_item">
+                                    <div class="wallet_service_item_box">
+                                        <div class="icon">
+                                        </div>
+                                        <p></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 零钱 -->
+                    <div class="transition_box lq_box" :class="{transition_show:transition_el02 === 'lq_box'}">
+                        <header class="lq_box_header transition_box_head">
+                            <a class="transition_box_head_fanhui" href="javascript:;" onclick="back();">
+                                <span class="button_arrow_box"><img src="./img/button_arrow.png" alt=""></span>
+                            </a>
+                            <span class="transition_box_head_text"></span>
+                            <a class="transition_box_head_right">
+                                <span class="transition_box_head_right_text">零钱明细</span>
+                            </a>
+                        </header>
+                        <div class="lq_box_wrapper">
+                            <div class="logo">
+                                <img src="./img/icon1.png" class="" alt="">
+                            </div>
+                            <div class="my_lq">
+                                <div class="title">
+                                    我的零钱
+                                </div>
+                                <div class="text">
+                                  <!-- <span class="pri_y"> -->
+                                      <img src="./img/rmb.png" alt="" class="pri_y">
+                                    <!-- </span> -->
+                                    {{allData.my_info.small_change | returnFloat}}
+                                </div>
+                                <p class="desc">输入零钱通享2.99%七日年化收益<img src="./img/small.png" alt=""></p>
+                            </div>
+                            <div class="lq_box_wrapper_btn">
+                                <a href="javascript:;" class="lq_box_wrapper_btn_cz" @click="switchPage('lq_cz', 3)">充值</a>
+                                <a href="javascript:;" class="lq_box_wrapper_btn_tx" v-show="allData.my_info.small_change > 0">提现</a>
+                            </div>
+                           
+                            <div class="lq_box_wrapper_footer">
+                                <p>常见问题</p>
+                                <span>本服务由财付通提供</span>
+                            </div>
+                        </div>
+                        <div class="transition_box lq_cz" :class="{transition_show:transition_el03 === 'lq_cz'}">
+                            <header class="lq_cz_header transition_box_head">
+                                <a class="transition_box_head_fanhui" href="javascript:;" onclick="back();">
+                                    <span class="button_arrow_box"><img src="./img/button_arrow.png" alt=""></span>
+                                </a>
+                                <span class="transition_box_head_text">零钱充值</span>
+                            </header>
+                            <div class="lq_cz_wrapper">
+                                <div class="lq_cz_item lq_cz_item01">
+                                    <span class="title">
+                                            银行卡
+                                    </span>
+                                    <span class="text">
+                                        使用新卡充值
+                                    </span>
+                                </div>
+                                <div class="lq_cz_item lq_cz_item02">
+                                    <span class="title">
+                                        金额(￥)
+                                    </span>
+                                    <input class="cz_pri_input" type="number" placeholder="请填写收钱金额" />
+                                </div>
+                                <div class="lq_cz_wrapper_btn" @click="recharge">
+                                    <a href="javascript:;">下一步</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="find_item my_info_item" @click="switchPage('set_my_info', 1)">
+                    <div class="my_info">
+                        <img :src="allData.my_info.tx" alt="" width="50" height="50" class="my_icon">
+                        <div class="my_info_con">
+                            <p class="my_info_name" v-html="nameFilter(allData.my_info.my_nc)"></p>
+                            <p class="my_info_num">微信号：{{allData.my_info.my_wxh}} 
+                                <img src="./img/chat-info-qr.png" class="qr_img" alt=""> 
+
+                            </p>
+                            <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                        </div>
+                        <!-- <img src="./img/chat-info-qr.png" class="qr_img" alt=""> -->
+                    </div>
+                </div>
+                <div class="find_item">
+                    <div class="find" @click="switchPage('my_wallet', 1)">
+                        <img src="img/me_more-my-bank-card.png" alt="" class="icon">
+                        <span class="text">支付</span>
+                        <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                    </div>
+                </div>
+                <div class="find_item">
+                    <div class="find">
+                            <span class="friend_b_line"><img src="img/me_more-my-favorites.png" alt="" class="icon"></span>
+                        <span class="text">收藏</span>
+                        <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                    </div>
+                    <div class="find">
+                        <span class="friend_b_line"><img src="img/me_more-my-album.png" alt="" class="icon"></span>
+                        <span class="text">相册</span>
+                        <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                    </div>
+                    <div class="find">
+                            <span class="friend_b_line"> <img src="img/me_my-card-package-icon.png" alt="" class="icon"></span>
+                        <span class="text">卡包</span>
+                        <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                    </div>
+                    <div class="find">
+                        <img src="img/me_more-expression.png" alt="" class="icon">
+                        <span class="text">表情</span>
+                        <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                    </div>
+                </div>
+                <div class="find_item" @click="bg_sheetVisible = true">
+                    <div class="find">
+                        <img src="img/me_more-setting.png" alt="" class="icon">
+                        <span class="text">设置</span>
+                        <img src="img/arrow_right.png" alt="" class="friend_r_pic">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="footer_nav">
+            <div class="footer_nav_item" @click="tab_index=0" :class="{active: tab_index === 0}">
+                <span class="icon img-wechat"><span class="msg_num" v-show="weidu_num > 0">{{weidu_num > 99 ? '...' : weidu_num}}</span></span>
+                <p>微信</p>
+            </div>
+            <div class="footer_nav_item" @click="tab_index=1" :class="{active: tab_index === 1}">
+                <span class="icon img-tongxunlu"></span>
+                <p>通讯录</p>
+            </div>
+            <div class="footer_nav_item" @click="tab_index=2" :class="{active: tab_index === 2}">
+                <span class="icon img-faxian"><span class="msg_num" v-show="friend_q.num > 0">{{friend_q.num}}</span></span>
+                <p>发现</p>
+            </div>
+            <div class="footer_nav_item" @click="tab_index=3":class="{active: tab_index === 3}">
+                <span class="icon img-me"></span>
+                <p>我</p>
+            </div>
+        </nav>
+
+        <div class="transition_box add_friend_box" :class="{transition_show: transition_el == 'new_friend'}">
+            <header class="add_friend_box_header transition_box_head">
+                <a class="transition_box_head_fanhui" href="javascript:;" onclick="back();">
+                    <span class="button_arrow_box"><img src="./img/button_arrow.png" alt=""></span>
+                </a>
+                <span class="transition_box_head_text">新的朋友</span>
+                <a class="transition_box_head_right add_friend_btn" @click="switchAddFriendModal">
+                    <span class="transition_box_head_right_text">添加朋友</span>
+                </a>
+                <div class="transition_box_head_modal_zz" @click="hideAddFriendModal" v-show="transition_box_head_modal_key"></div>
+                <div class="transition_box_head_modal" v-show="transition_box_head_modal_key">
+                    <div class="transition_box_head_modal_item" @click="disOneNewFriend">添加1个</div>
+                    <div class="transition_box_head_modal_item" @click="get20">添加20个</div>
+                    <div class="transition_box_head_modal_item" @click="acceptAll">全部接受</div>
+                    <div class="transition_box_head_modal_item" @click="emptyNewFriendList">清空列表</div>
+                </div>
+            </header>
+            <div class="add_friend_wrapper scrollbar">
+                <div style="height:16px;background-color:#ebebeb;"></div>
+                <div class="search">
+                    <div class="search_con">
+                        <img src="./img/search.png" alt="">
+                        <span>微信号/QQ号/手机号</span>
+                    </div>
+                </div>
+                <div style="height:19px;background-color:#ebebeb;"></div>
+                <div class="new_friend_list">
+                    <div class="title">新的朋友</div>
+                    <ul>
+                        <li v-for="item in allData.new_friend_list" :key="item.id">
+                           <span class="newfriend_img"><img v-lazy="item.icon" alt="" class="icon"></span>>
+                            <div class="info">
+                                <div class="name" v-html="nameFilter(item.name)"></div>
+                                <div class="desc">{{item.request_msg || '对方请求添加你为朋友'}}</div>
+                            </div>
+                            <div class="add_state">
+                                <span class="add_state_ok" v-if="item.request_state">已添加</span>
+                                <a href="javascript:;" class="add_state_wait" v-if="!item.request_state" @click="acceptRequest(item)">接受</a>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 添加朋友 -->
+            <div class="add_onefriend mt_box transition_box" :class="{transition_show:transition_el02 === 'add_onefriend'}">
+                <header class="mt_header">
+                    <a href="javascript:;" class="mt_header_fanhui" onclick="back();">
+                        <span><img src="./img/button_arrow.png" alt=""></span>
+                    </a>
+                    <span class="mt_header_text">添加新的朋友</span>
+                </header>
+                <div class="mt_item_wrapper">
+                    <div class="mt_item mt_pic" @click="xc_sheetVisible = true;xc_el = '.mt_new_pic'">
+                        <span class="mt_item_tit">头像</span>
+                        <div class="mt_item_right">
+                            <img src="./img/moren.png" alt="" class="mt_item_pic_img mt_new_pic">
+                            <!-- <input type="file" class="mt_item_pic" id="add_onefriend_pic" @change="mtPicChange($event)"> -->
+                            <img src="./img/arrow_right.png" alt="" class="arrow_right">
+                        </div>
+                    </div>
+                    <div class="mt_item mt_name">
+                        <input type="text" class="mt_input mt_new_nic" placeholder="昵称">
+                        <img src="./img/refresh.png" alt="" class="refresh" @click="randomNc('.mt_new_nic')">
+                    </div>
+                </div>
+                <div class="mt_item_wrapper">
+                    <div class="mt_item mt_name">
+                        <input type="text" class="mt_input mt_yz_new_input" placeholder="请输入验证信息">
+                        <img src="./img/refresh.png" alt="" class="refresh">
+                    </div>
+                    <div class="mt_item is_beenadd">
+                        <span class="mt_item_tit">是否已添加好友</span>
+                        <div class="mt_item_right">
+                            <mt-switch v-model="is_beenadd"></mt-switch>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt_box_btn_wrapper" @click="addNewFriend">
+                    <a href="javascript:;">添加</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 好友聊天窗口 -->
+        <div class="chat_window transition_box" :class="{transition_show:transition_el === 'chat_window'}" :style="{paddingBottom: footer_bot + 'px'}" v-lazy:background-image="current_friend.chat_bg != '' ? current_friend.chat_bg : allData.my_info.chat_bg">
+
+            <header class="chat_window_header transition_box_head">
+                <a class="transition_box_head_fanhui" href="javascript:;" onclick="back();">
+                    <span class="button_arrow_box"><img src="./img/button_arrow.png" alt=""></span>
+                </a>
+                <span class="transition_box_head_text" @click="switchChatTarget" v-html="nameFilter(current_friend.name)"></span>
+                <a class="transition_box_head_right add_friend_btn" @click="disComFriend">
+                    <img src="./img/user.png" alt="" class="transition_box_head_right_icon">
+                </a>
+            </header>
+            <!-- 删除单条聊天消息 -->
+            <mt-actionsheet :actions="actions_msg" v-model="sheetVisible_msg"></mt-actionsheet>
+            <div class="chat_window_body scrollbar" @touchstart="hideFooter">
+                <template v-for="(item,index) in current_friend.chat_record">
+                    <!-- 文字语音消息 -->
+                    <!-- <div class="msg msg_normal clearfix"
+                        v-if="item.msg_type === 'text' || item.msg_type === 'audio'"
+                        :class="{msg_my: item.isMe,msg_friend: !item.isMe}"
+                        >
+                        <img class="icon" :src="current_friend.icon" alt="">
+                        <div class="text" :class="{
+                            jt_left: !item.isMe,
+                            jt_right: item.isMe,
+                            audio: item.msg_type === 'audio'
+                        }" @click="item.isRead = !item.isRead" :style="{width: item.audio_num ? 202*item.audio_num/60 + 'px' : auto}">
+                            {{item.text || ""}}
+                            <span class="audio_icon"></span>
+                            <span class="audio_num" v-if="item.msg_type === 'audio'">{{item.audio_num}}''<span class="audio_num_xyd" v-show="!item.isRead"></span></span>
+                        </div>
+                    </div> -->
+
+                    <!-- 文字消息 -->
+                    <div class="msg msg_normal clearfix"
+                        v-if="item.msg_type === 'text'"
+                        :class="{msg_my: item.isMe,msg_friend: !item.isMe}"
+                        @touchstart="msgTouchstart(index)" @touchmove="msgTouchMove" @touchend="msgTouchEnd">
+                        <img class="icon" :src="current_friend.icon" alt="" v-if="!item.isMe">
+                        <img class="icon" :src="allData.my_info.tx" alt="" v-if="item.isMe">
+                        <div class="text" :class="{
+                            jt_left: !item.isMe,
+                            jt_right: item.isMe
+                        }" v-html="item.text || ''">
+                        </div>
+                    </div>
+
+                    <!-- 视频聊天消息 -->
+                    <div class="msg msg_normal clearfix"
+                        v-if="item.msg_type === 'video'"
+                        :class="{msg_my: item.isMe,msg_friend: !item.isMe}"
+                        @touchstart="msgTouchstart(index)" @touchmove="msgTouchMove" @touchend="msgTouchEnd">
+                        <img class="icon" :src="current_friend.icon" alt="" v-if="!item.isMe">
+                        <img class="icon" :src="allData.my_info.tx" alt="" v-if="item.isMe">
+                        <div class="text" 
+                        :class="{
+                            jt_left: !item.isMe,
+                            jt_right: item.isMe
+                        }">
+                            <span class="video_icon left" :class="{tel:item.message == '语音聊天',video:item.message == '视频聊天'}" v-if="!item.isMe"></span>
+                            <span class="video_text">{{item | videoTextFilter}}</span>
+                            <span v-if="item.text == '已取消'" class="video_red"></span>
+                            <span class="video_icon right" :class="{tel:item.message == '语音聊天',video:item.message == '视频聊天'}" v-if="item.isMe"></span>
+                        </div>
+                    </div>
+
+                    <!-- 图片消息 -->
+                    <div class="msg clearfix"
+                        v-if="item.msg_type === 'pic'"
+                        :class="{msg_my: item.isMe,msg_friend: !item.isMe}"
+                        @touchstart="msgTouchstart(index)" @touchmove="msgTouchMove" @touchend="msgTouchEnd">
+                        <img class="icon" :src="current_friend.icon" alt="" v-if="!item.isMe">
+                        <img class="icon" :src="allData.my_info.tx" alt="" v-if="item.isMe">
+                        <div class="msg_pic" :class="{msg_my: item.isMe,msg_friend: !item.isMe}"
+                        :style="{width: item.time01 + 'px', height: item.time02 + 'px'}"
+                        v-lazy:background-image="item.text">
+                        <!-- , backgroundImage: 'url(' + item.text + ')' -->
+                            <!-- <img :data-original="item.text" class="lazy" alt="" :style="{height: item.time02 + 'px'}"> -->
+                        </div>
+                    </div>
+
+                    <!-- 语音消息 -->
+                    <div class="msg msg_normal clearfix"
+                        v-if="item.msg_type === 'audio'"
+                        :class="{msg_my: item.isMe,msg_friend: !item.isMe}"
+                        @touchstart="msgTouchstart(index)" @touchmove="msgTouchMove" @touchend="msgTouchEnd">
+                        <img class="icon" :src="current_friend.icon" alt="" v-if="!item.isMe">
+                        <img class="icon" :src="allData.my_info.tx" alt="" v-if="item.isMe">
+                        <div class="text" :class="{
+                            jt_left: !item.isMe,
+                            jt_right: item.isMe,
+                            audio: item.msg_type === 'audio'
+                        }" @click="item.isRead = !item.isRead" :style="item.audio_num | audio_filter">
+                            <span class="audio_icon"></span>
+                            <!-- :class="{audio_num_color:current_friend.chat_bg}" -->
+                            <span class="audio_num" v-if="item.msg_type === 'audio'" :class="{audio_num_color: (current_friend.chat_bg || allData.my_info.chat_bg) && current_friend.chat_bg != 'default'}">{{item.audio_num}}''
+                                
+                            </span>
+                            <span class="audio_num_xyd" v-show="!item.isRead && !item.isMe"></span>
+                        </div>
+                    </div>
+
+                    <!-- 系统消息 -->
+                    <div class="system_msg" v-else-if="
+                        item.msg_type==='system' || item.msg_type==='system_time'"
+                        :class="{system_time: item.msg_type === 'system_time'}"
+                        @touchstart="msgTouchstart(index)" @touchmove="msgTouchMove" @touchend="msgTouchEnd">
+                        <span class="system_msg_con" v-if="item.msg_type==='system'" :class="{bg_style: current_friend.chat_bg}">{{item.text}}</span>
+                        <span class="system_msg_con" v-if="item.msg_type==='system_time'" :class="{bg_style: (current_friend.chat_bg || allData.my_info.chat_bg) && current_friend.chat_bg != 'default'}">{{item.time | gshChatTimeFilter}}</span>
+                    </div>
+
+                    <!-- 转账 -->
+                    <div class="msg msg_my msg_red msg_zz clearfix"
+                        v-else-if="item.msg_type === 'msg_zz'"
+                        :class="{
+                            receive:item.isReceive,
+                            msg_my: item.isMe,
+                            msg_friend: !item.isMe
+                        }"
+                        @touchstart="msgTouchstart(index)" @touchmove="msgTouchMove" @touchend="msgTouchEnd">
+                        <img class="icon" :src="current_friend.icon" alt="" v-if="!item.isMe">
+                        <img class="icon" :src="allData.my_info.tx" alt="" v-if="item.isMe">
+                        <div class="msg_red_content" :class="{
+                            jt_left: !item.isMe,
+                            jt_right: item.isMe,
+                        }" @click="openZz(item)">
+                            <div class="red_info">
+                                <img class="red_info_icon" src="./img/icon_01.png" width="34" v-show="!item.isReceive">
+                                <img class="red_info_icon" src="./img/duigou.png" width="34" v-show="item.isReceive">
+                                <div class="msg_red_con">
+                                    <div class="msg_red_con_tit">
+                                    <!-- 转账给{{current_friend.name}} -->
+                                    {{item.isReceive ? '已被领取'+(item.message ? '-'+item.message: '') : item.message ? item.message : '转账给' + (item.isMe ? current_friend.name : '你')}}
+                                    </div>
+                                    <div class="msg_red_con_text">
+                                        ¥{{item.money | returnFloat}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="red_desc">微信转账</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 已收钱 -->
+                    <div class="msg msg_my msg_red msg_zz clearfix receive"
+                        v-else-if="item.msg_type === 'msg_zz_ok'"
+                        :class="{
+                            msg_my: !item.isMe,
+                            msg_friend: item.isMe
+                        }" @touchstart="msgTouchstart(index)" @touchmove="msgTouchMove" @touchend="msgTouchEnd">
+                        <img class="icon" :src="current_friend.icon" alt="" v-if="item.isMe">
+                        <img class="icon" :src="allData.my_info.tx" alt="" v-if="!item.isMe">
+                        <div class="msg_red_content" :class="{
+                            jt_left: item.isMe,
+                            jt_right: !item.isMe,
+                        }" @click="openZz(item)">
+                            <div class="red_info">
+                                    <img class="red_info_icon" src="./img/icon_01.png" width="34" v-show="!item.isReceive">
+                                    <img class="red_info_icon" src="./img/duigou.png" width="34" v-show="item.isReceive">
+                                <div class="msg_red_con">
+                                    <div class="msg_red_con_tit">
+                                    已收钱
+                                    </div>
+                                    <div class="msg_red_con_text">
+                                        ¥{{item.money | returnFloat}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="red_desc">
+                                微信转账
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 红包-->
+                    <div class="msg msg_my msg_red msg_hb clearfix"
+                    v-else-if="item.msg_type === 'msg_hb'"
+                    :class="{
+                        receive:item.isReceive,
+                        msg_my: item.isMe,
+                        msg_friend: !item.isMe
+                    }"
+                    @touchstart="msgTouchstart(index)" @touchmove="msgTouchMove" @touchend="msgTouchEnd">
+                        <img class="icon" :src="current_friend.icon" alt="" v-if="!item.isMe">
+                        <img class="icon" :src="allData.my_info.tx" alt="" v-if="item.isMe">
+                        <div class="msg_red_content" :class="{
+                            jt_left: !item.isMe,
+                            jt_right: item.isMe,
+                        }" @click="openHb(item)">
+                            <div class="red_info">
+                                <img class="red_info_icon" src="./img/icon_hongb.png" width="34" v-if="!item.isReceive">
+                                <img class="red_info_icon" src="./img/icon_hongb_ok.png" width="34" v-if="item.isReceive">
+                                <div class="msg_red_con">
+                                    <div class="msg_red_con_tit">
+                                        {{item.message || '恭喜发财，大吉大利'}}
+                                    </div>
+                                    <div class="msg_red_con_text">
+                                        {{item.isReceive ? '红包已被领完' : '查看红包'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="red_desc">
+                                微信红包
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 领取红包消息 -->
+                    <div class="system_msg" v-if="item.msg_type==='receive_hb'" @touchstart="msgTouchstart(index)" @touchmove="msgTouchMove" @touchend="msgTouchEnd">
+                        <span class="system_msg_con">
+                            <!-- 这里不要换行 -->
+                            <img src="./img/small_hongb.png" alt="" class="hongbao_icon"><span v-if="!item.isMe" class="receive_hb_text">你领取了{{current_friend.name}}的</span><span v-if="item.isMe" class="receive_hb_text">{{current_friend.name}}领取了你的</span><span class="red_color">红包</span>
+                        </span>
+                    </div>
+                </template>
+            </div>
+            <div class="chat_window_footer">
+                <div class="chat_window_footer_top">
+                    <div class="chat_footer_too_left">
+                        <a class="icon-yuyin" @click="switchYuyin" v-show="chat_input_key"><img src="./img/icon_02.png" alt=""></a>
+                        <a class="icon-text" v-show="!chat_input_key" @click="switchYuyin"><img src="./img/jianpan.png" alt=""></a>
+                    </div>
+                    <!-- <input type="text" class="chat_input"> -->
+                    <div class="chat_input scrollbar" id="chat_input" contenteditable="true" v-show="chat_input_key" @focus="chatInputFocus" @input="chatInputChange"></div>
+                    <div class="chat_yuyin" v-show="!chat_input_key" @click="openMsgYuyin">按住说话</div>
+                    <div class="chat_footer_too_right">
+                        <a class="icon-text" v-show="face_tools_key" @click="face_tools_key = false"><img src="./img/jianpan.png" alt=""></a>
+                        <a class="icon-face" v-show="!face_tools_key" @click="clickFace"><img src="./img/icon_03.png" alt=""></a>
+                        <a class="iconfont icon-add" @click="clickAdd"><img src="./img/icon_04.png" alt=""></a>
+                        <!-- 发送 -->
+                        <a class="send_btn" v-show="send_btn_key" @click="sendMsgText">发送</a>
+                    </div>
+                </div>
+
+                <div class="chat_footer_tools">
+                    <div class="face_tools scrollbar" v-show="face_tools_key">
+                        <span class="face_item" v-for="item in 86" @click="disFace($event)"></span>
+                    </div>
+                    <div class="add_tools clearfix" v-show="add_tools_key">
+                        <div class="add_tools_item" @click="openChatPicker">
+                            <img src="./img/time.png" alt="">
+                            <p>时间</p>
+                        </div>
+                        <div class="add_tools_item" @click="openMsgYuyin">
+                            <img src="./img/vioce.png" alt="">
+                            <p>语音</p>
+                        </div>
+                        <div class="add_tools_item" @click="openMsgPic">
+                            <img src="./img/picture.png" alt="">
+                            <p>图片</p>
+                        </div>
+                        <div class="add_tools_item" @click="openMsgZz">
+                            <img src="./img/money.png" alt="">
+                            <p>转账</p>
+                        </div>
+                        <div class="add_tools_item" @click="openMsgHb">
+                            <img src="./img/hongb.png" alt="">
+                            <p>红包</p>
+                        </div>
+                        <div class="add_tools_item" @click="openMsgVideo">
+                            <img src="./img/hongb.png" alt="">
+                            <p>视频聊天</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- 红包详情 -->
+            <div class="transition_box hb" :class="{transition_show: transition_el02 === 'hb'}">
+                <header class="hb_header transition_box_head">
+                    <a class="transition_box_head_fanhui" href="javascript:;" onclick="back();">
+                        <span class="button_arrow_box"><img src="./img/path_left.png" alt=""></span>
+                    </a>
+                    <span class="transition_box_head_text">红包记录</span>
+                </header>
+                <div class="hb_wrapper">
+                    <div class="icon">
+                        <img :src="current_friend.icon" alt="">
+                        <div class="hb_friend_name">
+                            {{current_friend.name}}
+                        </div>的红包
+                    </div>
+                    <!-- <div class="hb_friend_name">
+                        {{current_friend.name}}
+                    </div> -->
+                    <div class="hb_desc">
+                        {{hb_info.message || "恭喜发财，大吉大利"}}
+                    </div>
+                    <div class="hb_pri">
+                        <span class="pri_rmb">¥</span>
+                        <span class="pri">{{hb_info.money | returnFloat}}</span>
+                    </div>
+                    <div class="hb_zeng">
+                        <!-- <img src="./img/small.png" alt=""> 你的红包可增值，点击查看> -->
+                        已存入零钱，可直接提现  <img src="./img/small1.png" alt=""> 
+                    </div>
+                    <p class="message">
+                        <span class="dosh_line">
+                            <img src="./img/Big-Smile.png" alt="">
+                        </span>
+                    </p>
+                    <p class="record">回复一个表情到聊天</p>
+                </div>
+            </div>
+
+            <!-- 转账详情 -->
+            <div class="transition_box zz" :class="{transition_show: transition_el02 === 'zz'}">
+                <header class="zz_header transition_box_head">
+                    <a class="transition_box_head_fanhui" href="javascript:;" onclick="back();">
+                        <span class="button_arrow_box"><img src="./img/button_arrow.png" alt=""></span>
+                    </a>
+                    <span class="transition_box_head_text"></span>
+                </header>
+                <div class="zz_wrapper">
+                    <div class="icon">
+                        <img src="./img/wait.png" alt="" v-if="!zz_info.isReceive">
+                        <img src="./img/ok.png" alt="" v-if="zz_info.isReceive">
+                    </div>
+                    <div class="zz_friend_name">
+                        <!-- 发送对象和说话对象是不一样 -->
+                        <div v-if="zz_info.isMe != isMe">
+                            <span v-if="!zz_info.isReceive">待收钱</span>
+                            <span v-if="zz_info.isReceive">已收钱</span>
+                        </div>
+                        <!-- 发送对象是对方并且和说话对象也是对方 -->
+                        <div v-if="zz_info.isMe == isMe">
+                            <span v-if="!zz_info.isReceive">待{{zz_info.isMe ? current_friend.name : allData.my_info.my_nc}}确认收钱</span>
+                            <span v-if="zz_info.isReceive">{{zz_info.isMe ? current_friend.name : allData.my_info.my_nc}}已收钱</span>
+                        </div>
+                        <!-- 发送对象是我并且和说话对象是我 -->
+                        <!-- <div v-if="zz_info.isMe && isMe">
+                            <span v-if="!zz_info.isReceive">待{{}}确认收钱</span>
+                            <span v-if="zz_info.isReceive">{{current_friend.name}}已收钱</span>
+                        </div> -->
+                    </div>
+                    <div class="zz_pri">
+                        <span class="pri_yy">¥</span>
+                        <span class="pri">{{zz_info.money | returnFloat}}</span>
+                    </div>
+                    <div class="zz_btn" v-if="(zz_info.isMe != isMe) && !zz_info.isReceive" @click="confirmMoney">
+                        <a href="javascript:;">确认收钱</a>
+                    </div>
+                    <div class="zz_desc">
+                        <div v-if="zz_info.isMe != isMe">
+                            <span v-if="!zz_info.isReceive">1天内未确认，将退还给对方。<span class="blue_color">立即退还</span></span>
+                            <span class="blue_color" v-if="zz_info.isReceive">查看零钱</span>
+                        </div>
+                        <div v-if="zz_info.isMe == isMe">
+                            <span v-if="!zz_info.isReceive">1天内朋友未确认，将退还给你。<span class="blue_color">重发转账信息</span></span>
+                            <span v-if="zz_info.isReceive">已存入对方零钱中</span>
+                        </div>
+                    </div>
+                    <!-- 添加新的广告栏 -->
+                    <div class="zz_advise">
+                        <div class="zz_advise_img">
+                            <img src="img/wallet-money.png" alt="">
+                        </div>
+                        <div class="zz_advise_r">
+                            <p class="zz_advise_title1">零钱通</p>
+                            <p class="zz_advise_title2">转入资金即享3.15%年化收入</p>
+                        </div>
+                        <div class="zz_advise_arrow">
+                            <img src="img/arrow_right.png" alt="">
+                        </div>
+                    </div>
+                    <!-- 广告栏结束 -->
+                    <div class="zz_time">
+                        <div class="zz_time01">
+                            转账时间: {{zz_info.time01}}
+                        </div>
+                        <div class="zz_time02" v-if="zz_info.isReceive">
+                            收钱时间: {{zz_info.time02}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 时间选择器 -->
+            <mt-datetime-picker ref="chat_picker" @confirm="addMsgTime" type="datetime" v-modal="chat_pickerVisible" year-format="{value}年" month-format="{value}月" date-format="{value}日" hour-format="{value}时" minute-format="{value}分" :value="chat_startDate" :endDate.sync="chat_endDate"></mt-datetime-picker>
+            <!-- 语音 -->
+            <div class="yuyin mt_box transition_box" :class="{transition_show:transition_el02 === 'yuyin'}">
+                <header class="mt_header">
+                    <a href="javascript:;" class="mt_header_fanhui" onclick="back();">
+                        <span><img src="./img/button_arrow.png" alt=""></span>
+                    </a>
+                    <span class="mt_header_text">添加语音消息</span>
+                </header>
+                <div class="mt_item_wrapper">
+                    <div class="chat_mtitem clearfix fasongren" @click="isMe = !isMe">
+                        <div class="chat_mtitem_left">
+                            <div class="mtitem_tit">发送人</div>
+                            <div class="mtitem_text">点我切换发送人</div>
+                        </div>
+                        <div class="chat_mtitem_right">
+                            <span class="chat_mtitem_right_name">{{isMe ? allData.my_info.my_nc : current_friend.name}}</span>
+                            <img :src="allData.my_info.tx" alt="" class="mt_item_pic_img" v-show="isMe">
+                            <img :src="current_friend.icon" alt="" class="mt_item_pic_img" v-show="!isMe">
+                            <img src="./img/arrow_right.png" alt="" class="arrow_right">
+                        </div>
+                    </div>
+                    <div class="chat_mtitem shichang">
+                        <div class="chat_mtitem_left">
+                            <div class="mtitem_tit">语音时长</div>
+                        </div>
+                        <mt-range v-model="rangeValue" :min="1" :max="60">
+                            <div slot="end" class="rangeValue">{{rangeValue}}秒</div>
+                        </mt-range>
+                    </div>
+                </div>
+                <div class="mt_sub_box" @click="addMsgYuyin">
+                    <a href="javascript:;" class="mt_sub">添加</a>
+                </div>
+            </div>
+            <!-- 图片 -->
+            <div class="pic mt_box transition_box" :class="{transition_show:transition_el02 === 'pic'}">
+                <header class="mt_header">
+                    <a href="javascript:;" class="mt_header_fanhui" onclick="back();">
+                        <span><img src="./img/button_arrow.png" alt=""></span>
+                    </a>
+                    <span class="mt_header_text">添加图片消息</span>
+                </header>
+                <div class="mt_item_wrapper" style="height:100%;">
+                    <div class="chat_mtitem clearfix fasongren" @click="isMe = !isMe">
+                        <div class="chat_mtitem_left">
+                            <div class="mtitem_tit">发送人</div>
+                            <div class="mtitem_text">点我切换发送人</div>
+                        </div>
+                        <div class="chat_mtitem_right">
+                            <span class="chat_mtitem_right_name">{{isMe ? allData.my_info.my_nc : current_friend.name}}</span>
+                            <img :src="allData.my_info.tx" alt="" class="mt_item_pic_img" v-show="isMe">
+                            <img :src="current_friend.icon" alt="" class="mt_item_pic_img" v-show="!isMe">
+                            <img src="./img/arrow_right.png" alt="" class="arrow_right">
+                        </div>
+                    </div>
+                    <div class="chat_mtitem chat_mtitem_pic clearfix" @click="xcPicMsg">
+                        <div class="chat_mtitem_left">
+                            <div class="mtitem_tit">选择图片</div>
+                        </div>
+                        <div class="chat_mtitem_right">
+                            <img src="" alt="" class="mt_item_pic_img new_msg_pic">
+                            <img src="./img/arrow_right.png" alt="" class="arrow_right">
+                        </div>
+                    </div>
+                    <div class="picMsg_wrapper scrollbar" v-show="pic_msg_arr.length > 1">
+                        <div v-for="item in pic_msg_arr" class="pic_msg_item"><img :src="item.src" alt=""></div>
+                    </div>
+                </div>
+                <div class="mt_sub_box" @click="addMsgPic">
+                    <a href="javascript:;" class="mt_sub">添加</a>
+                </div>
+            </div>
+            <!-- 转账 -->
+            <div class="transfer_accounts mt_box transition_box" :class="{transition_show:transition_el02 === 'transfer_accounts'}">
+                <header class="mt_header">
+                    <a href="javascript:;" class="mt_header_fanhui" onclick="back();">
+                        <span><img src="./img/button_arrow.png" alt=""></span>
+                    </a>
+                    <span class="mt_header_text">添加转账消息</span>
+                </header>
+                <div class="mt_item_wrapper">
+                    <div class="chat_mtitem clearfix fasongren" @click="isMe = !isMe">
+                        <div class="chat_mtitem_left">
+                            <div class="mtitem_tit">发送人</div>
+                            <div class="mtitem_text">点我切换发送人</div>
+                        </div>
+                        <div class="chat_mtitem_right">
+                            <span class="chat_mtitem_right_name">{{isMe ? allData.my_info.my_nc : current_friend.name}}</span>
+                            <img :src="allData.my_info.tx" alt="" class="mt_item_pic_img" v-show="isMe">
+                            <img :src="current_friend.icon" alt="" class="mt_item_pic_img" v-show="!isMe">
+                            <img src="./img/arrow_right.png" alt="" class="arrow_right">
+                        </div>
+                    </div>
+                    <div class="chat_mtitem_input">
+                        <input type="number" placeholder="金额" id="new_msg_zz_pri" @input="zzPriChange">
+                    </div>
+                    <div class="chat_mtitem_input">
+                        <input type="text" placeholder="转账留言（选填）" id="new_msg_zz_msg">
+                    </div>
+                    <div class="chat_mtitem clearfix chat_mtitem_time" @click="openZzTimePicker">
+                        <div class="chat_mtitem_left">
+                            <div class="mtitem_tit">转账时间</div>
+                        </div>
+                        <div class="chat_mtitem_right">
+                            <span class="time" id="new_msg_zz_time"></span>
+                            <img src="./img/arrow_right.png" alt="" class="arrow_right">
+                        </div>
+                    </div>
+                </div>
+                <div class="mt_sub_box" @click="addMsgZz">
+                    <a href="javascript:;" class="mt_sub">添加</a>
+                </div>
+                <mt-datetime-picker ref="add_zz_time_picker" @confirm="addZzTime" type="datetime" v-modal="add_zz_pickerVisible" year-format="{value}年" month-format="{value}月" date-format="{value}日" hour-format="{value}时" minute-format="{value}分" :value="zz_time_startDate"
+                    :endDate.sync="chat_endDate"></mt-datetime-picker>
+            </div>
+            <!-- 红包 -->
+            <div class="hongb mt_box transition_box" :class="{transition_show:transition_el02 === 'hongb'}">
+                <header class="mt_header">
+                    <a href="javascript:;" class="mt_header_fanhui" onclick="back();">
+                        <span><img src="./img/button_arrow.png" alt=""></span>
+                    </a>
+                    <span class="mt_header_text">添加红包消息</span>
+                </header>
+                <div class="mt_item_wrapper">
+                    <div class="chat_mtitem clearfix fasongren" @click="isMe = !isMe">
+                        <div class="chat_mtitem_left">
+                            <div class="mtitem_tit">发送人</div>
+                            <div class="mtitem_text">点我切换发送人</div>
+                        </div>
+                        <div class="chat_mtitem_right">
+                            <span class="chat_mtitem_right_name">{{isMe ? allData.my_info.my_nc : current_friend.name}}</span>
+                            <img :src="allData.my_info.tx" alt="" class="mt_item_pic_img" v-show="isMe">
+                            <img :src="current_friend.icon" alt="" class="mt_item_pic_img" v-show="!isMe">
+                            <img src="./img/arrow_right.png" alt="" class="arrow_right">
+                        </div>
+                    </div>
+                    <div class="chat_mtitem_input">
+                        <input type="number" placeholder="金额(不能大于200)" id="new_msg_hb_pri">
+                    </div>
+                    <div class="chat_mtitem_input">
+                        <input type="text" placeholder="恭喜发财（选填）" id="new_msg_hb_msg">
+                    </div>
+                </div>
+                <div class="mt_sub_box" @click="addMsgHb">
+                    <a href="javascript:;" class="mt_sub">添加</a>
+                </div>
+            </div>
+
+            <!-- 视频聊天 -->
+            <div class="video_chat mt_box transition_box" :class="{transition_show:transition_el02 === 'video'}">
+                <mt-actionsheet :actions="video_chat_actions" v-model="video_chat_sheetVisible"></mt-actionsheet>
+                <header class="mt_header">
+                    <a href="javascript:;" class="mt_header_fanhui" onclick="back();">
+                        <span><img src="./img/button_arrow.png" alt=""></span>
+                    </a>
+                    <span class="mt_header_text">添加电话消息</span>
+                </header>
+                <div class="mt_item_wrapper">
+                    <div class="chat_mtitem clearfix fasongren" @click="isMe = !isMe">
+                        <div class="chat_mtitem_left">
+                            <div class="mtitem_tit">发送人</div>
+                            <div class="mtitem_text">点我切换发送人</div>
+                        </div>
+                        <div class="chat_mtitem_right">
+                            <span class="chat_mtitem_right_name">{{isMe ? allData.my_info.my_nc : current_friend.name}}</span>
+                            <img :src="allData.my_info.tx" alt="" class="mt_item_pic_img" v-show="isMe">
+                            <img :src="current_friend.icon" alt="" class="mt_item_pic_img" v-show="!isMe">
+                            <img src="./img/arrow_right.png" alt="" class="arrow_right">
+                        </div>
+                    </div>
+                    <mt-radio align="right" title="选择类型" v-model="video_chat_value" :options="['视频聊天', '语音聊天']">
+                    </mt-radio>
+                    <div class="chat_mtitem clearfix" @click="openVideoChatSate" style="line-height:48px;">
+                        <div class="chat_mtitem_left">
+                            <div class="mtitem_tit">状态</div>
+                        </div>
+                        <div class="chat_mtitem_right">
+                            <span class="time" id="video_chat_state">{{video_chat_state}}</span>
+                            <img src="./img/arrow_right.png" alt="" class="arrow_right">
+                        </div>
+                    </div>
+                    <div class="chat_mtitem clearfix" id="lzf" :class="{fixed_input: footer_bot != 0}" v-show="video_chat_state === '已接通'" style="line-height:48px;" :style="{bottom: footer_bot + 'px' }">
+                        <div class="chat_mtitem_left">
+                            <div class="mtitem_tit">聊天时长(分:秒)</div>
+                        </div>
+                        <div class="chat_mtitem_right">
+                            <input type="number" id="video_chat_time" placeholder="如02.15" v-model="video_chat_time" @focus="focusVideoTime">
+                        </div>
+                    </div>
+                </div>
+                <div class="mt_sub_box" @click="addMsgVideo">
+                    <a href="javascript:;" class="mt_sub">添加</a>
+                </div>
+            </div>
+
+            <!-- 联系人角色编辑 -->
+            <div class="com_friend mt_box transition_box" :class="{transition_show:transition_el02 === 'com_friend'}">
+                <header class="mt_header">
+                    <a href="javascript:;" class="mt_header_fanhui" onclick="back();">
+                        <span><img src="./img/button_arrow.png" alt=""></span>
+                    </a>
+                    <span class="mt_header_text">联系人角色编辑</span>
+                </header>
+                <div class="mt_item_wrapper">
+                    <div class="mt_item mt_pic" @click="xc_sheetVisible = true;xc_el = '.com_friend_img'">
+                        <span class="mt_item_tit">头像</span>
+                        <div class="mt_item_right">
+                            <img :src="current_friend.icon" alt="" class="com_friend_img mt_item_pic_img">
+                            <img src="./img/arrow_right.png" alt="" class="arrow_right">
+                        </div>
+                    </div>
+                    <div class="mt_item mt_name">
+                        <input type="text" class="mt_input com_friend_nc" placeholder="昵称" v-modal="current_friend.name">
+                        <img src="./img/refresh.png" alt="" class="refresh" @click="randomNc('.com_friend_nc')">
+                    </div>
+                </div>
+                <div class="mt_item_wrapper">
+                    <div class="mt_item mt_pic com_mt_pic clearfix" @click="bg_sheetVisible = true">
+                        <span class="mt_item_tit">聊天背景图片</span>
+                        <div class="mt_item_right">
+                            <!-- <img src="./img/picture.png" alt="" class="mt_item_pic_img bg_default"> -->
+                            <span class="bg_default" v-show="chat_bg == 'default'">默认背景图</span>
+                            <span class="bg_sys" v-show="!chat_bg">跟随通用背景图</span>
+                            <img :src="current_friend.chat_bg" v-show="chat_bg == 'bg'" alt="聊天背景图" class="bgimg_friend mt_item_pic_img" style="max-height:150px;">
+                            <img src="./img/arrow_right.png" alt="" class="arrow_right">
+                        </div>
+                    </div>
+                    <div class="mt_item mt_pic" @click="currencyChatBg" style="margin-top:0;">
+                        <span class="mt_item_tit">取消聊天背景</span>
+                    </div>
+                </div>
+                <div class="mt_item_wrapper">
+                    <div class="mt_item mt_pic" @click="emptyRecordList">
+                        <span class="mt_item_tit">清空消息列表</span>
+                    </div>
+                </div>
+                <div class="mt_sub_box" @click="comFriendInfo">
+                    <a href="javascript:;" class="mt_sub">保存</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 点击聊天背景弹出框  start-->
+        <mt-actionsheet :actions="bg_actions" v-model="bg_sheetVisible"></mt-actionsheet>
+
+        <!-- 点击头像弹出框  start-->
+        <mt-actionsheet :actions="xc_actions" v-model="xc_sheetVisible"></mt-actionsheet>
+        <!-- 点击头像弹出框  end-->
+
+        <!-- 长按聊天好友弹出框  start-->
+        <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
+        <!-- 长按聊天好友弹出框  end-->
+
+        <!-- 时间选择器 -->
+        <mt-datetime-picker ref="picker" type="datetime" v-modal="pickerVisible" year-format="{value}年" month-format="{value}月" date-format="{value}日" hour-format="{value}时" minute-format="{value}分" :value="startDate" :endDate.sync="endDate" @confirm="handleConfirm"></mt-datetime-picker>
+
+        <!-- 添加聊天 -->
+        <div class="add_chat mt_box transition_box" :class="{transition_show: transition_el === 'add_chat'}">
+            <header class="mt_header">
+                <a href="javascript:;" class="mt_header_fanhui" onclick="back();">
+                    <span><img src="./img/button_arrow.png" alt=""></span>
+                </a>
+                <span class="mt_header_text">添加聊天</span>
+            </header>
+            <div class="mt_item_wrapper">
+                <div class="mt_item mt_pic" @click="xc_sheetVisible = true;xc_el = '.add_chat_icon'">
+                    <span class="mt_item_tit">头像</span>
+                    <div class="mt_item_right">
+                        <img src="./img/moren.png" alt="" class="add_chat_icon mt_item_pic_img">
+                        <img src="./img/arrow_right.png" alt="" class="arrow_right">
+                    </div>
+                </div>
+                <div class="mt_item mt_name">
+                    <input type="text" class="mt_input mt_new_chat_nic" placeholder="昵称">
+                    <img src="./img/refresh.png" alt="" class="refresh" @click="randomNc('.mt_new_chat_nic')">
+                </div>
+            </div>
+            <div class="mt_item_wrapper">
+                <div class="mt_item is_beenadd">
+                    <span class="mt_item_tit">是否已添加好友</span>
+                    <div class="mt_item_right">
+                        <mt-switch @change="addChatSwitch" :value="is_newfriend"></mt-switch>
+                    </div>
+                </div>
+            </div>
+            <div class="isnewfriend" v-show="is_newfriend">
+                <div @click="openPicker('add_chat', add_chat_time)" class="isnewfriend_time">
+                    <span class="">添加好友时间</span>
+                    <span class="time">
+                            <span>{{add_time}}</span>
+                    <span icon="more"></span>
+                    </span>
+                </div>
+                <div @click="openPicker('js_chat', js_chat_time)" class="isnewfriend_time">
+                    <span class="">接受好友时间</span>
+                    <span class="time">
+                        <span>{{js_time}}</span>
+                    </span>
+                </div>
+                <div class="add_chat_input"><input type="text" placeholder="打招呼内容1（可为空）"></div>
+                <div class="add_chat_input"><input type="text" placeholder="打招呼内容2（可为空）"></div>
+                <div class="add_chat_input"><input type="text" placeholder="打招呼内容3（可为空）"></div>
+            </div>
+            <div class="mt_box_btn_wrapper" @click="addChatSave">
+                <a href="javascript:;">添加</a>
+            </div>
+        </div>
+
+        <!-- 通用弹窗 -->
+        <!-- <div class="tip_info_modal_zz" v-show="tip_info_modal_key"></div>
+        <div class="tip_modal tip_info_modal" v-show="tip_info_modal_key">
+            <div class="tip_modal_tit">提示信息</div>
+            <div class="tip_modal_text">
+                亲爱的，删除后将清空聊天记录，确定要删除吗？
+            </div>
+            <div class="tip_modal_btn_box">
+                <a href="javascript:;" class="tip_info_qx" @click="tip_info_modal_key = false">取消</a>
+                <a href="javascript:;" class="tip_info_qd">确定</a>
+            </div>
+        </div> -->
+
+        <!-- 通用弹窗 -->
+        <!-- <div class="tip_input_modal_zz" v-show="tip_input_modal_key"></div>
+        <div class="tip_modal tip_input_modal" v-show="tip_input_modal_key">
+            <div class="tip_modal_tit">提示信息</div>
+            <div class="tip_modal_text">
+                设置朋友圈点赞数量
+            </div>
+            <input type="text" class="tip_modal_input">
+            <div class="tip_modal_btn_box">
+                <a href="javascript:;" class="tip_input_qx" @click="tip_input_modal_key = false">取消</a>
+                <a href="javascript:;" class="tip_input_qd">确定</a>
+            </div>
+        </div> -->
+    </div>
+
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <!-- <script src="js/bscroll.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/better-scroll@1.0.1/dist/bscroll.min.js"></script> -->
+    <script src="js/vue.min.js"></script>
+    <script src="js/vue-lazyload.js"></script>
+    <script src="js/mint.js"></script>
+    <!-- 未压缩 -->
+    <script src="./js/base.js"></script>
+    <script src="./js/wechat.js"></script>
+
+    <!-- 压缩混淆js文件 -->
+    <!-- <script src="js/base.min.js"></script> -->
+    <!-- <script src="js/wechat.min.js"></script> -->
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="ty">#40e3c7</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffff</color>
+    <color name="blue">#0078D7</color>
+    <color name="gray">#9D9A97</color>
+    <color name="weChatGray">#393a3f</color>
+    <color name="grayLine">#809D9A97</color>
+    <color name="light_gray">#efefef</color>
+    <color name="dark_green">#1AAD19</color>
+    <color name="stone_white">#F4F4F4</color>
+    <color name="young_green">#C8FDA2</color>
+    <color name="light_green">#CDEABE</color>
+    <color name="deep_green">#17B116</color>
+    <color name="light_blue">#65C6FD</color>
+    <color name="edit_bg">#EFEFF4</color>
+    <color name="darker_gray">#9b9b9b</color>
+    <color name="side_bar_text">#4A4A4A</color>
+    <color name="shadow_bg">#66000000</color>
+    <color name="black">#000</color>
+    <color name="light_black">#1A1A1A</color>
+    <color name="light_red">#f14748</color>
+    //橘黄色
+    <color name="saffron_yellow">#F9B248</color>
+    //青色
+    <color name="cyan">#17CFB3</color>
+    //草绿色
+    <color name="grass_green">#6BD127</color>
+    <color name="green">#46b12b</color>
+    <color name="weChatGift">#D85940</color>
+    <color name="transparent">#00000000</color>
+    <color name="found_divide_color">#d9d9d9</color>
+    <color name="found_description_color">#aaaaaa</color>
+    <color name="dark_gray">#999999</color>
+</resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height20"
+        android:background="@color/blue"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height50"
+        android:background="@color/blue"
+        >
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:id="@+id/weChat_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/sk"
+            />
+
+        <TextView
+            android:id="@+id/ver_line"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/weChat_back"
+            android:layout_margin="@dimen/margin10"
+            android:layout_width="1dp"
+            android:layout_height="@dimen/height20"
+            android:background="@color/black"
+            />
+
+        <TextView
+            android:text="标题"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/ver_line"
+            android:id="@+id/weChat_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            />
+        <TextView
+            android:text="零钱明细"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/weChat_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin10"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            />
+    </RelativeLayout>
+</LinearLayout>

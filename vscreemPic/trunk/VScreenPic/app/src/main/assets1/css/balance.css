@@ -1,0 +1,150 @@
+#app {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background-color: #f5f5f9;
+}
+#app .header {
+  height: 44px;
+  line-height: 44px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #1b82d2;
+}
+#app .header .button_arrow {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: 49px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  /* border-right: 1px solid #4c9ddc; */
+}
+#app .header .button_arrow img {
+  width: 15px;
+  height: 15px;
+}
+#app .header .head_text {
+  margin-left: 17px;
+}
+#app .header .head_right_text {
+  float: right;
+  margin-right: 13.5px;
+}
+#app .footer {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 17px;
+  text-align: center;
+  font-size: 0;
+}
+#app .footer span {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #354e7f;
+}
+#app .footer img {
+  width: 15px;
+  height: 15px;
+  vertical-align: bottom;
+  margin-right: 3px;
+}
+#app .footer .lx {
+  margin: 0 8px;
+  width: 1px;
+  height: 12px;
+  background-color: #354e7f;
+}
+#app .account_pri {
+  background-color: #1b82d2;
+  padding-top: 37.5px;
+}
+#app .account_pri .account_pri_desc {
+  margin-bottom: 34px;
+  padding-left: 16px;
+  font-size: 14px;
+  color: #c6dcf8;
+}
+#app .account_pri .account_pri_desc span {
+  /* margin-left: 10px; */
+}
+#app .account_pri .pri {
+  font-size: 69px;
+  color: #fff;
+  padding-left: 10.5px;
+  margin-bottom: 33.5px;
+}
+#app .account_pri .balance_bao {
+  height: 40px;
+  line-height: 40px;
+  color: #fff;
+  padding: 0 16px;
+  font-size: 14px;
+  background-color: #0074bf;
+}
+#app .account_pri .balance_bao .right {
+  float: right;
+  height: 40px;
+  line-height: 40px;
+}
+#app .account_pri .balance_bao .show_balance_bao {
+  display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
+  display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
+  display: inline-block;
+  width: 82px;
+  height: 24px;
+  line-height: 24px;
+  border: 1px solid #86a9e9;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  text-align: center;
+  color: #fff;
+  font-size: 12px;
+}
+#app .list .list_wrapper {
+  margin-bottom: 20px;
+}
+#app .list .list_wrapper:last-child {
+  margin-bottom: 0;
+}
+#app .list .list_wrapper .list_item {
+  background-color: #fff;
+  height: 46px;
+  line-height: 46px;
+  border-bottom: 1px solid #efefef;
+  padding: 0 16px;
+  position: relative;
+}
+#app .list .list_wrapper .list_item:first-child {
+  border-top: 1px solid #efefef;
+}
+#app .list .list_wrapper .list_item .icon {
+  width: 24px;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+#app .list .list_wrapper .list_item .text {
+  font-size: 18px;
+  color: #111;
+  vertical-align: middle;
+}
+#app .list .list_wrapper .list_item .right {
+  height: 46px;
+  line-height: 46px;
+  position: absolute;
+  right: 16px;
+  top: 0;
+}
+#app .list .list_wrapper .list_item .right img{
+  vertical-align: middle;
+}
+#app .list .list_wrapper .list_item .right .r_text{
+  color:grey;
+  font-size: 12px;
+
+}

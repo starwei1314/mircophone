@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/head.css">
+    <title>新的朋友</title>
+    <style>
+        .add_friend_wrapper .search {
+            height: 48px;
+            background-color: #fff;
+            padding: 0 12px;
+            margin: 16px 0 19px;
+            padding-top: 16px;
+        }
+        
+        .add_friend_wrapper .search .search_con {
+            /* border-bottom: 1px solid #e5e5e5; */
+            height: 24px;
+        }
+        
+        .add_friend_wrapper .search .search_con img {
+            width: 20px;
+            height: 20px;
+            vertical-align: top;
+            margin: 0 9px 0 6px;
+        }
+        
+        .add_friend_wrapper .search .search_con span {
+            font-size: 16px;
+            vertical-align: middle;
+            color: #c5c5c5;
+        }
+        .add_friend_wrapper .new_friend_list {
+            height: calc(100% - 83px);
+            background-color: #fff;
+       }
+        .add_friend_wrapper .new_friend_list .title {
+            margin-bottom: 6px;
+            font-size: 12px;
+            color: #727272;
+            padding: 0 12px;
+            padding-bottom: 6px;
+            background-color: #ebebeb;
+        }
+        .add_friend_wrapper .new_friend_list ul{
+            padding:0 10px 0 15px;
+        }
+        .add_friend_wrapper .new_friend_list ul li {
+            position: relative;
+            height: 64px;
+            padding: 0 9px 0 0px;
+            background-color: #fff;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        .add_friend_wrapper .new_friend_list ul li .newfriend_img{
+            display: inline-block;
+            height: 64px;
+            border-bottom: 2px solid white;
+        }
+        
+        .add_friend_wrapper .new_friend_list ul li:last-child {
+            border-bottom: none;
+        }
+        
+        .add_friend_wrapper .new_friend_list ul li .icon {
+            width: 48px;
+            height: 48px;
+            margin-right: 13px;
+            vertical-align: middle;
+            margin-top: 8px;
+            border-radius: 5px;
+        }
+        
+        .add_friend_wrapper .new_friend_list ul li .info {
+            margin-top: 8px;
+            display: -webkit-box/* OLD - iOS 6-, Safari 3.1-6 */
+            ;
+            display: -moz-box/* OLD - Firefox 19- (buggy but mostly works) */
+            ;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        .add_friend_wrapper .new_friend_list ul li .info .name {
+            font-size: 16px;
+            color: #0f0f0f;
+            margin-bottom: 7px;
+        }
+        
+        .add_friend_wrapper .new_friend_list ul li .info .desc {
+            font-size: 13px;
+            color: #848484;
+        }
+        
+        .add_friend_wrapper .new_friend_list ul li .add_state {
+            position: absolute;
+            right: 9px;
+            top: 0;
+            line-height: 64px;
+        }
+        
+        .add_friend_wrapper .new_friend_list ul li .add_state .add_state_ok {
+            font-size: 13px;
+            color: #8a8a8a;
+        }
+        
+        .add_friend_wrapper .new_friend_list ul li .add_state .add_state_wait {
+            display: -webkit-box/* OLD - iOS 6-, Safari 3.1-6 */
+            ;
+            display: -moz-box/* OLD - Firefox 19- (buggy but mostly works) */
+            ;
+            display: inline-block;
+            outline: 0;
+            width: 60px;
+            height: 31px;
+            background-color: #1aad19;
+            line-height: 31px;
+            text-align: center;
+            color: #fff;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="transition_box add_friend_box">
+        <header class="add_friend_box_header transition_box_head">
+            <a class="transition_box_head_fanhui" href="javascript:;" onclick="back()">
+                <span class="button_arrow_box"><img src="./img/button_arrow.png" alt=""></span>
+            </a>
+            <span class="transition_box_head_text">新的朋友</span>
+            <a class="transition_box_head_right add_friend_btn">
+                <span class="transition_box_head_right_text">添加朋友</span>
+            </a>
+        </header>
+        <div class="add_friend_wrapper">
+            <div class="search">
+                <div class="search_con">
+                    <img src="./img/search.png" alt="">
+                    <span>微信号/QQ号/手机号</span>
+                </div>
+            </div>
+            <div class="new_friend_list">
+                <div class="title">新的朋友</div>
+                <ul>
+                     <!-- <li> 
+                     <span class="newfriend_img"><img src="img/icon.png" alt="" class="icon"></span>
+                        <div class="info">
+                            <div class="name">啊啥都快</div>
+                            <div class="desc">案件速递</div>
+                        </div>
+                        <div class="add_state">
+                            <span class="add_state_ok">已添加</span>
+                            <a href="javascript:;" class="add_state_wait">接受</a>
+                        </div> 
+                     </li>  -->
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script>
+        function back() {
+            app.back()
+        }
+
+        function initFriendList(list) {
+            app.log(JSON.stringify(list));
+            list = JSON.parse(list)
+            $(".new_friend_list ul").empty()
+            $(list).each(function(i, v) {
+                var str = '<li>' +
+                    '<img src="' + v.icon + '" alt="" class="icon">' +
+                    '<div class="info">' +
+                    '<div class="name">' + v.name + '</div>' +
+                    '<div class="desc">' + v.request_msg + '</div>' +
+                    '</div><div class="add_state">'
+                if (v.request_state) {
+                    str += '<span class="add_state_ok">已添加</span>'
+                } else {
+                    str += '<a href="javascript:;" class="add_state_wait">接受</a>'
+                }
+                str += '</div></li>'
+                $(".new_friend_list ul").append(str)
+            })
+        }
+        // initFriendList([{
+        //     imgPath: './img/icon.png',
+        //     name: 'asdj ',
+        //     verifyContent: '会打开手机',
+        //     isAdded: true
+        // }])
+    </script>
+</body>
+
+</html>

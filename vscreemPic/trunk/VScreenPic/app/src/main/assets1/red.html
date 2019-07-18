@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>红包详情</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <style>
+        .transition_box {
+            background-color: #fff;
+            width: 100%;
+            height: 100%;
+            padding-top: 48px;
+        }
+        
+        .transition_box .transition_box_head {
+            height: 48px;
+            background-color: #f25542;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 200;
+            line-height: 48px;
+        }
+        
+        .transition_box .transition_box_head.hb_header .transition_box_head_fanhui .button_arrow_box {
+            /* border-right: 1px solid #ffe9b6; */
+        }
+        
+        .transition_box .transition_box_head.hb_header .transition_box_head_text {
+            color: #ffe9b6;
+            float: right;
+            margin-right: 15px;
+        }
+        
+        .transition_box .transition_box_head .transition_box_head_fanhui {
+            display: -webkit-box/* OLD - iOS 6-, Safari 3.1-6 */
+            ;
+            display: -moz-box/* OLD - Firefox 19- (buggy but mostly works) */
+            ;
+            display: inline-block;
+            width: 48px;
+            height: 48px;
+            /* padding-top: 12px; */
+            text-align: center;
+            margin-right: 15px;
+        }
+        
+        .transition_box .transition_box_head .transition_box_head_fanhui .button_arrow_box {
+            display: -webkit-box/* OLD - iOS 6-, Safari 3.1-6 */
+            ;
+            display: -moz-box/* OLD - Firefox 19- (buggy but mostly works) */
+            ;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+            /* border-right: 1px solid #303035; */
+            line-height: 24px;
+        }
+        
+        .transition_box .transition_box_head .transition_box_head_fanhui .button_arrow_box img {
+            width: 15px;
+            vertical-align: middle;
+            height: 15px;
+        }
+        
+        .transition_box .transition_box_head .transition_box_head_text {
+            font-size: 16px;
+            color: #fff;
+            vertical-align: middle;
+        }
+        
+        .hb {
+            padding-top: 48px;
+            height: 100%;
+        }
+        
+        .hb_wrapper {
+            background-image: url("./img/bg_02.jpg");
+            -webkit-background-size: 100% 100%;
+            -moz-background-size: 100% 100%;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .hb_wrapper .icon {
+            display: -webkit-box/* OLD - iOS 6-, Safari 3.1-6 */
+            ;
+            display: -moz-box/* OLD - Firefox 19- (buggy but mostly works) */
+            ;
+            display: inline-block;
+            margin-top: 41px;
+            text-align: center;
+            /* border: 2px solid #ebce9b; */
+            -webkit-border-radius: 6px;
+            border-radius: 6px;
+            /* width: 62px;
+            height: 62px; */
+            font-size: 16px;
+            color: #ffe9b6;
+            font-weight: bolder;
+        } 
+        
+        .hb_wrapper .icon img {
+            /* width: 58px; */
+            /* height: 58px; */
+            width:25px;
+            margin-right: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            vertical-align: middle;
+        }
+        
+        .hb_wrapper .hb_friend_name {
+            margin: 8px 0 6px;
+            font-size: 16px;
+            color: #ffe9b6;
+            display: inline-block;
+            font-weight: bolder;
+        }
+        
+        .hb_wrapper .hb_desc {
+            font-size: 14px;
+            color: #ffe9b6;
+            margin-bottom: 60px;
+            margin-top: 20px;
+        }
+        
+        .hb_wrapper .hb_pri {
+            font-size: 16px;
+            color: #ffe9b6;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .hb_wrapper .hb_pri .pri {
+            font-size: 52px;
+        }
+        .hb_wrapper .hb_pri .pri_rmb{
+            font-size: 46px;
+            display: inline-block;
+            vertical-align: top;
+            font-weight:600;
+            margin-right: 2px;
+        } 
+        .hb_wrapper .hb_zeng {
+            color: #fdc89c;
+            font-size: 14px;
+        }
+        
+        .hb_wrapper .hb_zeng img {
+            width: 15.5px;
+            height: 15px;
+            margin-right: 2px;
+            vertical-align: bottom;
+        }
+        
+        .hb_wrapper .message {
+            margin: 100px 0 30px;
+            font-size: 16px;
+            color: #000;
+        }
+        .hb_wrapper .dosh_line {
+             width: 63px;
+             height: 63px;
+             display: -webkit-inline-box;
+             display: inline-block;
+             border-radius: 5px;
+             border: 1px dashed #fa9d3b;
+             line-height: 63px;
+        }
+        .hb_wrapper .dosh_line img {
+            vertical-align: middle;
+            width: 23px;
+        }
+        
+        .hb_wrapper .record {
+            font-size: 14px;
+            color: #fa9d3b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="transition_box hb">
+        <header class="hb_header transition_box_head">
+            <a class="transition_box_head_fanhui" href="javascript:;" onclick="back()">
+                <span class="button_arrow_box"><img src="./img/path_left.png" alt=""></span>
+            </a>
+            <span class="transition_box_head_text">红包记录</span>
+        </header>
+        <div class="hb_wrapper">
+            <div class="icon">
+                <img src="" alt="">
+                <div class="hb_friend_name">
+                    <!-- {{current_friend.name}} -->
+                </div>的红包
+            </div>
+            <!-- <div class="hb_friend_name">
+                 {{current_friend.name}}
+            </div> -->
+            <div class="hb_desc">
+                <!-- {{hb_info.message || "恭喜发财，大吉大利"}} -->
+            </div>
+            <div class="hb_pri">
+                <span class="pri_rmb">¥</span>    <span class="pri"></span>
+            </div>
+            <div class="hb_zeng">
+                <!-- <img src="./img/small.png" alt="">  -->
+                已存入零钱，可直接消费 <img src="./img/small1.png" alt="">
+            </div>
+            <p class="message">
+                <span class="dosh_line">
+                <img src="./img/Big-Smile.png" alt="">
+                </span>
+            </p>
+            <p class="record">回复一个表情到聊天</p>
+        </div>
+    </div>
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script>
+        function initHb(icon, name, message, pri) {
+            $(".icon img").prop("src", icon)
+            $(".hb_friend_name").text(name)
+            $(".hb_desc").text(message)
+            $(".hb_pri .pri").text(pri)
+        }
+
+        function back() {
+            app.back();
+        }
+    </script>
+</body>
+
+</html>

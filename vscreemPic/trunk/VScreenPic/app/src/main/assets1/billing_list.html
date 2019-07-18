@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/billing_list.css">
+    <title>账单</title>
+</head>
+
+<body>
+    <div class="billing_list" id="app" v-cloak>
+        <header class="header">
+            <a href="javascript:;" class="button_arrow" onclick="back()">
+                <img src="./img/alipay/blue_fanhui.png" alt="">
+            </a>
+            <span class="head_text">账单</span>
+            <div class="head_right">
+                <span><img src="./img/alipay/ellipse.png" alt="" class="ellipse_r"></span>
+            </div>
+        </header>
+        <div class="screen_wrapper scrollbar" @scroll="listScroll" ref="screen">
+            <!-- 添加顶部固定导航搜索栏框 -->
+            <div class="screen_search">
+                <select name="">
+                    <option value="1">筛选</option>
+                </select>
+                <select name="">
+                        <option value="2">分类</option>
+                </select>
+                <span>搜索</span>
+            </div>
+           <div class="screen_title screen_title_fixed" v-show="fixed_key">
+                <span class="by"> {{current_month_text}} </span>
+                <div class="right">
+                     <span class="right_span" >
+                         <a>{{current_pri}}</a> 
+                        <a>{{current_pri_o}}</a> 
+                    </span> 
+                </div>
+            </div>
+            <div class="screen_item" v-for="key in arr.arr02">
+                <div class="screen_title">                  
+                    <span class="by"> {{key.time | monthFilter}} </span>
+                    <div class="right">
+                        <span class="right_span">
+                          <a>支出 &nbsp;¥&nbsp;{{key.in_blance|fmoney}}</a> 
+                          <a>收入 &nbsp;¥&nbsp;{{key.out_blance|fmoney}}</a>  
+                        </span>
+                        <!-- <img src="./img/arrow_right.png" alt=""> -->
+                    </div>
+                </div>
+                <div class="zz_list">
+                    <div class="zz_list_box">
+                        <div class="zz_item" v-for="item in key.billDetails">
+                            <div class="icon">
+                                <img :src="item.img" alt="">
+                                <!-- 删除等级图标 -->
+                                <!-- <span class="lx" :class="item.vipLv"></span> -->
+                            </div>
+                            <div class="zz_item_con">
+                                <div class="zz_item_text">
+                                    <span class="zz_item_text_head">转账-{{item.head}}</span>
+                                    <div class="zz_item_pri_box">
+                                        <span class="zz_item_pri" :style="item.type | jiaoyiColor">{{item.type}}{{item.money|fmoney}}</span>
+                                    </div>
+                                </div>
+                                <div class="zz_item_time">
+                                    <span class="time_text">{{item.time | timeFilter}}</span>
+                                    <span class="zz_item_state" :style="item.status | stateColor" v-show="$options.filters.jiaoyiType(item.type)">{{item.status}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script>
+        var app01 = null;
+
+        function initVue() {
+            app01 = new Vue({
+                el: '#app',
+                data: function() {
+                    return {
+                        arr: {
+                            arr02: [
+                                // 模拟部分数据
+                                {
+                                   time:"2019-04-01 18:22",
+                                   billDetails:[{
+                                       img:"./img/alipay/1.jpg",
+                                       vipLv:"1",
+                                       head:"你好1，中国，大阿达阿达大大大的",
+                                       type:"-",
+                                       money:10000,
+                                       time:"2019-04-01 18:22",
+                                       status:"交易成功"
+                                   },
+                                   {
+                                       img:"./img/alipay/1.jpg",
+                                       vipLv:"1",
+                                       head:"你好1，中国",
+                                       type:"-",
+                                       money:1000,
+                                       time:"2019-04-04 07:22",
+                                       status:"交易成功"
+
+                                   },
+                                   {
+                                       img:"./img/alipay/1.jpg",
+                                       vipLv:"1",
+                                       head:"你好1，中国",
+                                       type:"+",
+                                       money:1000,
+                                       time:"2019-04-02 18:22",
+                                       status:"交易成功"
+
+                                   }]
+                                },
+                                {
+                                   time:"2019-03-01 17:33",
+                                   billDetails:[{
+                                       img:"./img/alipay/1.jpg",
+                                       vipLv:"1",
+                                       head:"你好1，中国",
+                                       type:"+",
+                                       money:1000,
+                                       time:"2019-03-01 18:22",
+                                       status:"交易成功"
+
+                                   },
+                                   {
+                                       img:"./img/alipay/1.jpg",
+                                       vipLv:"1",
+                                       head:"你好1，中国",
+                                       type:"+",
+                                       money:1000,
+                                       time:"2019-03-02 18:22",
+                                       status:"交易成功"
+
+                                   },
+                                   {
+                                       img:"./img/alipay/1.jpg",
+                                       vipLv:"1",
+                                       head:"你好1，中国",
+                                       type:"+",
+                                       money:1000,
+                                       time:"2019-03-03 18:22",
+                                       status:"交易成功"
+
+                                   }]
+                                },
+                                {
+                                   time:"2019-02-01 16:36",
+                                   billDetails:[{
+                                       img:"./img/alipay/1.jpg",
+                                       vipLv:"1",
+                                       head:"你好1，中国",
+                                       type:"+",
+                                       money:1000,
+                                       time:"2019-02-02 16:36",
+                                       status:"交易成功"
+
+                                   },
+                                   {
+                                       img:"./img/alipay/1.jpg",
+                                       vipLv:"1",
+                                       head:"你好1，中国",
+                                       type:"+",
+                                       money:1000,
+                                       time:"2019-02-01 16:36",
+                                       status:"交易成功"
+
+                                   },
+                                   {
+                                       img:"./img/alipay/1.jpg",
+                                       vipLv:"1",
+                                       head:"你好1，中国",
+                                       type:"+",
+                                       money:1000,
+                                       time:"2019-02-03 16:36",
+                                       status:"交易成功"
+
+                                   }]
+                                },
+                                 {
+                                   time:"2019-01-01 11:11",
+                                   billDetails:[{
+                                       img:"./img/alipay/1.jpg",
+                                       vipLv:"1",
+                                       head:"你好1，中国",
+                                       type:"+",
+                                       money:1000,
+                                       time:"2019-01-01 11:11",
+                                       status:"交易成功"
+
+                                   },
+                                   {
+                                       img:"./img/alipay/1.jpg",
+                                       vipLv:"1",
+                                       head:"你好1，中国",
+                                       type:"+",
+                                       money:2000,
+                                       time:"2019-01-03 11:11",
+                                       status:"交易成功"
+
+                                   },
+                                   {
+                                       img:"./img/alipay/1.jpg",
+                                       vipLv:"1",
+                                       head:"你好1，中国",
+                                       type:"+",
+                                       money:1000,
+                                       time:"2019-01-04 11:11",
+                                       status:"交易成功"
+
+                                   }]
+                                },
+                            ]
+                         //模拟数据结束 ，，，更改完成后删除   
+                        },
+                        fixed_key: false,
+                        current_month_text: '本月',
+                        state_css: 'normal',
+                        arr3:[],
+                        total_arr:[],
+                        current_pri:'',
+                        current_pri_o:'',
+                    }
+                },
+                updated(){
+                    //在挂载到页面之前对数据进行处理
+                    this.getTotalBlance(this.arr.arr02)               
+                },
+                filters: {
+                         //金钱初始化格式
+                 fmoney(s, n) {
+                  n = n > 0 && n <= 20 ? n : 2;
+                  s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
+                  var l = s.split(".")[0].split("").reverse(),
+                      r = s.split(".")[1];
+                  t = "";
+                  for (var i = 0; i < l.length; i++) {
+                      t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
+                  }
+                  return t.split("").reverse().join("") + "." + r;
+                  },
+                    monthFilter: function(time) {
+                       
+                        var date = new Date()
+                        time = time.split("-")
+                        var year = parseInt(time[0]),
+                            month = parseInt(time[1]),
+                            current_year = date.getFullYear(),
+                            current_month = date.getMonth() + 1;
+                        var str = month + '月';
+                        if (year < current_year) {
+                            str = year + '年' + month + '月'
+                        } else if (year === current_year && month === current_month) {
+                            str = '本月'
+                        }
+                        return str;
+                    },
+                    //添加交易类型的文本颜色过滤
+                    jiaoyiColor(text){
+                        if(text == "+"){
+                            return 'color: #e8541e;'
+                        }
+                    },
+                    //根据收入支出类型隐藏交易成功的文本
+                    jiaoyiType(text){
+                        if(text=="+"|| text=="-"){
+                            return false
+                        }else{
+                            return true
+                        }
+                    },
+                    stateColor: function(str) {
+                        if (str === "等待付款" || str === '等待对方付款') {
+                            return 'color: #ff870f;'
+                        }
+                    },
+                    timeFilter: function(time) {
+                        var date = new Date(time),
+                            now_date = new Date()
+                        var item_year = date.getFullYear(),
+                            item_month = date.getMonth() + 1,
+                            item_date = date.getDate(),
+                            item_hours=date.getHours(),
+                            item_minutes=date.getMinutes(),
+                            now_year = now_date.getFullYear(),
+                            now_month = now_date.getMonth() + 1,
+                            now_date = now_date.getDate()
+                            //对时间进行补0操作处理  并且添加空格
+                            item_hours=item_hours<10?"0"+item_hours:item_hours;
+                            item_minutes=item_minutes<10?"0"+item_minutes:item_minutes;
+                        var str = item_month + '-' + item_date + '\xa0\xa0\xa0\xa0'+ item_hours+":"+item_minutes ;
+                        if (item_year === now_year && item_month === now_month) {                         
+                            if (item_date === now_date) {
+                                str = '今天'+ '\xa0\xa0\xa0\xa0'+item_hours+":"+item_minutes;
+                            } else if (now_date - item_date === 1) { 
+                                str = '昨天'+'\xa0\xa0\xa0\xa0'+ item_hours+":"+item_minutes;
+                            }else{
+                                item_month=item_month<10?"0"+item_month:item_month;
+                                item_date=item_date<10?"0"+item_date:item_date;
+                                str = item_month + '-' + item_date + '\xa0\xa0\xa0\xa0'+ item_hours+":"+item_minutes ; 
+                            }
+                        }else{
+                                item_month=item_month<10?"0"+item_month:item_month;
+                                item_date=item_date<10?"0"+item_date:item_date;
+                                str = item_month + '-' + item_date + '\xa0\xa0\xa0\xa0'+ item_hours+":"+item_minutes ; 
+                        }      
+                        return str;
+                    },
+                
+                },
+                methods: {
+                    listScroll: function() {
+                        var els = $(".screen_title").not(".screen_title_fixed")
+                       
+                        if ($(".screen_wrapper").scrollTop() > 0) {
+                            this.fixed_key = true
+                            for (var i = 0; i < els.length; i++) {
+                                if ($(".screen_wrapper").scrollTop() >= $(els[i])[0].offsetTop-50) {
+                                    this.current_month_text = $(els[i]).find(".by").text()
+                                    this.current_pri=$(els[i]).find(".right_span>a").eq(0).text()
+                                    this.current_pri_o=$(els[i]).find(".right_span>a").eq(1).text()
+                                }
+                            }
+                        } else {
+                            this.fixed_key = false;
+                            this.current_month_text = '本月';
+                            this.current_pri=$(".right_span>a").text();
+                            this.current_pri_o=$(".right_span>a").text()
+                        }
+                    },
+                // 收入支出统计数据
+                getTotalBlance:function(blance){
+                        var arr02_new=blance
+                    for(var i=0;i<arr02_new.length;i++){
+                        var billDetails_new=arr02_new[i].billDetails
+                        var arr3=[];
+                        var arr4=[];
+                          for(var j=0;j<billDetails_new.length;j++){
+                              if(billDetails_new[j].type == "+"){
+                                  arr3.push(billDetails_new[j].money) 
+                              }else{
+                                  arr4.push(billDetails_new[j].money)
+                              }                            
+                          }
+                          var total=0;
+                          var total_r=0;
+                          for (var k=0;k<arr3.length;k++){
+                             total += Number(arr3[k])
+                          }
+                          for (var k=0;k<arr4.length;k++){
+                             total_r += Number(arr4[k])
+                          }
+                        this.$set(app01.$data.arr.arr02[i], "out_blance", Number(total_r))
+                        this.$set(app01.$data.arr.arr02[i], "in_blance", Number(total))
+                    }
+                    }
+                }
+            })
+        }
+        function back() {
+            transfer.back();
+        }
+        $(function() {
+            initVue();
+            if (typeof transfer === "object") {
+                var data = JSON.parse(transfer.getBill())
+                transfer.log('typeof' + (typeof transfer.getBill()))
+                app01.$set(app01.$data.arr, "arr02", data)
+                transfer.log(app01.$data.arr.arr02)  
+            };                                                                                                                                                                                                                                                                                                                                                                                                                                                
+        })
+    </script>
+</body>
+
+</html>
